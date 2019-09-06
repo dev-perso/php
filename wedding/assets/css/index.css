@@ -23,11 +23,22 @@
     transform : translate(-50%, -50%);
 }
 
+.mainBlock span
+{
+
+}
+
 .mainBlock .imageTower
 {
     width : 200px;
     position : absolute;
     top : 0px;
+    margin-left: -150px;
+}
+
+.mainBlock .risMainTitre
+{
+    margin-left : 35px;
 }
 
 /* latin */

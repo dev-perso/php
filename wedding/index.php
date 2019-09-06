@@ -45,8 +45,11 @@
         <!-- Premier Jumbotron - prend tout l'écran -->
         <div class="jumbotron firstJumbo">
             <div class="mainBlock">
-                <h1 class="mainTitre">P RIS</h1>
-                <img src="assets/img/tower.png" class="imageTower" alt="A">
+                <h1 class="mainTitre">
+                    <span>P</span>
+                    <img src="assets/img/tower.png" class="imageTower" alt="A">
+                    <span class="risMainTitre">RIS</span>
+                </h1>
                 <span class="sousTitre">Michael et Natalia</span>
             </div>
         </div>
