@@ -1,0 +1,228 @@
+.firstJumbo, .secondJumbo
+{
+    text-align : center;
+    position : relative;
+}
+
+.firstJumbo
+{
+    background-color: #CAFEFE;
+}
+
+.secondJumbo
+{
+    background-color : white;
+}
+
+.mainBlock
+{
+    position : absolute;
+    width : 100%;
+    left : 50%;
+    top : 50%;
+    transform : translate(-50%, -50%);
+}
+
+.mainBlock .imageTower
+{
+    width : 200px;
+    position : absolute;
+    top : 0px;
+}
+
+/* latin */
+@font-face 
+{
+    font-family: 'Italiana';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../font/Italiana-Regular.ttf") format('truetype');
+}
+
+.mainTitre
+{   
+    font-family: 'Italiana';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 288px;
+    line-height: 339px;
+}
+
+/* latin */
+@font-face
+{
+    font-family: 'Amatic SC';
+    src: url("../font/AmaticSC-Regular.ttf") format('truetype');
+}
+
+.sousTitre
+{
+    font-family: "Amatic SC";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 96px;
+    line-height: 121px;
+}
+
+.blockImage
+{
+    font: "Miama";
+}
+
+.firstImage, .secondImage, .thirdImage
+{
+    height : 500px;
+    width : 100%;
+    background-color : #CAFEFE;
+    position : relative;
+    border : 15px solid white;
+    padding-left : 0px;
+    padding-right : 0px;
+}
+
+/* latin */
+@font-face
+{
+    font-family: 'Miama';
+    src: url("../font/Miama.ttf") format('truetype');
+}
+
+.numero1, .numero2, .numero3
+{
+    font-family: "Miama";
+    font-size : 144px;
+    position : absolute;
+}
+
+.numero1
+{
+    left : -10px;
+    top : 50%;
+    transform : translate(-50%, -50%);
+}
+
+.numero2
+{
+    left : -10px;
+    top : 75%;
+    transform : translate(-50%, -50%);
+}
+
+.numero3
+{
+    left : -10px;
+    top : 100%;
+    transform : translate(-50%, -50%);
+}
+
+.blockDescription
+{
+    margin-top : 30px;
+}
+
+.firstHour, .secondHour, .thirdHour
+{
+    font-family: "Miama";
+    font-style: italic;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 150px;
+    text-align : left;
+}
+
+/*.firstHour h2, .secondHour h2, .thirdHour h2
+{
+    border-bottom : 6px solid #CAFEFE;
+}*/
+
+.borderHour
+{
+    width : 96px;
+    border-top : 6px solid #CAFEFE;
+}
+
+.textHour
+{
+    margin-top : 10px;
+    font-family: "century-gothic", sans-serif;
+    font-size : 20px;
+    line-height : 40px;
+}
+
+.fondRose
+{
+    margin-top : 50px;
+    background-color : #FFDDF5;
+}
+
+.backgroundForm
+{
+    background-color : #CAFEFE;
+}
+
+.textareaComment
+{
+    width : 100%;
+}
+
+.containerForm
+{
+    margin-top : 25px;
+    font-family: "century-gothic", sans-serif;
+}
+
+.formText
+{
+    height : 100%;  
+    text-align : center;
+    margin-top : 40px;
+    /* margin-bottom : 10px; */
+}
+
+.textName
+{
+    border : none;
+    background : lightgrey;
+    margin-left : 5px;
+    text-align : center;
+}
+
+.answerPlz
+{
+    margin : 5px 0px 5px 0  px;
+
+    border : 1px solid grey;
+}
+
+.usStyle
+{
+    width : 100%;
+    /* height : 261px; */
+}
+
+footer
+{
+    margin-top : -180px;
+    position : relative;
+    z-index : -1;
+}
+
+.backgroundFooter
+{
+    background-image : url("../img/footer.png");
+    background-repeat: no-repeat;
+    height : 400px;
+    background-size: 926px 400px;
+    background-position: center; 
+}
+
+.centerFooter
+{
+    text-align : center;
+    vertical-align : bottom;
+    color : white;
+    position : absolute;
+    bottom : 5px;
+    left : 0px;
+}
