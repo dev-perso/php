@@ -2,17 +2,19 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
-class CaveAVinController
+class CaveAVinController extends AbstractController
 {
-    public function __construct (Environment $twig)
+    /**
+     * @Route("/", name="caveavin")
+     * @return Response
+     */
+    public function index(): Response
     {
-        $this->twig = $twig;
-    } 
-    public function index()
-    {
-        return new Response($this->twig->render("cave/vin.html.twig"));
+        return $this->render("cave/vin.html.twig");
     }
 }
