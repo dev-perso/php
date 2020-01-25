@@ -11,7 +11,14 @@
     </head>
     <body>
         <nav class="navbar-light text-center" style="position: relative; justify-content: space-between; padding: .5rem 1rem; background-color: white!important; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);">
-            <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
+            <div class="row">
+                <div class="offset-2 col-8">
+                    <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-primary" href="{{ path('connexion') }}" role="button">Connexion</a>
+                </div>
+            </div>
         </nav>
 
         {% block body %}{% endblock %}

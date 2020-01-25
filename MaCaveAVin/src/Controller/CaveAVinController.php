@@ -25,4 +25,13 @@ class CaveAVinController extends AbstractController
     {
 
     }
+
+    /**
+     * @Route("/", name="connexion")
+     * @return Response
+     */
+    public function tempConnexion() : Response
+    {
+        return $this->render("cave/vin.html.twig");
+    }
 }
