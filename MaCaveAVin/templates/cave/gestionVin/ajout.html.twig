@@ -1,15 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <div class="container mb-5">
         <h1>Ajouter un vin</h1>
         {{ form_start(form) }}
             <div class="row">
-                {{ dump(form) }}
-                {{ form_row(form.region) }}
+                <div class="offset-3 col-6 p-3" style="border : 1px solid lightgrey; border-radius : 5px; background-color : #eeeeee">
+                    <div class="col-12">
+                        {{ form_row(form.region) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_row(form.couleur) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_row(form.appellation) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_row(form.chateau) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_row(form.annee) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_row(form.prix) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_row(form.note) }}
+                    </div>
+                    <div class="col-12 text-right">
+                        <button class="btn btn-primary">{{ button|default('Ajouter à la cave') }}</button>
+                    </div>
+                </div>
+                {{ form_rest(form) }}
             </div>
-            {{ form_widget(form) }}
-            <button class="btn btn-primary">{{ button|default('Créer') }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}
