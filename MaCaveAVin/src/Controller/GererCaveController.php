@@ -41,7 +41,7 @@ class GererCaveController extends AbstractController
 
             return $this->redirectToRoute("caveavin");
         }
-
+        dump($form);
         return $this->render("gestionVin/ajout.html.twig", [
             "vin"   => $vin,
             "form"  => $form->createView()
