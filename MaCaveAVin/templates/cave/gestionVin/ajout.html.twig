@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Ajouter un vin</h1>
+        {{ form_start(form) }}
+            <div class="row">
+                {{ dump(form) }}
+                {{ form_row(form.region) }}
+            </div>
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">{{ button|default('Créer') }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

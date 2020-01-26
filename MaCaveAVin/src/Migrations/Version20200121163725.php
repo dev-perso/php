@@ -22,7 +22,7 @@ final class Version20200121163725 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE vins (id INT AUTO_INCREMENT NOT NULL, region VARCHAR(255) NOT NULL, couleur VARCHAR(255) NOT NULL, appellation VARCHAR(255) NOT NULL, chateau VARCHAR(255) DEFAULT NULL, annee INT NOT NULL, prix DOUBLE PRECISION DEFAULT NULL, note SMALLINT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE vin (id INT AUTO_INCREMENT NOT NULL, region VARCHAR(255) NOT NULL, couleur VARCHAR(255) NOT NULL, appellation VARCHAR(255) NOT NULL, chateau VARCHAR(255) DEFAULT NULL, annee INT NOT NULL, prix DOUBLE PRECISION DEFAULT NULL, note SMALLINT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20200121163725 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE vins');
+        $this->addSql('DROP TABLE vin');
     }
 }

@@ -38,6 +38,7 @@ class GererCaveController extends AbstractController
         {
             $this->em->persist($vin);
             $this->em->flush();
+
             return $this->redirectToRoute("caveavin");
         }
 

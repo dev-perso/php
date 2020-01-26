@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <h1>Bienvenue sur le site de la Cave à Vin</h1>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <a role="button" href="{{ path('caveavin.gestion.ajout²') }}" class="btn btn-outline-dark">
+                    <i class="fa fa-plus"></i> Ajouter un vin
+                </a>
+            </div>
+        </div>
     </div>
 {% endblock %}
