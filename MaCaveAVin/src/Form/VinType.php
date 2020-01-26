@@ -13,13 +13,45 @@ class VinType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('region')
-            ->add('couleur')
-            ->add('appellation')
-            ->add('chateau')
-            ->add('annee')
-            ->add('prix')
-            ->add('note');
+            ->add('region', ChoiceType::class, [
+                'choices' => 
+                [
+                    'Alsace'                => 'alsace',
+                    'Bordeaux'              => 'bordeaux',
+                    'Bourgogne'             => 'bourgogne',
+                    'Côte du Rhône'         => 'cote_rhone',
+                    'Corse'                 => 'corse',
+                    'Languedoc Roussillon'  => 'languedoc',
+                    'Loire'                 => 'loire',
+                    'Etranger'              => 'etranger'
+                ],
+                'label' => 'Région'
+            ])
+            ->add('couleur', ChoiceType::class, [
+                'choices' => 
+                [
+                    'Blanc' => 'blanc',
+                    'Rosé'  => 'rose',
+                    'Rouge' => 'rouge'
+                ],
+                'required' => true,
+                'label' => 'Couleur'
+            ])
+            ->add('appellation', null, [
+                'label' => 'Appellation'
+            ])
+            ->add('chateau', null, [
+                'label' => 'Château'
+            ])
+            ->add('annee', null, [
+                'label' => 'Année'
+            ])
+            ->add('prix', null, [
+                'label' => 'Prix'
+            ])
+            ->add('note', null, [
+                'label' => 'Note'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
