@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\VinRepository;
 use App\Entity\Vin;
+use App\Form\VinType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class GererCaveController extends AbstractController
     {
         $vin = new Vin();
 
-        $form = $this->createForm(VinRepository::class, $vin);
+        $form = $this->createForm(VinType::class, $vin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -42,7 +43,7 @@ class GererCaveController extends AbstractController
             return $this->redirectToRoute("caveavin");
         }
         dump($form);
-        return $this->render("gestionVin/ajout.html.twig", [
+        return $this->render("cave/gestionVin/ajout.html.twig", [
             "vin"   => $vin,
             "form"  => $form->createView()
         ]);
