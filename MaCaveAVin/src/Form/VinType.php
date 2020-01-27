@@ -13,7 +13,9 @@ class VinType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('region', ChoiceType::class, [
+            ->add('region', ChoiceType::class,
+            [
+                'placeholder' => 'Choisir une région',
                 'choices' => 
                 [
                     'Alsace'                => 'alsace',
@@ -28,6 +30,7 @@ class VinType extends AbstractType
                 'label' => 'Région'
             ])
             ->add('couleur', ChoiceType::class, [
+                'placeholder' => 'Choisir une couleur',
                 'choices' => 
                 [
                     'Blanc' => 'blanc',

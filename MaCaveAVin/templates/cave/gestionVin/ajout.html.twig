@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <style>
+        option[selected=selected]
+        {
+            font-style: italic;
+        }
+    </style>
     <div class="container mb-5">
         <h1>Ajouter un vin</h1>
         {{ form_start(form) }}
@@ -22,7 +28,15 @@
                         {{ form_row(form.annee) }}
                     </div>
                     <div class="col-12">
-                        {{ form_row(form.prix) }}
+                        <div class="input-group">
+                            {{ form_label(form.prix) }}
+                            <div class="input-group mb-3">
+                                {{ form_widget(form.prix, {'class' : 'form-control', 'type' : 'text', 'aria-label' : 'montant en Euros'}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-12">
                         {{ form_row(form.note) }}
