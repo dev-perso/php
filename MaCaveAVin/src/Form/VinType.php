@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Vin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,8 +16,8 @@ class VinType extends AbstractType
         $builder
             ->add('region', ChoiceType::class,
             [
-                'placeholder' => 'Choisir une région',
-                'choices' => 
+                'placeholder'   => 'Choisir une région',
+                'choices'       =>
                 [
                     'Alsace'                => 'alsace',
                     'Bordeaux'              => 'bordeaux',
@@ -27,27 +28,31 @@ class VinType extends AbstractType
                     'Loire'                 => 'loire',
                     'Etranger'              => 'etranger'
                 ],
-                'label' => 'Région'
+                'required'  => true,
+                'label'     => 'Région'
             ])
             ->add('couleur', ChoiceType::class, [
-                'placeholder' => 'Choisir une couleur',
-                'choices' => 
+                'placeholder'   => 'Choisir une couleur',
+                'choices'       =>
                 [
                     'Blanc' => 'blanc',
                     'Rosé'  => 'rose',
                     'Rouge' => 'rouge'
                 ],
-                'required' => true,
-                'label' => 'Couleur'
+                'required'  => true,
+                'label'     => 'Couleur'
             ])
             ->add('appellation', null, [
-                'label' => 'Appellation'
+                'required'  => true,
+                'label'     => 'Appellation'
             ])
             ->add('chateau', null, [
                 'label' => 'Château'
             ])
-            ->add('annee', null, [
-                'label' => 'Année'
+            ->add('annee', ChoiceType::class, [
+                'choices'   => $this->buildYearChoices(),
+                'required'  => true,
+                'label'     => 'Année'
             ])
             ->add('prix', null, [
                 'label' => 'Prix'
@@ -55,6 +60,13 @@ class VinType extends AbstractType
             ->add('note', null, [
                 'label' => 'Note'
             ]);
+    }
+
+    public function buildYearChoices()
+    {
+        $yearFrom = 1900;
+        $yearNow = date('Y');
+        return array_combine(array_reverse(range($yearFrom, $yearNow)), array_reverse(range($yearFrom, $yearNow)));
     }
 
     public function configureOptions(OptionsResolver $resolver)

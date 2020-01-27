@@ -10,15 +10,26 @@ use Twig\Environment;
 
 class CaveAVinController extends AbstractController
 {
+    /*
+     * @var VinRepository
+     */
+    private $vin;
+
+    public function __construct(VinRepository $vin)
+    {
+        $this->vin = $vin;
+    }
     /**
      * @Route("/", name="caveavin")
      * @return Response
      */
-    public function index(VinRepository $vinRepository): Response
+    public function index(): Response
     {
-        //$vin = $this->vinRepository->find(1);
-        //dump($vin);
-        return $this->render("cave/vin.html.twig");
+        $vins = $this->vin->findAll();
+        dump($vins);
+        return $this->render("cave/vin.html.twig", [
+            'vins' => $vins
+        ]);
     }
 
     public function ajoutVin ()
