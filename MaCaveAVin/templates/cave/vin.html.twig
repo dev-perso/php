@@ -16,7 +16,6 @@
                     <th scope="col">Région</th>
                     <th scope="col">Couleur</th>
                     <th scope="col">Appelation</th>
-                    <th scope="col">Château</th>
                     <th scope="col">Année</th>
                     <th scope="col">Prix</th>
                     <th scope="col">Note</th>
@@ -25,25 +24,41 @@
             </thead>
             <tbody>
                 {%  for vin in vins %}
-                    <tr>
-                        <td>{{ vin.region | capitalize }}</td>
-                        <td>{{ vin.couleur | capitalize }}</td>
-                        <td>{{ vin.appellation }}</td>
-                        <td>{{ vin.chateau }}</td>
-                        <td>{{ vin.annee }}</td>
-                        {%  if vin.prix is empty %}
-                            <td>NC</td>
-                        {% else %}
-                            <td>{{ vin.prix }} €</td>
-                        {% endif %}
-                        <td>{{ vin.note }}</td>
-                        <td>
-                            <i class="fa fa-edit" title="Modifier"></i>
-                            <i class="fa fa-archive ml-3" title="Archiver"></i>
-                        </td>
-                    </tr>
+
+                    <a href="{{ path('caveavin.bouteille.information', {id: vin.id}) }}">
+                        <tr>
+                            <td data-id="{{ vin.id }}">{{ vin.region | capitalize }}</td>
+                            <td>{{ vin.couleur | capitalize }}</td>
+                            <td>{{ vin.appellation }}</td>
+                            <td>{{ vin.annee }}</td>
+                            {%  if vin.prix is empty %}
+                                <td>NC</td>
+                            {% else %}
+                                <td>{{ vin.prix }} €</td>
+                            {% endif %}
+                            <td>{{ vin.note }}</td>
+                            <td>
+                                <i class="fa fa-edit" title="Modifier"></i>
+                                <i class="fa fa-archive ml-3" title="Archiver"></i>
+                            </td>
+                        </tr>
+                    </a>
+
                 {% endfor %}
             </tbody>
         </table>
+
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        document.getElementsByTagName("tr").addEventListener("click", redirect)
+        function redirect()
+        {
+            //alert(this.getAttribute("data-id"));
+            alert("truc");
+        }
+
+    </script>
 {% endblock %}

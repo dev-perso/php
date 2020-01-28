@@ -19,6 +19,7 @@ class CaveAVinController extends AbstractController
     {
         $this->vin = $vin;
     }
+
     /**
      * @Route("/", name="caveavin")
      * @return Response
@@ -26,15 +27,23 @@ class CaveAVinController extends AbstractController
     public function index(): Response
     {
         $vins = $this->vin->findAll();
-        dump($vins);
+
         return $this->render("cave/vin.html.twig", [
             'vins' => $vins
         ]);
     }
 
-    public function ajoutVin ()
+    /**
+     * @Route("/caveavin/bouteille/{id}", name="caveavin.bouteille.information")
+     * @return Response
+     */
+    public function informationVin ($id): Response
     {
-
+        $vin = $this->vin->find($id);
+        return $this->render("cave/bouteille.html.twig",
+        [
+            'vin' => $vin
+        ]);
     }
 
     /**
