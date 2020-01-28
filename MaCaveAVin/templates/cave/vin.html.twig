@@ -25,9 +25,10 @@
             <tbody>
                 {%  for vin in vins %}
 
-                    <a href="{{ path('caveavin.bouteille.information', {id: vin.id}) }}">
-                        <tr>
+                        <tr data-id="{{ vin.id }}">
+
                             <td data-id="{{ vin.id }}">{{ vin.region | capitalize }}</td>
+
                             <td>{{ vin.couleur | capitalize }}</td>
                             <td>{{ vin.appellation }}</td>
                             <td>{{ vin.annee }}</td>
@@ -42,7 +43,6 @@
                                 <i class="fa fa-archive ml-3" title="Archiver"></i>
                             </td>
                         </tr>
-                    </a>
 
                 {% endfor %}
             </tbody>
@@ -53,12 +53,28 @@
 
 {% block javascripts %}
     <script type="text/javascript">
-        document.getElementsByTagName("tr").addEventListener("click", redirect)
-        function redirect()
+        document.addEventListener("DOMContentLoaded", function()
         {
-            //alert(this.getAttribute("data-id"));
-            alert("truc");
-        }
+            function redirect()
+            {
+                var id = this.getAttribute("data-id")
+                if (id != null)
+                {
+                    var test = this.getAttribute("data-id")
+                    console.log("id", test);
+
+                   // window.location = '{{ path("caveavin.bouteille.information", {'id': 'id' }) }}';
+                }
+            }
+
+            var tr = document.getElementsByTagName("tr");
+            for (var i = 0; i < tr.length; i++)
+            {
+                tr[i].addEventListener("click", redirect, false);
+            }
+
+
+        });
 
     </script>
 {% endblock %}
