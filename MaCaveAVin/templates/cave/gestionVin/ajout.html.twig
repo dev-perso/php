@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
+
+{% block stylesheets %}
+<style>
+.custom-file-label::after
+{
+    content : "Parcourir" !important;
+}
+</style>
+{% endblock %}
+
 {% block body %}
     <style>
         option[selected=selected]
@@ -62,16 +72,4 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function()
-        {
-            var btnImage = document.getElementsByClassName(".custom-file-label::after");
-            console.log(btnImage);
-            btnImage.style.content = "Parcourir";
-            /*
-            $(document).on('change', '.custom-file-input', function () {
-            let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
-            $(this).parent('.custom-file').find('.custom-file-label').text(fileName);*/
-        });
-    </script>
 {% endblock %}
