@@ -6,6 +6,7 @@ use App\Entity\Vin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -63,7 +64,7 @@ class VinType extends AbstractType
             ->add('description', null, [
                 'label' => 'Description'
             ])
-            ->add('image', null, [
+            ->add('image', FileType::class, [
                 'label' => 'Image'
             ])
             ->add('note', null, [
