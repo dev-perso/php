@@ -62,15 +62,11 @@
             
             for (var i = 0; i < use.length; i++)
             {
-                //var idWine = use[i].getAttribute('id');
                 use[i].addEventListener("click", useWine, false);
-                //idWine = idWine.substring(3);
-                //console.log(idWine);
             }
 
             function useWine()
             {
-                //var idSelect = id.subistring(3);
                 console.log(this.getAttribute('id').substring(3));
             }
 
@@ -79,9 +75,6 @@
                 var id = this.getAttribute("data-id")
                 if (id != null)
                 {
-                    var test = this.getAttribute("data-id")
-                    console.log("id", test);
-
                     window.location.href = '/caveavin/bouteille/' + id;
                 }
             }
@@ -93,9 +86,6 @@
                     tr[i].cells[j].addEventListener("click", redirect, false);
                 }
             }
-
-
         });
-
     </script>
 {% endblock %}
