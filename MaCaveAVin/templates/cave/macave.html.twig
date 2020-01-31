@@ -17,6 +17,7 @@
                     <th scope="col">Couleur</th>
                     <th scope="col">Appelation</th>
                     <th scope="col">Année</th>
+                    <th scope="col">Quantité</th>
                     <th scope="col">Prix</th>
                     <th scope="col">Note</th>
                     <th scope="col">Action</th>
@@ -25,22 +26,23 @@
             <tbody>
                 {%  for vin in vins %}
 
-                        <tr data-id="{{ vin.id }}">
+                        <tr>
 
                             <td data-id="{{ vin.id }}">{{ vin.region | capitalize }}</td>
 
-                            <td>{{ vin.couleur | capitalize }}</td>
-                            <td>{{ vin.appellation }}</td>
-                            <td>{{ vin.annee }}</td>
+                            <td data-id="{{ vin.id }}">{{ vin.couleur | capitalize }}</td>
+                            <td data-id="{{ vin.id }}">{{ vin.appellation }}</td>
+                            <td data-id="{{ vin.id }}">{{ vin.annee }}</td>
+                            <td data-id="{{ vin.id }}">{{ vin.quantite }}</td>
                             {%  if vin.prix is empty %}
-                                <td>NC</td>
+                                <td data-id="{{ vin.id }}">NC</td>
                             {% else %}
-                                <td>{{ vin.prix }} €</td>
+                                <td data-id="{{ vin.id }}">{{ vin.prix }} €</td>
                             {% endif %}
-                            <td>{{ vin.note }}</td>
+                            <td data-id="{{ vin.id }}">{{ vin.note }}</td>
                             <td>
                                 <i class="fa fa-edit" title="Modifier"></i>
-                                <i class="fa fa-archive ml-3" title="Archiver"></i>
+                                <i class="fa fa-archive ml-3 useWine" id="{{ 'use' ~ vin.id }}" title="Utiliser"></i>
                             </td>
                         </tr>
 
@@ -55,6 +57,23 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function()
         {
+            var tr  = document.getElementsByTagName("tr");
+            var use = document.getElementsByClassName("useWine");
+            
+            for (var i = 0; i < use.length; i++)
+            {
+                //var idWine = use[i].getAttribute('id');
+                use[i].addEventListener("click", useWine, false);
+                //idWine = idWine.substring(3);
+                //console.log(idWine);
+            }
+
+            function useWine()
+            {
+                //var idSelect = id.subistring(3);
+                console.log(this.getAttribute('id').substring(3));
+            }
+
             function redirect()
             {
                 var id = this.getAttribute("data-id")
@@ -67,10 +86,12 @@
                 }
             }
 
-            var tr = document.getElementsByTagName("tr");
             for (var i = 0; i < tr.length; i++)
             {
-                tr[i].addEventListener("click", redirect, false);
+                for (var j = 0; j < (tr[i].cells.length - 1); j++)
+                {
+                    tr[i].cells[j].addEventListener("click", redirect, false);
+                }
             }
 
 

@@ -28,7 +28,7 @@ class CaveAVinController extends AbstractController
     {
         $vins = $this->vin->findAll();
 
-        return $this->render("cave/vin.html.twig", [
+        return $this->render("cave/macave.html.twig", [
             'vins' => $vins
         ]);
     }
@@ -52,6 +52,6 @@ class CaveAVinController extends AbstractController
      */
     public function tempConnexion() : Response
     {
-        return $this->render("cave/vin.html.twig");
+        return $this->render("cave/macave.html.twig");
     }
 }

@@ -54,7 +54,7 @@ class Vin
     /**
      * @ORM\Column(type="integer")
      */
-    private $nombre;
+    private $quantite;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -155,14 +155,14 @@ class Vin
         return $this;
     }
 
-    public function getNombre(): ?int
+    public function getQuantite(): ?int
     {
-        return $this->nombre;
+        return $this->quantite;
     }
 
-    public function setNombre(int $nombre): self
+    public function setQuantite(int $quantite): self
     {
-        $this->nombre = $nombre;
+        $this->quantite = $quantite;
 
         return $this;
     }

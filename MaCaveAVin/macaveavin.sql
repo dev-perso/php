@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `vin` (
   `chateau` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `annee` int(11) NOT NULL,
   `prix` double DEFAULT NULL,
-  `nombre` int(11) NOT NULL,
+  `quantite` int(11) NOT NULL,
   `description` text CHARACTER SET utf8 DEFAULT NULL,
   `image` longtext CHARACTER SET utf8 DEFAULT NULL,
   `note` smallint(6) DEFAULT NULL,

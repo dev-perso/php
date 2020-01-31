@@ -58,13 +58,14 @@ class VinType extends AbstractType
             ->add('prix', null, [
                 'label' => 'Prix'
             ])
-            ->add('nombre', null, [
-                'label' => 'Nombre de bouteille'
+            ->add('quantite', null, [
+                'label' => 'Quantité'
             ])
             ->add('description', null, [
                 'label' => 'Description'
             ])
             ->add('image', FileType::class, [
+                'required' => false,
                 'label' => 'Image'
             ])
             ->add('note', null, [

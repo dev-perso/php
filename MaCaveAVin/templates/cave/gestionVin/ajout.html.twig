@@ -22,47 +22,55 @@
         <h1>Ajouter un vin</h1>
         {{ form_start(form) }}
             <div class="row">
-                <div class="offset-3 col-6 p-3" style="border : 1px solid lightgrey; border-radius : 5px; background-color : #eeeeee">
-                    <div class="col-12">
-                        {{ form_row(form.region) }}
+                <div class="offset-lg-3 col-lg-6 p-3" style="border : 1px solid lightgrey; border-radius : 5px; background-color : #eeeeee">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{ form_row(form.region) }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form_row(form.couleur) }}
+                        </div>
                     </div>
-                    <div class="col-12">
-                        {{ form_row(form.couleur) }}
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_row(form.appellation) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.chateau) }}
+                        </div>
                     </div>
-                    <div class="col-12">
-                        {{ form_row(form.appellation) }}
-                    </div>
-                    <div class="col-12">
-                        {{ form_row(form.chateau) }}
-                    </div>
-                    <div class="col-12">
-                        {{ form_row(form.annee) }}
-                    </div>
-                    <div class="col-12">
-                        <div class="input-group">
-                            {{ form_label(form.prix) }}
-                            <div class="input-group mb-3">
-                                {{ form_widget(form.prix, {'class' : 'form-control', 'type' : 'text', 'aria-label' : 'montant en Euros'}) }}
-                                <div class="input-group-append">
-                                    <span class="input-group-text">€</span>
+                    <div class="row">
+                        <div class="col-4">
+                            {{ form_row(form.annee) }}
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                {{ form_label(form.prix) }}
+                                <div class="input-group mb-3">
+                                    {{ form_widget(form.prix, {'class' : 'form-control', 'type' : 'text', 'aria-label' : 'montant en Euros'}) }}
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-4">
+                            {{ form_row(form.quantite) }}
+                        </div>
                     </div>
-                    <div class="col-12">
-                        {{ form_row(form.nombre) }}
-                    </div>
-                    <div class="col-12">
-                        {{ form_row(form.description) }}
-                    </div>
-                    <div class="col-12">
-                        {{ form_row(form.image) }}
-                    </div>
-                    <div class="col-12">
-                        {{ form_row(form.note) }}
-                    </div>
-                    <div class="col-12 text-right">
-                        <button class="btn btn-primary">{{ button|default('Ajouter à la cave') }}</button>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_row(form.description) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.image) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.note) }}
+                        </div>
+                        <div class="col-12 text-right">
+                            <button class="btn btn-primary">{{ button|default('Ajouter à la cave') }}</button>
+                        </div>
                     </div>
                 </div>
                 {{ form_rest(form) }}

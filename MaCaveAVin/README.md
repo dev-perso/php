@@ -12,7 +12,7 @@ Configuration du WAMP :
 ## Test en local
 
 ### Lancer le serveur en local :
-Depuis le dossier MaCaveAVin
+Depuis le dossier MaCaveAVin, lancer :
 
 ```
 server.bat 
