@@ -28,18 +28,19 @@
 
                         <tr>
 
-                            <td data-id="{{ vin.id }}">{{ vin.region | capitalize }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
 
-                            <td data-id="{{ vin.id }}">{{ vin.couleur | capitalize }}</td>
-                            <td data-id="{{ vin.id }}">{{ vin.appellation }}</td>
-                            <td data-id="{{ vin.id }}">{{ vin.annee }}</td>
-                            <td data-id="{{ vin.id }}">{{ vin.quantite }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.quantite }}</td>
                             {%  if vin.prix is empty %}
-                                <td data-id="{{ vin.id }}">NC</td>
+                                <td data-id="{{ vin.id }}" style="cursor : pointer;">NC</td>
                             {% else %}
-                                <td data-id="{{ vin.id }}">{{ vin.prix }} €</td>
+                                <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.prix }} €</td>
                             {% endif %}
-                            <td data-id="{{ vin.id }}">{{ vin.note }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.note }}</td>
+                            <!-- Should be the last column -->
                             <td>
                                 <i class="fa fa-edit" title="Modifier"></i>
                                 <i class="fa fa-archive ml-3 useWine" id="{{ 'use' ~ vin.id }}" title="Utiliser"></i>
@@ -65,9 +66,21 @@
                 use[i].addEventListener("click", useWine, false);
             }
 
+            for (var i = 0; i < tr.length; i++)
+            {
+                for (var j = 0; j < (tr[i].cells.length - 1); j++)
+                {
+                    tr[i].cells[j].addEventListener("click", redirect, false);
+                }
+            }
+
             function useWine()
             {
-                console.log(this.getAttribute('id').substring(3));
+                var id = this.getAttribute('id').substring(3);
+                if (id != null)
+                {
+                    window.location.href = '/caveavin/utiliser/' + id;
+                }
             }
 
             function redirect()
@@ -77,15 +90,7 @@
                 {
                     window.location.href = '/caveavin/bouteille/' + id;
                 }
-            }
-
-            for (var i = 0; i < tr.length; i++)
-            {
-                for (var j = 0; j < (tr[i].cells.length - 1); j++)
-                {
-                    tr[i].cells[j].addEventListener("click", redirect, false);
-                }
-            }
+            }            
         });
     </script>
 {% endblock %}

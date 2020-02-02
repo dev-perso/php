@@ -66,6 +66,11 @@ class Vin
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archive;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -187,6 +192,18 @@ class Vin
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): self
+    {
+        $this->archive = $archive;
 
         return $this;
     }

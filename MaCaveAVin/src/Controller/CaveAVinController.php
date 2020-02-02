@@ -4,20 +4,28 @@ namespace App\Controller;
 
 use App\Repository\VinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
 class CaveAVinController extends AbstractController
 {
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
     /*
      * @var VinRepository
      */
     private $vin;
 
-    public function __construct(VinRepository $vin)
+    public function __construct(EntityManagerInterface $em, VinRepository $vin)
     {
-        $this->vin = $vin;
+        $this->em   = $em;
+        $this->vin  = $vin;
     }
 
     /**
@@ -26,10 +34,17 @@ class CaveAVinController extends AbstractController
      */
     public function index(): Response
     {
-        $vins = $this->vin->findAll();
+        //$vins = $this->vin->findAll();
+        
+        $qb = $this->vin->createQueryBuilder('v')
+            ->where('v.quantite > :quantite')
+            ->setParameter('quantite', 0)
+            ->orderBy('v.annee', 'ASC');
 
+        $vins = $qb->getQuery();
+        
         return $this->render("cave/macave.html.twig", [
-            'vins' => $vins
+            'vins' => $vins->getResult()
         ]);
     }
 
@@ -39,11 +54,16 @@ class CaveAVinController extends AbstractController
      */
     public function informationVin ($id): Response
     {
-        $vin = $this->vin->find($id);
-        return $this->render("cave/bouteille.html.twig",
-        [
-            'vin' => $vin
-        ]);
+        if ($id != null)
+        {
+            $vin = $this->vin->find($id);
+            return $this->render("cave/bouteille.html.twig",
+            [
+                'vin' => $vin
+            ]);
+        }
+        else
+            return $this->redirectToRoute("caveavin");
     }
 
     /**
