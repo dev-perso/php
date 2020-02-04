@@ -3,9 +3,14 @@
 {% block body %}
     <div class="container mt-4">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <a role="button" href="{{ path('caveavin.gestion.ajout') }}" class="btn btn-outline-dark">
                     <i class="fa fa-plus"></i> Ajouter un vin
+                </a>
+            </div>
+            <div class="col-6 text-right">
+                <a role="button" href="{{ path('caveavin.archive') }}" class="btn btn-outline-dark">
+                    <i class="fa fa-archive"></i> Archive
                 </a>
             </div>
         </div>
@@ -25,24 +30,24 @@
             </thead>
             <tbody>
                 {%  for vin in vins %}
-                        <tr>
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.quantite }}</td>
-                            {%  if vin.prix is empty %}
-                                <td data-id="{{ vin.id }}" style="cursor : pointer;">NC</td>
-                            {% else %}
-                                <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.prix }} €</td>
-                            {% endif %}
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.note }}</td>
-                            <!-- Should be the last column -->
-                            <td>
-                                <i class="fa fa-edit" title="Modifier"></i>
-                                <i class="fa fa-archive ml-3 useWine" id="{{ 'use' ~ vin.id }}" title="Utiliser"></i>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
+                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
+                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
+                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>
+                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.quantite }}</td>
+                        {%  if vin.prix is empty %}
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">NC</td>
+                        {% else %}
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.prix }} €</td>
+                        {% endif %}
+                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.note }}</td>
+                        <!-- Should be the last column -->
+                        <td>
+                            <i class="fa fa-edit editWine" id="{{ 'edit' ~ vin.id }}" title="Modifier" style="cursor : pointer;"></i>
+                            <i class="fa fa-archive ml-3 useWine" id="{{ 'use' ~ vin.id }}" title="Utiliser" style="cursor : pointer;"></i>
+                        </td>
+                    </tr>
 
                 {% endfor %}
             </tbody>
@@ -55,19 +60,34 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function()
         {
-            var tr  = document.getElementsByTagName("tr");
-            var use = document.getElementsByClassName("useWine");
-            
+            var tr      = document.getElementsByTagName("tr");
+            var use     = document.getElementsByClassName("useWine");
+            var edit    = document.getElementsByClassName("editWine");
+
             for (var i = 0; i < use.length; i++)
             {
                 use[i].addEventListener("click", useWine, false);
+            }
+
+            for (var i = 0; i < edit.length; i++)
+            {
+                edit[i].addEventListener("click", editWine, false);
             }
 
             for (var i = 0; i < tr.length; i++)
             {
                 for (var j = 0; j < (tr[i].cells.length - 1); j++)
                 {
-                    tr[i].cells[j].addEventListener("click", redirect, false);
+                    tr[i].cells[j].addEventListener("click", getDescription, false);
+                }
+            }
+
+            function editWine()
+            {
+                var id = this.getAttribute('id').substring(4);
+                if (id != null)
+                {
+                    window.location.href = '/caveavin/gestion/modifier/' + id;
                 }
             }
 
@@ -76,11 +96,11 @@
                 var id = this.getAttribute('id').substring(3);
                 if (id != null)
                 {
-                    window.location.href = '/caveavin/utiliser/' + id;
+                    window.location.href = '/caveavin/gestion/utiliser/' + id;
                 }
             }
 
-            function redirect()
+            function getDescription()
             {
                 var id = this.getAttribute("data-id")
                 if (id != null)

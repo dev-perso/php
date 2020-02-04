@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Archive</h1>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <a role="button" href="{{ path('caveavin') }}" class="btn btn-outline-dark">
+                    <i class="fa fa-chevron-left"></i> Retour à la cave
+                </a>
+            </div>
+        </div>
+
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">Région</th>
+                    <th scope="col">Couleur</th>
+                    <th scope="col">Appelation</th>
+                    <th scope="col">Année</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Note</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%  for vin in vins %}
+                        <tr>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.quantite }}</td>
+                            {%  if vin.prix is empty %}
+                                <td data-id="{{ vin.id }}" style="cursor : pointer;">NC</td>
+                            {% else %}
+                                <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.prix }} €</td>
+                            {% endif %}
+                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.note }}</td>
+                            <!-- Should be the last column -->
+                            <td>
+                                <i class="fa fa-edit editWine" id="{{ 'edit' ~ vin.id }}" title="Modifier" style="cursor : pointer;"></i>
+                                <i class="fa fa-plus ml-3 addWine" id="{{ 'add' ~ vin.id }}" title="Ajouter à la cave" style="cursor : pointer;"></i>
+                            </td>
+                        </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function()
+        {
+            var tr      = document.getElementsByTagName("tr");
+            var edit    = document.getElementsByClassName("editWine");
+            var add     = document.getElementsByClassName("addWine");
+
+            for (var i = 0; i < edit.length; i++)
+            {
+                edit[i].addEventListener("click", editWine, false);
+            }
+
+            for (var i = 0; i < add.length; i++)
+            {
+                add[i].addEventListener("click", addWine, false);
+            }
+
+            for (var i = 0; i < tr.length; i++)
+            {
+                for (var j = 0; j < (tr[i].cells.length - 1); j++)
+                {
+                    tr[i].cells[j].addEventListener("click", getDescription, false);
+                }
+            }
+
+            function editWine()
+            {
+                var id = this.getAttribute('id').substring(4);
+                if (id != null)
+                {
+                    window.location.href = '/caveavin/gestion/modifier/' + id;
+                }
+            }
+
+            function addWine()
+            {
+                var id = this.getAttribute('id').substring(3);
+                if (id != null)
+                {
+                    window.location.href = '/caveavin/gestion/remettre/' + id;
+                }
+            }
+            
+            function getDescription()
+            {
+                var id = this.getAttribute("data-id")
+                if (id != null)
+                {
+                    window.location.href = '/caveavin/bouteille/' + id;
+                }
+            }            
+        });
+    </script>
+{% endblock %}

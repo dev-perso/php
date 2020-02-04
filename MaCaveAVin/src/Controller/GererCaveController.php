@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\VinRepository;
 use App\Entity\Vin;
 use App\Form\VinType;
+use App\Form\CommenterVinType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,10 @@ class GererCaveController extends AbstractController
     }
 
     /**
-     * @Route("/caveavin/gestion/ajout", name="caveavin.gestion.ajout")
+     * @Route("/caveavin/gestion/ajouter", name="caveavin.gestion.ajout")
      * @return Response
      */
-    public function ajoutVin(Request $request)
+    public function ajouterVin(Request $request)
     {
         $vin = new Vin();
 
@@ -49,46 +50,111 @@ class GererCaveController extends AbstractController
             return $this->redirectToRoute("caveavin");
         }
         
-        return $this->render("cave/gestionVin/ajout.html.twig", [
+        return $this->render("cave/gestionVin/ajouter.html.twig", [
             "vin"   => $vin,
             "form"  => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/caveavin/utiliser/{id}", name="caveavin.utiliser")
+     * @Route("/caveavin/gestion/modifier/{id}", name="caveavin.gestion.modifier")
      * @return Response
      */
-    public function utiliserVin($id)
+    public function modifierVin(Request $request, $id)
     {
         if ($id != null)
         {
             $vin = $this->vin->find($id);
 
-            $form = $this->createForm(CommenterVinType::class, $vin);
+            $form = $this->createForm(VinType::class, $vin);
+            $form->handleRequest($request);
 
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                // Update
+                $this->em->persist($vin);
+                $this->em->flush();
+    
+                return $this->redirectToRoute("caveavin");
+            }
 
-            // Quantité
-            $quantite = $vin->getQuantite();
-            $quantite--;
-            $vin->setQuantite($quantite);
-
-            // Archivage
-            $archive = $vin->getArchive();
-            if ($archive == false)
-                $archive = true;
-            $vin->setArchive($archive);
-
-            // Update
-            $this->em->persist($vin);
-            $this->em->flush();
-
-            return $this->render("cave/macave.html.twig", [
+            return $this->render("cave/gestionVin/modifier.html.twig", [
                 "vin"   => $vin,
                 "form"  => $form->createView()
             ]);
         }
 
         return $this->redirectToRoute("caveavin");
+    }
+
+    /**
+     * @Route("/caveavin/gestion/utiliser/{id}", name="caveavin.gestion.utiliser")
+     * @return Response
+     */
+    public function utiliserVin(Request $request, $id)
+    {
+        if ($id != null)
+        {
+            $vin = $this->vin->find($id);
+
+            $form = $this->createForm(CommenterVinType::class, $vin);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                // Quantité
+                $quantite = $vin->getQuantite();
+                $quantite--;
+                $vin->setQuantite($quantite);
+
+                // Archivage
+                $archive = $vin->getArchive();
+                if ($archive == false)
+                    $archive = true;
+                $vin->setArchive($archive);
+
+                // Update
+                $this->em->persist($vin);
+                $this->em->flush();
+    
+                return $this->redirectToRoute("caveavin");
+            }
+
+            return $this->render("cave/gestionVin/commenter.html.twig", [
+                "vin"   => $vin,
+                "form"  => $form->createView()
+            ]);
+        }
+
+        return $this->redirectToRoute("caveavin");
+    }
+
+    /**
+     * @Route("/caveavin/gestion/remettre/{id}", name="caveavin.gestion.remettre")
+     * @return Response
+     */
+    public function remettreVin(Request $request, $id)
+    {
+        $vin = $this->vin->find($id);
+
+        // Ajout du vin dans la cave
+        $quantite = $vin->getQuantite();
+        $quantite++;
+        $vin->setQuantite($quantite);
+
+        // Update
+        $this->em->persist($vin);
+        $this->em->flush();
+
+        $qb = $this->vin->createQueryBuilder('v')
+            ->where('v.quantite > :quantite')
+            ->setParameter('quantite', 0)
+            ->orderBy('v.annee', 'ASC');
+
+        $vins = $qb->getQuery();
+        
+        return $this->render("cave/macave.html.twig", [
+            'vins' => $vins->getResult()
+        ]);
     }
 }

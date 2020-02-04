@@ -34,8 +34,6 @@ class CaveAVinController extends AbstractController
      */
     public function index(): Response
     {
-        //$vins = $this->vin->findAll();
-        
         $qb = $this->vin->createQueryBuilder('v')
             ->where('v.quantite > :quantite')
             ->setParameter('quantite', 0)
@@ -64,6 +62,24 @@ class CaveAVinController extends AbstractController
         }
         else
             return $this->redirectToRoute("caveavin");
+    }
+
+     /**
+     * @Route("/caveavin/archive", name="caveavin.archive")
+     * @return Response
+     */
+    public function archiveVin (): Response
+    {
+        $qb = $this->vin->createQueryBuilder('v')
+            ->where('v.archive = :archive')
+            ->setParameter('archive', true)
+            ->orderBy('v.annee', 'ASC');
+
+        $vins = $qb->getQuery();
+        
+        return $this->render("cave/archive.html.twig", [
+            'vins' => $vins->getResult()
+        ]);
     }
 
     /**

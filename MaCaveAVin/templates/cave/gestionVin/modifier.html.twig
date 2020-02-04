@@ -7,19 +7,18 @@
 {
     content : "Parcourir" !important;
 }
+
+option[selected=selected]
+{
+    font-style: italic;
+    display : none;
+}
 </style>
 {% endblock %}
 
 {% block body %}
-    <style>
-        option[selected=selected]
-        {
-            font-style: italic;
-            display : none;
-        }
-    </style>
     <div class="container mb-5">
-        <h1>Ajouter un vin</h1>
+        <h1 class="mt-3 mb-3">Modifier le vin : {{ vin.appellation }}</h1>
         {{ form_start(form) }}
             <div class="row">
                 <div class="offset-lg-3 col-lg-6 p-3" style="border : 1px solid lightgrey; border-radius : 5px; background-color : #eeeeee">
@@ -69,7 +68,7 @@
                             {{ form_row(form.note) }}
                         </div>
                         <div class="col-12 text-right">
-                            <button class="btn btn-primary">{{ button|default('Ajouter à la cave') }}</button>
+                            <button class="btn btn-primary">{{ button|default('Modifier') }}</button>
                         </div>
                     </div>
                 </div>
