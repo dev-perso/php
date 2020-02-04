@@ -25,11 +25,8 @@
             </thead>
             <tbody>
                 {%  for vin in vins %}
-
                         <tr>
-
                             <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
-
                             <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
                             <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
                             <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>

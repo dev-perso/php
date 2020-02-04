@@ -65,6 +65,9 @@ class GererCaveController extends AbstractController
         {
             $vin = $this->vin->find($id);
 
+            $form = $this->createForm(CommenterVinType::class, $vin);
+
+
             // Quantité
             $quantite = $vin->getQuantite();
             $quantite--;
@@ -80,7 +83,10 @@ class GererCaveController extends AbstractController
             $this->em->persist($vin);
             $this->em->flush();
 
-            return $this->redirectToRoute("caveavin");
+            return $this->render("cave/macave.html.twig", [
+                "vin"   => $vin,
+                "form"  => $form->createView()
+            ]);
         }
 
         return $this->redirectToRoute("caveavin");
