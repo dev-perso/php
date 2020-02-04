@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `vin` (
   `description` text CHARACTER SET utf8 DEFAULT NULL,
   `image` longtext CHARACTER SET utf8 DEFAULT NULL,
   `note` smallint(6) DEFAULT NULL,
+  `archive` boolean DEFAULT false,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -48,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `vin` (
 -- Déchargement des données de la table `vin`
 --
 
-INSERT INTO `vin` (`id`, `region`, `couleur`, `appellation`, `chateau`, `annee`, `prix`, `nombre`, `description`, `image`, `note`) VALUES
-(1, 'bourgogne', 'blanc', 'Chardonnay', NULL, 2017, 8, 0, NULL, NULL, 3);
+INSERT INTO `vin` (`id`, `region`, `couleur`, `appellation`, `chateau`, `annee`, `prix`, `quantite`, `description`, `image`, `note`, `archive`) VALUES
+(1, 'bourgogne', 'blanc', 'Chardonnay', NULL, 2017, 8, 0, NULL, NULL, 3, false);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
