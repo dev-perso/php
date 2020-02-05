@@ -67,8 +67,13 @@ option[selected=selected]
                         <div class="col-12">
                             {{ form_row(form.note) }}
                         </div>
-                        <div class="col-12 text-right">
-                            <button class="btn btn-primary">{{ button|default('Modifier') }}</button>
+                        <div class="col-6">
+                            <a href="{{ path('caveavin') }}" class="btn btn-light">
+                                <i class="fa fa-chevron-left"></i> Retour
+                            </a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-light"><i class="fa fa-edit"></i> {{ button|default('Modifier') }}</button>
                         </div>
                     </div>
                 </div>

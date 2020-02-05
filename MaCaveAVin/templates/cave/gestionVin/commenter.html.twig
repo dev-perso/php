@@ -13,8 +13,13 @@
                         <div class="col-sm-12">
                             {{ form_row(form.note) }}
                         </div>
-                        <div class="col-12 text-right">
-                            <button class="btn btn-primary">{{ button|default('Commenter') }}</button>
+                        <div class="col-6">
+                            <button class="btn btn-light">
+                                <i class="fa fa-chevron-left"></i> Retour
+                            </button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-light"><i class="fa fa-pencil"></i> {{ button|default('Commenter') }}</button>
                         </div>
                     </div>
                 </div>
