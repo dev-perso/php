@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/macave.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container mt-4">
         <div class="row">
@@ -31,21 +36,31 @@
             <tbody>
                 {%  for vin in vins %}
                     <tr>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.quantite }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.region | capitalize }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.couleur | capitalize }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.appellation }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.annee }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.quantite }}</td>
                         {%  if vin.prix is empty %}
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">NC</td>
+                            <td data-id="{{ vin.id }}" class="pointer">NC</td>
                         {% else %}
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.prix }} €</td>
+                            <td data-id="{{ vin.id }}" class="pointer">{{ vin.prix }} €</td>
                         {% endif %}
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.note }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.note }}</td>
                         <!-- Should be the last column -->
                         <td>
-                            <i class="fa fa-edit editWine" id="{{ 'edit' ~ vin.id }}" title="Modifier" style="cursor : pointer;"></i>
-                            <i class="fa fa-archive ml-3 useWine" id="{{ 'use' ~ vin.id }}" title="Utiliser" style="cursor : pointer;"></i>
+                            <img src="{{ asset('img/modifier.png') }}"
+                                 class="fa fa-edit editWine" 
+                                 id="{{ 'edit' ~ vin.id }}" 
+                                 title="Modifier"
+                                 height="30px" 
+                                 width="30px" />
+                            <img src="{{ asset('img/archiver.png') }}" 
+                                 class="useWine ml-3" 
+                                 id="{{ 'use' ~ vin.id }}" 
+                                 title="Utiliser" 
+                                 height="30px" 
+                                 width="30px" />
                         </td>
                     </tr>
 
@@ -57,57 +72,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function()
-        {
-            var tr      = document.getElementsByTagName("tr");
-            var use     = document.getElementsByClassName("useWine");
-            var edit    = document.getElementsByClassName("editWine");
-
-            for (var i = 0; i < use.length; i++)
-            {
-                use[i].addEventListener("click", useWine, false);
-            }
-
-            for (var i = 0; i < edit.length; i++)
-            {
-                edit[i].addEventListener("click", editWine, false);
-            }
-
-            for (var i = 0; i < tr.length; i++)
-            {
-                for (var j = 0; j < (tr[i].cells.length - 1); j++)
-                {
-                    tr[i].cells[j].addEventListener("click", getDescription, false);
-                }
-            }
-
-            function editWine()
-            {
-                var id = this.getAttribute('id').substring(4);
-                if (id != null)
-                {
-                    window.location.href = '/caveavin/gestion/modifier/' + id;
-                }
-            }
-
-            function useWine()
-            {
-                var id = this.getAttribute('id').substring(3);
-                if (id != null)
-                {
-                    window.location.href = '/caveavin/gestion/utiliser/' + id;
-                }
-            }
-
-            function getDescription()
-            {
-                var id = this.getAttribute("data-id")
-                if (id != null)
-                {
-                    window.location.href = '/caveavin/bouteille/' + id;
-                }
-            }            
-        });
-    </script>
+     <script src="{{ asset('js/macave.js') }}"></script>
 {% endblock %}

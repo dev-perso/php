@@ -1,19 +1,8 @@
 {% extends 'base.html.twig' %}
 
-
 {% block stylesheets %}
-<style>
-.custom-file-label::after
-{
-    content : "Parcourir" !important;
-}
-
-option[selected=selected]
-{
-    font-style: italic;
-    display : none;
-}
-</style>
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/ajouter.css') }}">
 {% endblock %}
 
 {% block body %}

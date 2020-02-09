@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 
-
-
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}La Cave à Vin!{% endblock %}</title>
+
+        <title>
+            {% block title %}La Cave à Vin!{% endblock %}
+        </title>
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         
         {% block stylesheets %}
-            {#{ asset('css/main.css') }#}
+            <link rel="stylesheet" href="{{ asset('css/base.css') }}">
         {% endblock %}
     </head>
     <body>
@@ -20,7 +22,7 @@
                     <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
                 </div>
                 <div class="col-2">
-                    <a class="btn btn-light" style="border : 1px solid #dddddd" title="Connexion" href="{{ path('connexion') }}" role="button">
+                    <a class="btn btn-light connexionBtn" title="Connexion" href="{{ path('connexion') }}" role="button">
                         <i class="fa fa-user"></i>
                     </a>
                 </div>

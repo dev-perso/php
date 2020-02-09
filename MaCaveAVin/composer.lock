@@ -5805,11 +5805,6 @@
                     "url": "https://github.com/symfony/webpack-encore"
                 }
             },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\WebpackEncoreBundle\\": "src"
-                }
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
