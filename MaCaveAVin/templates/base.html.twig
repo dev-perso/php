@@ -10,6 +10,8 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- font-family: 'Lobster', cursive; -->
+        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
         
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/base.css') }}">
@@ -21,9 +23,11 @@
                 <div class="offset-2 col-8">
                     <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
                 </div>
-                <div class="col-2">
-                    <a class="btn btn-light connexionBtn" title="Connexion" href="{{ path('connexion') }}" role="button">
-                        <i class="fa fa-user"></i>
+                <div class="col-2 connexion">
+                    <a class="connexionBtn" title="Connexion" href="{{ path('connexion') }}">
+                        <img src="{{ asset('img/login.png') }}"
+                             height="30px" 
+                             width="30px" />
                     </a>
                 </div>
             </div>

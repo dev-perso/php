@@ -15,7 +15,9 @@
             </div>
             <div class="col-6 text-right">
                 <a role="button" href="{{ path('caveavin.archive') }}" class="btn btn-outline-dark">
-                    <i class="fa fa-archive"></i> Archive
+                    <img src="{{ asset('img/archive.png') }}"
+                         height="30px" 
+                         width="30px" /> Archive
                 </a>
             </div>
         </div>
@@ -50,12 +52,12 @@
                         <!-- Should be the last column -->
                         <td>
                             <img src="{{ asset('img/modifier.png') }}"
-                                 class="fa fa-edit editWine" 
+                                 class="editWine" 
                                  id="{{ 'edit' ~ vin.id }}" 
                                  title="Modifier"
                                  height="30px" 
                                  width="30px" />
-                            <img src="{{ asset('img/archiver.png') }}" 
+                            <img src="{{ asset('img/utiliser.png') }}" 
                                  class="useWine ml-3" 
                                  id="{{ 'use' ~ vin.id }}" 
                                  title="Utiliser" 
