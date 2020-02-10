@@ -16,9 +16,11 @@ body .navAjustement .h1
 
 body .navAjustement .connexion
 {
+    position : relative;
 }
 
 body .navAjustement .connexion .connexionBtn
 {
-    vertical-align : middle;
+    position : absolute;
+    top : calc(50% - 15px);
 }

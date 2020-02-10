@@ -2,22 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/macave.css') }}">
-{% endblock %}
-
-{% block stylesheets %}
-<style>
-.custom-file-label::after
-{
-    content : "Parcourir" !important;
-}
-
-option[selected=selected]
-{
-    font-style: italic;
-    display : none;
-}
-</style>
+    <link rel="stylesheet" href="{{ asset('css/modifier.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -77,7 +62,15 @@ option[selected=selected]
                             </a>
                         </div>
                         <div class="col-6 text-right">
-                            <button class="btn btn-light"><i class="fa fa-edit"></i> {{ button|default('Modifier') }}</button>
+                            <button class="btn btn-light">
+                                <img src="{{ asset('img/modifier.png') }}"
+                                     class="modifier" 
+                                     id="{{ 'edit' ~ vin.id }}" 
+                                     title="Modifier"
+                                     height="20px" 
+                                     width="20px" /> 
+                                {{ button|default('Modifier') }}
+                            </button>
                         </div>
                     </div>
                 </div>

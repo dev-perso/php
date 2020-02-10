@@ -11,7 +11,34 @@
 
             <h2 class="mt-3 mb-3">Consultation de la bouteille de {{ vin.appellation }}</h2 class="mt-3 mb-3">
             <div class="col-12">
-                {{ dump(vin) }}
+                Région : {{ vin.region }}
+            </div>
+            <div class="col-12">
+                Couleur : {{ vin.couleur }}
+            </div>
+            <div class="col-12">
+                Appellation : {{ vin.appellation }}
+            </div>
+            <div class="col-12">
+                Château : {{ vin.chateau }}
+            </div>
+            <div class="col-12">
+                Année : {{ vin.annee }}
+            </div>
+            <div class="col-12">
+                Prix : {{ vin.prix }}
+            </div>
+            <div class="col-12">
+                Quantité : {{ vin.quantite }}
+            </div>
+            <div class="col-12">
+                Description : {{ vin.description }}
+            </div>
+            <div class="col-12">
+                Image : {{ vin.image }}
+            </div>
+            <div class="col-12">
+                Note : {{ vin.note }}
             </div>
             <div class="col-12">
                 <a class="btn btn-light" href="{{ path ('caveavin') }}">
