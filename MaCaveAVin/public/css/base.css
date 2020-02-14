@@ -24,3 +24,8 @@ body .navAjustement .connexion .connexionBtn
     position : absolute;
     top : calc(50% - 15px);
 }
+
+.colorImgLogin
+{
+    color : blue;
+}
