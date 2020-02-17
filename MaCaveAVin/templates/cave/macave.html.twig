@@ -22,7 +22,18 @@
             </div>
         </div>
 
-        {{ dump(couleur) }}
+        <div class="row filterLine">
+            <div class="col-12">
+                {%  for couleur, nombre in couleurs %}
+                    {% if nombre > 0 %}
+                        <button role="button" data-filter="{{ couleur }}" class="btn btn-light btnFilter">
+                            {{ couleur | capitalize }}
+                        </button>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
 
         <table class="table mt-5">
             <thead>
@@ -67,7 +78,6 @@
                                  width="30px" />
                         </td>
                     </tr>
-
                 {% endfor %}
             </tbody>
         </table>

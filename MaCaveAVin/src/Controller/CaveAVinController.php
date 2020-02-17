@@ -66,11 +66,9 @@ class CaveAVinController extends AbstractController
                 ->getSingleScalarResult();
         }
 
-        
-        
         return $this->render("cave/macave.html.twig", [
             'vins' => $vins->getResult(),
-            'couleur' => $this->couleur
+            'couleurs' => $this->couleur
         ]);
     }
 
