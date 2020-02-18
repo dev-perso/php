@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function()
         var constraint = this.getAttribute("data-filter");
         alert(constraint);
 
-        request.open('POST', url, true);
+        /*request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         request.withCredentials = true;
@@ -88,6 +88,6 @@ document.addEventListener("DOMContentLoaded", function()
         request.onprogress = function(event)
         {
             //console.log("Reçu " + event.loaded + " sur " + event.total);
-        };
+        };*/
     }
 });

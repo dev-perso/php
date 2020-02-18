@@ -10,7 +10,9 @@
         <div class="row">
             <div class="col-6">
                 <a role="button" href="{{ path('caveavin.gestion.ajout') }}" class="btn btn-light btnWine">
-                    <i class="fa fa-plus"></i> Ajouter un vin
+                    <img src="{{ asset('img/ajouter.png') }}"
+                         height="30px" 
+                         width="30px" /> Ajouter un vin
                 </a>
             </div>
             <div class="col-6 text-right">
@@ -22,7 +24,7 @@
             </div>
         </div>
 
-        <div class="row filterLine">
+        <div class="row filterLine text-center">
             <div class="col-12">
                 {%  for couleur, nombre in couleurs %}
                     {% if nombre > 0 %}
