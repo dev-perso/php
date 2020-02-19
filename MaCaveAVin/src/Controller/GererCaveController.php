@@ -25,10 +25,21 @@ class GererCaveController extends AbstractController
      */
     private $vin;
 
+    /*
+     * @var Array
+     */
+    private $couleur;
+
     public function __construct(EntityManagerInterface $em, VinRepository $vin)
     {
         $this->em   = $em;
         $this->vin  = $vin;
+        $this->couleur = array
+        (
+            "blanc" => 0,
+            "rouge" => 0,
+            "rose"  => 0
+        );
     }
 
     /**
@@ -152,9 +163,23 @@ class GererCaveController extends AbstractController
             ->orderBy('v.annee', 'ASC');
 
         $vins = $qb->getQuery();
+
+        // Count
+        foreach ($this->couleur as $couleur => $nombre)
+        {
+            $this->couleur[$couleur] = $this->vin->createQueryBuilder('v')
+                ->select('count(v.id)')
+                ->where('v.couleur = :couleur')
+                ->andWhere('v.quantite > :quantite')
+                ->setParameter('couleur', $couleur)
+                ->setParameter('quantite', 0)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
         
         return $this->render("cave/macave.html.twig", [
-            'vins' => $vins->getResult()
+            'vins'      => $vins->getResult(),
+            'couleurs'  => $this->couleur
         ]);
     }
 }
