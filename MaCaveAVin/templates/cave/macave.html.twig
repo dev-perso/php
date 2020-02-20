@@ -33,6 +33,19 @@
                         </button>
                     {% endif %}
                 {% endfor %}
+                {%  for region, nombre in regions %}
+                    {% if nombre > 0 %}
+                        <button role="button" data-filter="{{ region }}" class="btn btn-light btnFilter">
+                            {{ region | capitalize }}
+                        </button>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" id="actifFilter">
+
             </div>
         </div>
 
@@ -50,7 +63,7 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="macave">
                 {%  for vin in vins %}
                     <tr>
                         <td data-id="{{ vin.id }}" class="pointer">{{ vin.region | capitalize }}</td>
