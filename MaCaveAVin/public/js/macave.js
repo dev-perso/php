@@ -34,6 +34,11 @@ document.addEventListener("DOMContentLoaded", function()
             window.location.href = '/caveavin/bouteille/' + id;
         }
     }
+
+    function removeFilter()
+    {
+
+    }
     
     function filterMyCave()
     {
@@ -62,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function()
                 buttonFilter.classList.add('actif-filtre');
                 buttonFilter.appendChild(span);
                 actifFilter.appendChild(buttonFilter);
+                buttonFilter.addEventListener("click", removeFilter, false);
 
                 // Suppression des lignes du tableau
                 tableBody.innerHTML = "";
@@ -74,16 +80,33 @@ document.addEventListener("DOMContentLoaded", function()
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.appellation.charAt(0).toUpperCase() + vin.appellation.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.annee + "</td>";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.quantite + "</td>";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.prix + "</td>";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.note + "</td>";
-
+                    if (vin.prix != null)
+                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.prix + "</td>";
+                    else
+                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">NC</td>";
+                    if (vin.note != null)
+                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.note + "</td>";
+                    else
+                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\"></td>";
+                    newTableBody += "<td><img src=\"../img/modifier.png\" class=\"editWine\" id=\"edit" + vin.id + "\" title=\"Modifier\" height=\"30px\" width=\"30px\" />" +
+                                    "<img src=\"../img/utiliser.png\" class=\"useWine ml-3\" id=\"use" + vin.id + "\" title=\"Utiliser\" height=\"30px\" width=\"30px\" /></td>";
                     newTableBody += "</tr>";
                 });
 
                 tableBody.innerHTML = newTableBody;
 
+                var edit    = document.getElementsByClassName("editWine");
+                var use     = document.getElementsByClassName("useWine");
 
+                for (var i = 0; i < edit.length; i++)
+                {
+                    edit[i].addEventListener("click", editWine, false);
+                }
 
+                for (var i = 0; i < use.length; i++)
+                {
+                    use[i].addEventListener("click", useWine, false);
+                }
 
                 console.log(JSON.parse(request.response));
 
