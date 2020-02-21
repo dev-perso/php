@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", function()
         var constraint  = this.getAttribute("data-filter");
         var url         = "/caveavin/filtre/" + constraint;
 
+        this.remove();
+
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -52,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function()
                 const response      = JSON.parse(request.response);
                 var buttonFilter    = document.createElement('button');
                 var span            = document.createElement('span');
+                var tableBody       = document.getElementById("macave");
+                let newTableBody    = "";
 
                 // Création button du filtre actif
                 span.innerText = response['filtres'];
@@ -59,8 +63,25 @@ document.addEventListener("DOMContentLoaded", function()
                 buttonFilter.appendChild(span);
                 actifFilter.appendChild(buttonFilter);
 
-                
-                console.log(buttonFilter);
+                // Suppression des lignes du tableau
+                tableBody.innerHTML = "";
+
+                response['vins'].forEach((vin) =>
+                {
+                    newTableBody += "<tr>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.region.charAt(0).toUpperCase() + vin.region.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.couleur.charAt(0).toUpperCase() + vin.couleur.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.appellation.charAt(0).toUpperCase() + vin.appellation.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.annee + "</td>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.quantite + "</td>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.prix + "</td>";
+                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.note + "</td>";
+
+                    newTableBody += "</tr>";
+                });
+
+                tableBody.innerHTML = newTableBody;
+
 
 
 
