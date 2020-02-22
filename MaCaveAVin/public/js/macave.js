@@ -43,13 +43,20 @@ document.addEventListener("DOMContentLoaded", function()
     function filterMyCave()
     {
         var constraint  = this.getAttribute("data-filter");
-        var url         = "/caveavin/filtre/" + constraint;
+        var actifFiltre = document.getElementById("filtres");
+        var url         = "/caveavin/filtre/";
 
+        if (actifFiltre.value != "")
+            url += constraint + "--" + actifFiltre.value;
+        else
+            url += constraint;
+        console.log("url", url);
         this.remove();
 
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        console.log(request);
         request.send();
 
         request.onreadystatechange = function()
@@ -63,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function()
                 let newTableBody    = "";
 
                 // Création button du filtre actif
-                span.innerText = response['filtres'];
+                span.innerText = response['filtres'][0];
                 buttonFilter.classList.add('actif-filtre');
                 buttonFilter.appendChild(span);
                 actifFilter.appendChild(buttonFilter);
@@ -107,9 +114,13 @@ document.addEventListener("DOMContentLoaded", function()
                 {
                     use[i].addEventListener("click", useWine, false);
                 }
+                
+                if (actifFiltre.value != "")
+                    actifFiltre.value = actifFiltre.value + "--" + response['filtres'][0];
+                else
+                    actifFiltre.value = response['filtres'];
 
                 console.log(JSON.parse(request.response));
-
             }
         };
     

@@ -55,6 +55,7 @@ class GererCaveController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $vin->setArchive(false);
             $this->em->persist($vin);
             $this->em->flush();
 

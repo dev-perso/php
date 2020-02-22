@@ -144,9 +144,58 @@ class CaveAVinController extends AbstractController
      */
     public function filtreVin ($filtre): Response
     {
-        $vins = null;
+        $vins       = null;
+        $nbFilter   = 0;
+        $allFiltres = explode("--", $filtre);
 
-        if (array_key_exists($filtre, $this->couleur))
+        $qb = $this->vin->createQueryBuilder('v');
+        foreach ($allFiltres as $oneFiltre)
+        {
+            if (array_key_exists($oneFiltre, $this->couleur))
+            {
+                $qb->orWhere('v.couleur = :couleur' . $nbFilter)
+                ->setParameter('couleur' . $nbFilter, $oneFiltre);
+            }
+            else if (array_key_exists($oneFiltre, $this->region))
+            {
+                $qb->orWhere('v.region = :region' . $nbFilter)
+                    ->setParameter('region' . $nbFilter, $oneFiltre);
+            }
+            $nbFilter++;
+        }
+
+        $qb->andWhere('v.quantite > :quantite')
+            ->setParameter('quantite', 0)
+            ->orderBy('v.annee', 'ASC');
+
+        $vins = $qb->getQuery();
+
+        // Count region
+        foreach ($this->region as $region => $nombre)
+        {
+            $this->region[$region] = $this->vin->createQueryBuilder('v')
+                ->select('count(v.id)')
+                ->where('v.region = :region')
+                ->andWhere('v.quantite > :quantite')
+                ->setParameter('region', $region)
+                ->setParameter('quantite', 0)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+
+        // Count couleur
+        foreach ($this->couleur as $couleur => $nombre)
+        {
+            $this->couleur[$couleur] = $this->vin->createQueryBuilder('v')
+                ->select('count(v.id)')
+                ->where('v.couleur = :couleur')
+                ->andWhere('v.quantite > :quantite')
+                ->setParameter('couleur', $couleur)
+                ->setParameter('quantite', 0)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+        /*if (array_key_exists($filtre, $this->couleur))
         {
             $qb = $this->vin->createQueryBuilder('v')
                 ->where('v.couleur = :couleur')
@@ -197,14 +246,14 @@ class CaveAVinController extends AbstractController
                     ->getQuery()
                     ->getSingleScalarResult();
             }
-        }
+        }*/
 
         return $this->json(
         [
             'vins'      => $vins->getResult(),
             'couleurs'  => $this->couleur,
             'regions'   => $this->region,
-            'filtres'   => $filtre
+            'filtres'   => $allFiltres
         ]);
     }
 
