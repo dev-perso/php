@@ -147,8 +147,9 @@ class CaveAVinController extends AbstractController
         $vins       = null;
         $nbFilter   = 0;
         $allFiltres = explode("--", $filtre);
-
+        
         $qb = $this->vin->createQueryBuilder('v');
+        
         foreach ($allFiltres as $oneFiltre)
         {
             if (array_key_exists($oneFiltre, $this->couleur))

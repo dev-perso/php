@@ -49,9 +49,15 @@ document.addEventListener("DOMContentLoaded", function()
                 newFilter += actifFiltre[i] + "--";
         }
         if (newFilter != "")
+        {
             newFilter = newFilter.substring(0, newFilter.length - 2);
+            url += newFilter;
+        }
+        else
+        {
+            url += "noFilter";
+        }
         
-        url += newFilter;
         
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -105,10 +111,14 @@ document.addEventListener("DOMContentLoaded", function()
                     use[i].addEventListener("click", useWine, false);
                 }
                 
+                // Réécris dans l'input hidden des filtres en cours
                 if (actifFiltre.value != "")
                     actifFiltre.value = actifFiltre.value + "--" + response['filtres'][0];
                 else
                     actifFiltre.value = response['filtres'];
+
+                // Créer le nouveau bouton du filtre disponible
+                
             }
         };
 
