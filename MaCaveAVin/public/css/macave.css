@@ -1,3 +1,22 @@
+.areaFilterBtn
+{
+    position : relative;
+}
+
+.areaFilterBtn .policeInfo
+{
+    font-family: 'Lobster', cursive;
+    font-size: 12px;
+    color : #38040E;
+}
+
+.areaFilterBtn .textInfoFilter
+{
+    position : absolute;
+    left : 15px;
+    top : calc(50% - 6px); /* taille de la police / 2 */
+}
+
 @media (min-width: 576px)
 {
     .container-table-adapted
@@ -36,8 +55,9 @@
 
 .btnWine, .btnFilter
 {
-    background-color: white !important;
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
+    font-size : 15px;
+    background-color : white !important;
+    box-shadow : 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
 }
 
 .filterLine

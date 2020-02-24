@@ -25,7 +25,10 @@
         </div>
 
         <div class="row filterLine text-center">
-            <div class="col-12">
+            <div class="col-12 areaFilterBtn" id="filterLine">
+                <span class="text-left policeInfo textInfoFilter">
+                    Filtrer :
+                </span>
                 {%  for couleur, nombre in couleurs %}
                     {% if nombre > 0 %}
                         <button role="button" data-filter="{{ couleur }}" class="btn btn-light btnFilter">
@@ -36,7 +39,7 @@
                 {%  for region, nombre in regions %}
                     {% if nombre > 0 %}
                         <button role="button" data-filter="{{ region }}" class="btn btn-light btnFilter">
-                            {{ region | capitalize }}
+                            {{ region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}
                         </button>
                     {% endif %}
                 {% endfor %}

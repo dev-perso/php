@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function()
         var actifFiltre     = currentFilter.value.split("--");
         var newFilter       = "";
         var url             = "/caveavin/filtre/";
+        var valueToDisplay  = "";
 
         for (var i = 0; i < actifFiltre.length; i++)
         {
@@ -57,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function()
         {
             url += "noFilter";
         }
-        
         
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -112,13 +112,23 @@ document.addEventListener("DOMContentLoaded", function()
                 }
                 
                 // Réécris dans l'input hidden des filtres en cours
-                if (actifFiltre.value != "")
-                    actifFiltre.value = actifFiltre.value + "--" + response['filtres'][0];
+                if (currentFilter.value != "")
+                    currentFilter.value = newFilter;
                 else
-                    actifFiltre.value = response['filtres'];
+                    currentFilter.value = "";
 
                 // Créer le nouveau bouton du filtre disponible
-                
+                var buttonFilter    = document.createElement('button');
+                var filterLine      = document.getElementById("filterLine");
+
+                // Création button du filtre actif
+                if (toRemove == "cote_rhone") valueToDisplay = "Côte du rhône";
+                else valueToDisplay = toRemove;
+                buttonFilter.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
+                buttonFilter.className = 'btn btn-light btnFilter';
+                buttonFilter.setAttribute("data-filter", toRemove);
+                buttonFilter.addEventListener("click", filterMyCave, false);
+                filterLine.appendChild(buttonFilter);
             }
         };
 
@@ -153,9 +163,12 @@ document.addEventListener("DOMContentLoaded", function()
                 var span            = document.createElement('span');
                 var tableBody       = document.getElementById("macave");
                 let newTableBody    = "";
+                var valueToDisplay  = "";
 
                 // Création button du filtre actif
-                span.innerText = response['filtres'][0].charAt(0).toUpperCase() + response['filtres'][0].slice(1);
+                if (constraint == "cote_rhone") valueToDisplay = "Côte du rhône";
+                else valueToDisplay = constraint;
+                span.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
                 buttonFilter.classList.add('actif-filtre');
                 buttonFilter.setAttribute("data-filter", response['filtres'][0]);
                 buttonFilter.appendChild(span);
