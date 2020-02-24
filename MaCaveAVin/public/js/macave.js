@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function()
                 response['vins'].forEach((vin) =>
                 {
                     newTableBody += "<tr>";
+                    if (vin.region == "cote_rhone") vin.region = "Côte du rhône";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.region.charAt(0).toUpperCase() + vin.region.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.couleur.charAt(0).toUpperCase() + vin.couleur.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.appellation.charAt(0).toUpperCase() + vin.appellation.slice(1) + "</td>";
@@ -100,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function()
 
                 var edit    = document.getElementsByClassName("editWine");
                 var use     = document.getElementsByClassName("useWine");
+                var tr          = document.getElementsByTagName("tr");
 
                 for (var i = 0; i < edit.length; i++)
                 {
@@ -109,6 +111,14 @@ document.addEventListener("DOMContentLoaded", function()
                 for (var i = 0; i < use.length; i++)
                 {
                     use[i].addEventListener("click", useWine, false);
+                }
+
+                for (var i = 0; i < tr.length; i++)
+                {
+                    for (var j = 0; j < (tr[i].cells.length - 1); j++)
+                    {
+                        tr[i].cells[j].addEventListener("click", getDescription, false);
+                    }
                 }
                 
                 // Réécris dans l'input hidden des filtres en cours
@@ -125,8 +135,9 @@ document.addEventListener("DOMContentLoaded", function()
                 if (toRemove == "cote_rhone") valueToDisplay = "Côte du rhône";
                 else valueToDisplay = toRemove;
                 buttonFilter.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
-                buttonFilter.className = 'btn btn-light btnFilter';
+                buttonFilter.className = 'btn btn-light btnFilter ml-1';
                 buttonFilter.setAttribute("data-filter", toRemove);
+                buttonFilter.setAttribute("role", "button");
                 buttonFilter.addEventListener("click", filterMyCave, false);
                 filterLine.appendChild(buttonFilter);
             }
@@ -181,6 +192,7 @@ document.addEventListener("DOMContentLoaded", function()
                 response['vins'].forEach((vin) =>
                 {
                     newTableBody += "<tr>";
+                    if (vin.region == "cote_rhone") vin.region = "Côte du rhône";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.region.charAt(0).toUpperCase() + vin.region.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.couleur.charAt(0).toUpperCase() + vin.couleur.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.appellation.charAt(0).toUpperCase() + vin.appellation.slice(1) + "</td>";
@@ -203,6 +215,7 @@ document.addEventListener("DOMContentLoaded", function()
 
                 var edit    = document.getElementsByClassName("editWine");
                 var use     = document.getElementsByClassName("useWine");
+                var tr      = document.getElementsByTagName("tr");
 
                 for (var i = 0; i < edit.length; i++)
                 {
@@ -212,6 +225,14 @@ document.addEventListener("DOMContentLoaded", function()
                 for (var i = 0; i < use.length; i++)
                 {
                     use[i].addEventListener("click", useWine, false);
+                }
+
+                for (var i = 0; i < tr.length; i++)
+                {
+                    for (var j = 0; j < (tr[i].cells.length - 1); j++)
+                    {
+                        tr[i].cells[j].addEventListener("click", getDescription, false);
+                    }
                 }
                 
                 if (actifFiltre.value != "")

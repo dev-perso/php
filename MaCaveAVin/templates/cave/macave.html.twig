@@ -70,7 +70,7 @@
             <tbody id="macave">
                 {%  for vin in vins %}
                     <tr>
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.region | capitalize }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}</td>
                         <td data-id="{{ vin.id }}" class="pointer">{{ vin.couleur | capitalize }}</td>
                         <td data-id="{{ vin.id }}" class="pointer">{{ vin.appellation }}</td>
                         <td data-id="{{ vin.id }}" class="pointer">{{ vin.annee }}</td>
