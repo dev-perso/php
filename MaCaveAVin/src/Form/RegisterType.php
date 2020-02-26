@@ -23,6 +23,16 @@ class RegisterType extends AbstractType
                 'label'     => 'Prénom',
                 'required'  => true
             ])
+            ->add('email', null,
+            [
+                'label'     => 'Email',
+                'required'  => true
+            ])
+            ->add('confirm_email', null,
+            [
+                'label'     => 'Confirmation du mail',
+                'required'  => true
+            ])
             ->add('username', null,
             [
                 'label'     => 'Utilisateur',

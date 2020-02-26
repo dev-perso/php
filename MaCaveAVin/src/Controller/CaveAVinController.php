@@ -205,13 +205,4 @@ class CaveAVinController extends AbstractController
             'filtres'   => $allFiltres
         ]);
     }
-
-    /**
-     * @Route("/", name="connexion")
-     * @return Response
-     */
-    public function tempConnexion() : Response
-    {
-        return $this->render("cave/macave.html.twig");
-    }
 }

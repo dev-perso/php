@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Form\RegisterType;
@@ -44,10 +45,21 @@ class SecurityController extends AbstractController
             $user->setPassword($hash);
             $this->em->persist($user);
             $this->em->flush();
+
+            return $this->redirectToRoute("caveavin");
         }
 
         return $this->render('security/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/connexion", name="connexion")
+     * @return Response
+     */
+    public function connexion() : Response
+    {
+        return $this->render("security/connexion.html.twig");
     }
 }

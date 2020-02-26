@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields = {"email"},
+ *     message = "This mail is already used"
+ * )
  */
 class User implements UserInterface
 {
@@ -29,7 +34,23 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="email", type="string", length=100)
+     * @Assert\EqualTo(
+     *     propertyPath="confirm_email",
+     *     message = "This value should be equal to the Email Confirmation")
+     * @Assert\Email
+     */
+    private $email;
+
+    /**
+     * @Assert\EqualTo(
+     *     propertyPath="email",
+     *     message = "This value should be equal to the Email")
+     */
+    private $confirm_email;
+
+    /**
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $username;
 
@@ -40,15 +61,17 @@ class User implements UserInterface
      *      minMessage = "You password should be at least {{ limit }} characters long")
      * @Assert\EqualTo(
      *     propertyPath = "confirm_password",
-     *     message = "")
+     *     message = "This value should be equal to the Confirmation")
      */
     private $password;
 
     /**
      * @Assert\EqualTo(
-     *     propertyPath="password")
+     *     propertyPath="password",
+     *     message = "This value should be equal to the Password")
      */
     private $confirm_password;
+
 
     public function getId(): ?int
     {
@@ -75,6 +98,30 @@ class User implements UserInterface
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getConfirmEmail(): ?string
+    {
+        return $this->confirm_email;
+    }
+
+    public function setConfirmEmail(string $confirm_email): self
+    {
+        $this->confirm_email = $confirm_email;
 
         return $this;
     }
