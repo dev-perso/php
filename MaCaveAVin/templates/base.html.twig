@@ -23,13 +23,26 @@
                 <div class="offset-2 col-8">
                     <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
                 </div>
-                <div class="col-2 connexion">
-                    <a class="connexionBtn" title="Connexion" href="{{ path('connexion') }}">
-                        <img src="{{ asset('img/login.png') }}"
-                             height="30px" 
-                             width="30px" />
-                    </a>
-                </div>
+
+                {# Connexion / Déconnexion #}
+                {% if app.user %}
+                    <div class="col-2 deconnexion">
+                        <a class="connexionBtn" title="Déconnexion" href="{{ path('deconnexion') }}">
+                            <img src="{{ asset('img/logout.svg') }}"
+                                height="30px" 
+                                width="30px" />
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col-2 connexion">
+                        <a class="connexionBtn" title="Connexion" href="{{ path('connexion') }}">
+                            <img src="{{ asset('img/login.svg') }}"
+                                height="30px" 
+                                width="30px" />
+                        </a>
+                    </div>
+                {% endif %}
+
             </div>
         </nav>
 

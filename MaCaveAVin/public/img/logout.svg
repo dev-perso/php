@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px"
+	 height="30px" viewBox="0 0 30 30" enable-background="new 0 0 30 30" xml:space="preserve">
+<g id="Слой_6" display="none">
+</g>
+<g id="Слой_7" display="none">
+</g>
+<g id="Слой_10" display="none">
+</g>
+<g id="Слой_12" display="none">
+	<g display="inline">
+		<g>
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1" y1="15" x2="29" y2="15">
+				<stop  offset="0" style="stop-color:#F4CB40"/>
+				<stop  offset="1" style="stop-color:#931931"/>
+			</linearGradient>
+			<path fill="url(#SVGID_1_)" d="M15,2.417c6.938,0,12.583,5.645,12.583,12.583S21.938,27.583,15,27.583S2.417,21.938,2.417,15
+				S8.062,2.417,15,2.417 M15,1C7.269,1,1,7.268,1,15s6.269,14,14,14s14-6.268,14-14S22.731,1,15,1L15,1z"/>
+		</g>
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="5.541" y1="15.3047" x2="24.459" y2="15.3047">
+			<stop  offset="0" style="stop-color:#F4CB40"/>
+			<stop  offset="1" style="stop-color:#931931"/>
+		</linearGradient>
+		
+			<path fill="none" stroke="url(#SVGID_2_)" stroke-width="1.417" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M18.33,6.906c3.182,1.31,5.42,4.441,5.42,8.094c0,4.833-3.917,8.75-8.75,8.75S6.25,19.833,6.25,15c0-3.698,2.293-6.86,5.535-8.141
+			"/>
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="14.125" y1="6.25" x2="15.875" y2="6.25">
+			<stop  offset="0" style="stop-color:#F4CB40"/>
+			<stop  offset="1" style="stop-color:#931931"/>
+		</linearGradient>
+		<rect x="14.125" y="3.625" fill="url(#SVGID_3_)" width="1.75" height="5.25"/>
+	</g>
+</g>
+<g id="log_in">
+</g>
+<g id="log_out">
+</g>
+<g id="archive">
+</g>
+<g id="edit">
+</g>
+<g id="ajouter">
+</g>
+<g id="Слой_8">
+</g>
+<g id="Слой_9">
+</g>
+<g id="Слой_11">
+	<g>
+		<g>
+			<path fill="#010101" d="M15,2.417c6.938,0,12.583,5.645,12.583,12.583S21.938,27.583,15,27.583S2.417,21.938,2.417,15
+				S8.062,2.417,15,2.417 M15,1C7.269,1,1,7.268,1,15s6.269,14,14,14s14-6.268,14-14S22.731,1,15,1L15,1z"/>
+		</g>
+		<path fill="none" stroke="#010101" stroke-width="1.4173" stroke-linecap="round" stroke-miterlimit="10" d="M18.33,6.906
+			c3.182,1.31,5.42,4.441,5.42,8.094c0,4.833-3.917,8.75-8.75,8.75S6.25,19.833,6.25,15c0-3.698,2.293-6.86,5.535-8.141"/>
+		<rect x="14.125" y="3.625" fill="#010101" width="1.75" height="5.25"/>
+	</g>
+</g>
+</svg>

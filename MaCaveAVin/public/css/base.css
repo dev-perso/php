@@ -14,12 +14,12 @@ body .navAjustement .h1
     color : #38040E;
 }
 
-body .navAjustement .connexion
+body .navAjustement .connexion, body .navAjustement .deconnexion
 {
     position : relative;
 }
 
-body .navAjustement .connexion .connexionBtn
+body .navAjustement .connexion .connexionBtn, body .navAjustement .deconnexion .connexionBtn
 {
     position : absolute;
     top : calc(50% - 15px);
