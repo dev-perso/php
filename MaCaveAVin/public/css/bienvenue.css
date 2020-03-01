@@ -1,4 +1,46 @@
 body
 {
     background-image: url("../img/background-grap.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.rowBvn
+{
+    position : fixed;
+    display: table;
+    height: 100%;
+    margin-top : -88px;
+}
+
+.rowBvn .divBvn
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.rowBvn .divBvn .textBvnFst, .rowBvn .divBvn .textBvnSnd
+{
+    color : white;
+    font-size: 70px;
+    font-weight: bold;
+    line-height : 35px;
+    font-family: 'Roboto';
+}
+
+.rowBvn .divBvn .textBvnSnd
+{
+    margin-left : 25px;
+}
+
+.rowBvn .divBvn .textBvnTrd
+{
+    color : white;
+    font-size: 45px;
+    font-weight: bold;
+    line-height : 35px;
+    margin-left : 50px;
+    font-family: 'Roboto';
 }
