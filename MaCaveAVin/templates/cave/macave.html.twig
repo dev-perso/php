@@ -7,44 +7,51 @@
 
 {% block body %}
     <div class="container-table-adapted mt-4">
-        <div class="row">
-            <div class="col-6">
-                <a role="button" href="{{ path('caveavin.gestion.ajout') }}" class="btn btn-light btnWine">
-                    <img src="{{ asset('img/ajouter.png') }}"
-                         height="30px" 
-                         width="30px" /> Ajouter un vin
-                </a>
-            </div>
-            <div class="col-6 text-right">
-                <a role="button" href="{{ path('caveavin.archive') }}" class="btn btn-light btnWine">
-                    <img src="{{ asset('img/archive.png') }}"
-                         height="30px" 
-                         width="30px" /> Archive
-                </a>
-            </div>
-        </div>
 
-        <div class="row filterLine text-center">
-            <div class="col-12 areaFilterBtn" id="filterLine">
-                <span class="text-left policeInfo textInfoFilter">
-                    Filtrer :
-                </span>
-                {%  for couleur, nombre in couleurs %}
-                    {% if nombre > 0 %}
-                        <button role="button" data-filter="{{ couleur }}" class="btn btn-light btnFilter">
-                            {{ couleur | capitalize }}
-                        </button>
-                    {% endif %}
-                {% endfor %}
-                {%  for region, nombre in regions %}
-                    {% if nombre > 0 %}
-                        <button role="button" data-filter="{{ region }}" class="btn btn-light btnFilter">
-                            {{ region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}
-                        </button>
-                    {% endif %}
-                {% endfor %}
+        {# Ajouter vin et accès aux archives #}
+        {% if app.user %}
+            <div class="row">
+                <div class="col-6">
+                    <a role="button" href="{{ path('caveavin.gestion.ajout') }}" class="btn btn-light btnWine">
+                        <img src="{{ asset('img/ajouter.png') }}"
+                            height="30px" 
+                            width="30px" /> Ajouter un vin
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+                    <a role="button" href="{{ path('caveavin.archive') }}" class="btn btn-light btnWine">
+                        <img src="{{ asset('img/archive.png') }}"
+                            height="30px" 
+                            width="30px" /> Archive
+                    </a>
+                </div>
             </div>
-        </div>
+        {% endif %}
+
+        {# Filtrer l'affichage #}
+        {% if app.user %}
+            <div class="row filterLine text-center">
+                <div class="col-12 areaFilterBtn" id="filterLine">
+                    <span class="text-left policeInfo textInfoFilter">
+                        Filtrer :
+                    </span>
+                    {%  for couleur, nombre in couleurs %}
+                        {% if nombre > 0 %}
+                            <button role="button" data-filter="{{ couleur }}" class="btn btn-light btnFilter">
+                                {{ couleur | capitalize }}
+                            </button>
+                        {% endif %}
+                    {% endfor %}
+                    {%  for region, nombre in regions %}
+                        {% if nombre > 0 %}
+                            <button role="button" data-filter="{{ region }}" class="btn btn-light btnFilter">
+                                {{ region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}
+                            </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-12" id="actifFilter">
@@ -64,7 +71,9 @@
                     <th scope="col">Qté</th>
                     <th scope="col">Prix</th>
                     <th scope="col">Note</th>
-                    <th scope="col">Action</th>
+                    {% if app.user %}
+                        <th scope="col">Action</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody id="macave">
@@ -82,20 +91,22 @@
                         {% endif %}
                         <td data-id="{{ vin.id }}" class="pointer">{{ vin.note }}</td>
                         <!-- Should be the last column -->
-                        <td>
-                            <img src="{{ asset('img/modifier.png') }}"
-                                 class="editWine" 
-                                 id="{{ 'edit' ~ vin.id }}" 
-                                 title="Modifier"
-                                 height="30px" 
-                                 width="30px" />
-                            <img src="{{ asset('img/utiliser.png') }}" 
-                                 class="useWine ml-3" 
-                                 id="{{ 'use' ~ vin.id }}" 
-                                 title="Utiliser" 
-                                 height="30px" 
-                                 width="30px" />
-                        </td>
+                        {% if app.user %}
+                            <td>
+                                <img src="{{ asset('img/modifier.png') }}"
+                                    class="editWine" 
+                                    id="{{ 'edit' ~ vin.id }}" 
+                                    title="Modifier"
+                                    height="30px" 
+                                    width="30px" />
+                                <img src="{{ asset('img/utiliser.png') }}" 
+                                    class="useWine ml-3" 
+                                    id="{{ 'use' ~ vin.id }}" 
+                                    title="Utiliser" 
+                                    height="30px" 
+                                    width="30px" />
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

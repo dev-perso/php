@@ -55,6 +55,15 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/bienvenue", name="bienvenue")
+     * @return Response
+     */
+    public function bienvenue() : Response
+    {
+        return $this->render("cave/bienvenue.html.twig");
+    }
+
+    /**
      * @Route("/connexion", name="connexion")
      * @return Response
      */
