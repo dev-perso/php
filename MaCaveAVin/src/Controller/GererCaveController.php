@@ -30,6 +30,11 @@ class GererCaveController extends AbstractController
      */
     private $couleur;
 
+    /*
+     * @var Array
+     */
+    private $region;
+
     public function __construct(EntityManagerInterface $em, VinRepository $vin)
     {
         $this->em   = $em;
@@ -39,6 +44,17 @@ class GererCaveController extends AbstractController
             "blanc" => 0,
             "rouge" => 0,
             "rose"  => 0
+        );
+        $this->region = array
+        (
+            "alsace" => 0,
+            "bordeaux" => 0,
+            "bourgogne" => 0,
+            "cote_rhone" => 0,
+            "corse" => 0,
+            "languedoc" => 0,
+            "loire" => 0,
+            "etranger" => 0
         );
     }
 
@@ -177,10 +193,24 @@ class GererCaveController extends AbstractController
                 ->getQuery()
                 ->getSingleScalarResult();
         }
+
+        // Count region
+        foreach ($this->region as $region => $nombre)
+        {
+            $this->region[$region] = $this->vin->createQueryBuilder('v')
+                ->select('count(v.id)')
+                ->where('v.region = :region')
+                ->andWhere('v.quantite > :quantite')
+                ->setParameter('region', $region)
+                ->setParameter('quantite', 0)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
         
         return $this->render("cave/macave.html.twig", [
             'vins'      => $vins->getResult(),
-            'couleurs'  => $this->couleur
+            'couleurs'  => $this->couleur,
+            'regions'   => $this->region
         ]);
     }
 }

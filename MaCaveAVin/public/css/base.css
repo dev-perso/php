@@ -47,6 +47,7 @@ body .navAjustement .connexion .connexionBtn, body .navAjustement .deconnexion .
 {
     position : absolute;
     top : calc(50% - 15px);
+    margin-left: -15px;
 }
 
 .colorImgLogin

@@ -132,7 +132,7 @@ class CaveAVinController extends AbstractController
             ->orderBy('v.annee', 'ASC');
 
         $vins = $qb->getQuery();
-        
+
         return $this->render("cave/archive.html.twig", [
             'vins' => $vins->getResult()
         ]);
