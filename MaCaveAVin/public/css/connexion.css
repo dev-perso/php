@@ -1,0 +1,34 @@
+body
+{
+    background-image: url("../img/background-grapes.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+.divContainerConnect
+{
+    position : fixed;
+    display: table;
+    height: 100%;
+    width : 100%;
+    margin-top : -105px;
+}
+
+.rowConnect
+{
+    display: table-cell;
+    vertical-align: middle;
+    width : 100%;
+}
+
+.divConnect
+{
+    background-color : rgba(255, 255, 255, 0.8);
+    box-shadow : 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
+    border : 1px solid transparent;
+    border-radius : 20px;
+    padding : 30px;
+}

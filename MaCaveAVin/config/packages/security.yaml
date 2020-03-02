@@ -19,6 +19,7 @@ security:
             form_login:
                 login_path: bienvenue
                 check_path: connexion
+                failure_path: connexion
             logout:
                 path: deconnexion
                 target: bienvenue
