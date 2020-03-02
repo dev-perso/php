@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/inscription", name="security")
+     * @Route("/inscription", name="inscription")
      */
     public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
@@ -49,9 +49,17 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute("caveavin");
         }
 
-        return $this->render('security/register.html.twig', [
+        return $this->render('security/gestionCompte/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/gestion/profil", name="gestion.profil")
+     */
+    public function editProfil()
+    {
+        return $this->render('security/gestionCompte/profil.html.twig');
     }
 
     /**
