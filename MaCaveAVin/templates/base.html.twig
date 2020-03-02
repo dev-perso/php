@@ -22,7 +22,28 @@
     <body>
         <nav class="navbar-light text-center navAjustement">
             <div class="row">
-                <div class="offset-2 col-8">
+                <div class="col-2 profil">
+                    {% if app.user %}
+                        <div class="row rowProfil">
+                            <div class="col-6 text-right profilImg">
+                                <a class="profilBtn" title="Profil" href="{{ path('gestion.profil') }}">
+                                    <img src="{{ asset('img/login.svg') }}"
+                                         height="40px"
+                                         width="40px" />
+                                </a>
+                            </div>
+                            <div class="col-6 text-left profilTxt">
+                                <div class="col-12">
+                                    {{ app.user.prenom | capitalize }}
+                                </div>
+                                <div class="col-12">
+                                    {{ app.user.nom | capitalize }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-8">
                     <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
                 </div>
 
