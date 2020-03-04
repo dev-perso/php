@@ -58,11 +58,26 @@
                                     <div class="text-center">
                                         <a class="btn btn-light" role="button" href="{{ path('gestion.profil') }}">Gérer votre compte</a>
                                     </div>
-                                    {#<a class="dropdown-item" href="#">Action</a>#}
+                                    <div class="text-center">
+                                        <a class="btn btn-light" role="button" href="{{ path('deconnexion') }}">Déconnexion</a>
+                                    </div>
+                                    
                                 </div>
                                 
                             </div>
                         </div>
+                    {% else %}
+                        <div class="row rowProfil">
+                            <div class="col-12 text-center profilImg dropdown">
+                                <a href="{{ path('connexion') }}">
+                                    <img src="{{ asset('img/login.svg') }}"
+                                        height="40px"
+                                        width="40px" />
+                                    </a>    
+                                </div>
+                            </div>
+                        </div>
+
                     {% endif %}
                 </div>
             </div>
