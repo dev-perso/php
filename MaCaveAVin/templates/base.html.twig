@@ -22,50 +22,49 @@
     <body>
         <nav class="navbar-light text-center navAjustement">
             <div class="row">
+                
+                <div class="offset-2 col-8">
+                    <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
+                </div>
+
+                {# Profil #}
                 <div class="col-2 profil">
                     {% if app.user %}
                         <div class="row rowProfil">
-                            <div class="col-6 text-right profilImg">
-                                <a class="profilBtn" title="Profil" href="{{ path('gestion.profil') }}">
-                                    <img src="{{ asset('img/login.svg') }}"
-                                         height="40px"
-                                         width="40px" />
-                                </a>
-                            </div>
-                            <div class="col-6 text-left profilTxt">
-                                <div class="col-12">
-                                    {{ app.user.prenom | capitalize }}
+                            <div class="col-12 text-center profilImg dropdown">
+                                <img src="{{ asset('img/login.svg') }}"
+                                    height="40px"
+                                    width="40px" 
+                                    class="dropdown-toggle"
+                                    id="dropdownMenuButton" 
+                                    data-toggle="dropdown" 
+                                    aria-haspopup="true" 
+                                    aria-expanded="false" />
+
+                                <div class="dropdown-menu adjustDropdown" aria-labelledby="dropdownMenuButton">
+                                    <div class="text-center mainProfilInfo">
+                                        <div>
+                                            <img src="{{ asset('img/login.svg') }}"
+                                                height="60px"
+                                                width="60px" />
+                                        </div>
+                                        <div class="profilName">
+                                            {{ app.user.prenom | capitalize }} {{ app.user.nom | capitalize }}
+                                        </div>
+                                        <div class="profilEmail">
+                                            {{ app.user.email }}
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="btn btn-light" role="button" href="{{ path('gestion.profil') }}">Gérer votre compte</a>
+                                    </div>
+                                    {#<a class="dropdown-item" href="#">Action</a>#}
                                 </div>
-                                <div class="col-12">
-                                    {{ app.user.nom | capitalize }}
-                                </div>
+                                
                             </div>
                         </div>
                     {% endif %}
                 </div>
-                <div class="col-8">
-                    <a href="{{ path('caveavin') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
-                </div>
-
-                {# Connexion / Déconnexion #}
-                {% if app.user %}
-                    <div class="col-2 deconnexion">
-                        <a class="connexionBtn" title="Déconnexion" href="{{ path('deconnexion') }}">
-                            <img src="{{ asset('img/logout.svg') }}"
-                                height="30px" 
-                                width="30px" />
-                        </a>
-                    </div>
-                {% else %}
-                    <div class="col-2 connexion">
-                        <a class="connexionBtn" title="Connexion" href="{{ path('connexion') }}">
-                            <img src="{{ asset('img/login.svg') }}"
-                                height="30px" 
-                                width="30px" />
-                        </a>
-                    </div>
-                {% endif %}
-
             </div>
         </nav>
 

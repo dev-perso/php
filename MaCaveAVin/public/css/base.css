@@ -21,14 +21,28 @@ body .navAjustement .profil .rowProfil
     width : 100%;
 }
 
-.profil .profilTxt
+body .navAjustement .profil .rowProfil .adjustDropdown
 {
-    margin-top : -8px;
+    transform : translate3d(0px, 0px, 0px) !important;
+    left : auto !important;
+    top : auto !important;
+    width : 354px;
+    right : 6px;
 }
 
-.profil .profilTxt, .profil .profilTxt div
+.adjustDropdown .mainProfilInfo
 {
-    padding-left : 0px !important;
+    margin-top : 10px;
+}
+
+.adjustDropdown .mainProfilInfo .profilName
+{
+    margin-top : 10px;
+}
+
+.adjustDropdown .mainProfilInfo .profilEmail
+{
+    font-size : 12px;
 }
 
 body .navAjustement .h1
