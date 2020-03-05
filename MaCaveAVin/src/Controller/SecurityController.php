@@ -9,8 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 class SecurityController extends AbstractController
 {
@@ -57,9 +59,35 @@ class SecurityController extends AbstractController
     /**
      * @Route("/gestion/profil", name="gestion.profil")
      */
-    public function editProfil()
+    public function gestionProfil(Security $security) : Response
     {
-        return $this->render('security/gestionCompte/profil.html.twig');
+        $user = $security->getUser();
+
+        if ($user)
+        {
+            return $this->render("security/gestionCompte/profil.html.twig", [
+                "user"  => $user
+            ]);
+        }
+
+        return $this->redirectToRoute("caveavin");
+    }
+
+    /**
+     * @Route("/gestion/profil/modifier", name="gestion.profil.modifier")
+     */
+    public function editProfil(Security $security) : Response
+    {
+        $user = $security->getUser();
+
+        if ($user)
+        {
+            $user->setNom($_POST['nom']);
+            $this->em->persist($user);
+            $this->em->flush();
+        }
+        
+        return $this->redirectToRoute("caveavin");
     }
 
     /**

@@ -38,11 +38,35 @@ body .navAjustement .profil .rowProfil .adjustDropdown
 .adjustDropdown .mainProfilInfo .profilName
 {
     margin-top : 10px;
+    font-weight : bold;
 }
 
 .adjustDropdown .mainProfilInfo .profilEmail
 {
     font-size : 12px;
+}
+
+.btnGestionCompte
+{
+    margin-top: 10px;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+    padding: 4px 15px 4px 15px;
+}
+
+.btnDeconnexion
+{
+    margin-top: 10px;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+    padding: 4px 15px 4px 15px;
+}
+
+.btnGestionCompte:hover, .btnDeconnexion:hover
+{
+    background-color : #f4f4f4;
 }
 
 body .navAjustement .h1

@@ -1,4 +1,5 @@
 # La cave à vin #
+Author : Michael PARIS
 
 ## Configuration du serveur
 Framework utilisé :

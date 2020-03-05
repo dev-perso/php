@@ -7,6 +7,41 @@
 
 {% block body %}
     <h1>Modifier le profil</h1>
-    {{ dump(app.user) }}
-
+    <div class="row">
+        <div class="offset-lg-3 col-lg-6 p-3" style="border : 1px solid lightgrey; border-radius : 5px; background-color : #eeeeee">
+            <form action="{{ path('gestion.profil.modifier') }}" method="post">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" value="{{ user.nom }}" name="nom" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" class="form-control" value="{{ user.prenom }}" name="prenom" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" value="{{ user.email }}" name="email" />
+                    </div>
+                    <div class="col-12">
+                        <label for="confirm_email">Confirmation email</label>
+                        <input type="text" class="form-control" value="" name="confirm_email" />
+                    </div>
+                </div>
+                
+                <div class="col-12 text-center">
+                    <button class="btn btn-light">
+                        <img src="{{ asset('img/modifier.png') }}"
+                                class="modifier" 
+                                title="Modifier"
+                                height="20px" 
+                                width="20px" /> 
+                        {{ button|default('Modifier') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
