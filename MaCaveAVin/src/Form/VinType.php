@@ -3,81 +3,44 @@
 namespace App\Form;
 
 use App\Entity\Vin;
+use App\Entity\Region;
+use App\Entity\Couleur;
+use App\Entity\Domaine;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class VinType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('region', ChoiceType::class,
+            ->add('appellation')
+            ->add('image', FileType::class, 
             [
-                'placeholder'   => 'Choisir une région',
-                'choices'       =>
-                [
-                    'Alsace'                => 'alsace',
-                    'Bordeaux'              => 'bordeaux',
-                    'Bourgogne'             => 'bourgogne',
-                    'Côte du Rhône'         => 'cote_rhone',
-                    'Corse'                 => 'corse',
-                    'Languedoc Roussillon'  => 'languedoc',
-                    'Loire'                 => 'loire',
-                    'Etranger'              => 'etranger'
-                ],
-                'required'  => true,
-                'label'     => 'Région'
+                'required'      => false,
+                'label'         => 'Image'
             ])
-            ->add('couleur', ChoiceType::class, [
-                'placeholder'   => 'Choisir une couleur',
-                'choices'       =>
-                [
-                    'Blanc' => 'blanc',
-                    'Rosé'  => 'rose',
-                    'Rouge' => 'rouge'
-                ],
-                'required'  => true,
-                'label'     => 'Couleur'
+            ->add('id_couleur', EntityType::class,
+            [
+                'class'         => Couleur::class,
+                'choice_label'  => 'couleur',
+                'label'         => 'Couleur',
+                'choice_value'  => 'id_couleur',
+                'placeholder'   =>'Choose pet type',
+                'empty_data'  => null
             ])
-            ->add('appellation', null, [
-                'required'  => true,
-                'label'     => 'Appellation'
+            ->add('id_region', EntityType::class,
+            [
+                'class'         => Region::class,
+                'choice_label'  => 'region',
+                'label'         => 'Région',
+                'choice_value'  => 'id_region'
             ])
-            ->add('chateau', null, [
-                'label' => 'Château'
-            ])
-            ->add('annee', ChoiceType::class, [
-                'choices'   => $this->buildYearChoices(),
-                'required'  => true,
-                'label'     => 'Année'
-            ])
-            ->add('prix', null, [
-                'label' => 'Prix'
-            ])
-            ->add('quantite', null, [
-                'label' => 'Quantité'
-            ])
-            ->add('description', null, [
-                'label' => 'Description'
-            ])
-            ->add('image', FileType::class, [
-                'required' => false,
-                'label' => 'Image'
-            ])
-            ->add('note', null, [
-                'label' => 'Note'
-            ]);
-    }
-
-    public function buildYearChoices()
-    {
-        $yearFrom = 1900;
-        $yearNow = date('Y');
-        return array_combine(array_reverse(range($yearFrom, $yearNow)), array_reverse(range($yearFrom, $yearNow)));
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

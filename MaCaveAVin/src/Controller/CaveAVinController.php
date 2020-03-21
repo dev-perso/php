@@ -2,13 +2,22 @@
 
 namespace App\Controller;
 
-use App\Repository\VinRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Vin;
+use App\Entity\Cave;
+use App\Form\VinType;
+use Twig\Environment;
 use Doctrine\ORM\QueryBuilder;
+use App\Repository\VinRepository;
+use App\Repository\PaysRepository;
+use App\Repository\RegionRepository;
+use App\Repository\CouleurRepository;
+use App\Repository\DomaineRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CaveAVinController extends AbstractController
 {
@@ -22,37 +31,14 @@ class CaveAVinController extends AbstractController
      */
     private $vin;
 
-    /*
-     * @var Array
-     */
-    private $couleur;
-
-    /*
-     * @var Array
-     */
-    private $region;
-
-    public function __construct(EntityManagerInterface $em, VinRepository $vin)
+    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine)
     {
-        $this->em   = $em;
-        $this->vin  = $vin;
-        $this->couleur = array
-        (
-            "blanc" => 0,
-            "rouge" => 0,
-            "rose"  => 0
-        );
-        $this->region = array
-        (
-            "alsace" => 0,
-            "bordeaux" => 0,
-            "bourgogne" => 0,
-            "cote_rhone" => 0,
-            "corse" => 0,
-            "languedoc" => 0,
-            "loire" => 0,
-            "etranger" => 0
-        );
+        $this->em       = $em;
+        $this->pays     = $pays;
+        $this->couleur  = $couleur;
+        $this->domaine  = $domaine;
+        $this->region   = $region;
+        $this->vin      = $vin;
     }
 
     /**

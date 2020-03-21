@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,8 +22,10 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Cave", mappedBy="id_user")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
      */
-    private $id;
+    private $id_user;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -72,10 +76,9 @@ class User implements UserInterface
      */
     private $confirm_password;
 
-
-    public function getId(): ?int
+    public function getIdUser(): ?int
     {
-        return $this->id;
+        return $this->id_user;
     }
 
     public function getNom(): ?string

@@ -3,14 +3,21 @@
 namespace App\Controller;
 
 use App\Repository\VinRepository;
+use App\Repository\PaysRepository;
+use App\Repository\RegionRepository;
+use App\Repository\CouleurRepository;
+use App\Repository\DomaineRepository;
 use App\Entity\Vin;
+use App\Entity\Cave;
 use App\Form\VinType;
 use App\Form\CommenterVinType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 class GererCaveController extends AbstractController
@@ -25,62 +32,87 @@ class GererCaveController extends AbstractController
      */
     private $vin;
 
-    /*
-     * @var Array
-     */
-    private $couleur;
-
-    /*
-     * @var Array
-     */
-    private $region;
-
-    public function __construct(EntityManagerInterface $em, VinRepository $vin)
+    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine)
     {
-        $this->em   = $em;
-        $this->vin  = $vin;
-        $this->couleur = array
-        (
-            "blanc" => 0,
-            "rouge" => 0,
-            "rose"  => 0
-        );
-        $this->region = array
-        (
-            "alsace" => 0,
-            "bordeaux" => 0,
-            "bourgogne" => 0,
-            "cote_rhone" => 0,
-            "corse" => 0,
-            "languedoc" => 0,
-            "loire" => 0,
-            "etranger" => 0
-        );
+        $this->em       = $em;
+        $this->pays     = $pays;
+        $this->couleur  = $couleur;
+        $this->domaine  = $domaine;
+        $this->region   = $region;
+        $this->vin      = $vin;
     }
 
     /**
      * @Route("/caveavin/gestion/ajouter", name="caveavin.gestion.ajout")
      * @return Response
      */
-    public function ajouterVin(Request $request)
+    public function ajouterVin(Request $request, Security $security): Response
     {
-        $vin = new Vin();
+        $couleurs   = $this->couleur->findAll();
+        $regions    = $this->region->findAll();
 
+        $vin    = new Vin();
+        $cave   = new Cave();
+
+        // Récupère le user
+        $user   = $security->getUser();
+
+        // Cré le formulaire d'ajout du Vin
         $form = $this->createForm(VinType::class, $vin);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
+        if ($form->isSubmitted() && $form->isValid() && $user)
         {
-            $vin->setArchive(false);
+            // Récupère les informations du formulaire
+            $domaineFromForm = $_POST['domaine'];
+            $data = $form->getData();
+            
+            $domaine = $this->domaine->createQueryBuilder('d')
+                ->where('d.domaine = :domaine')
+                ->setParameter('domaine', $domaineFromForm)
+                ->getQuery()
+                ->getResult();
+
+            
+            if ($domaine)
+            {
+                $vin->setIdDomaine($domaine[0]);
+            }
+            
+            dump($vin);
+            dump($data->getAppellation());
+            /*
+            
+            $this->couleur[$couleur] = $this->domaine->createQueryBuilder('v')
+                ->select('count(v.id)')
+                ->where('v.couleur = :couleur');
+
+
             $this->em->persist($vin);
             $this->em->flush();
 
-            return $this->redirectToRoute("caveavin");
+            $cave->setQuantite(1);
+            $cave->setIdUser($user);
+            $cave->setIdVin($vin);
+            
+            $this->em->persist($cave);
+            $this->em->flush();
+*/
+            return $this->render("cave/gestionVin/ajouter.html.twig", 
+            [
+                "couleurs"  => $couleurs,
+                "regions"   => $regions,
+                "vin"       => $vin,
+                "form"      => $form->createView()
+            ]);
         }
-        
-        return $this->render("cave/gestionVin/ajouter.html.twig", [
-            "vin"   => $vin,
-            "form"  => $form->createView()
+
+        return $this->render("cave/gestionVin/ajouter.html.twig", 
+        [
+            "couleurs"  => $couleurs,
+            "regions"   => $regions,
+            "vin"       => $vin,
+            "form"      => $form->createView()
         ]);
     }
 

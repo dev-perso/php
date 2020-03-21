@@ -13,18 +13,10 @@ class Vin
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Cave", mappedBy="id_vin")
+     * @ORM\JoinColumn(name="id_vin", referencedColumnName="id_vin")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $region;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $couleur;
+    private $id_vin;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -32,72 +24,34 @@ class Vin
     private $appellation;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $chateau;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $annee;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $prix;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $note;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantite;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $image;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":false})
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Couleur", inversedBy="id_couleur")
+     * @ORM\JoinColumn(name="id_couleur", referencedColumnName="id_couleur", nullable=false)
      */
-    private $archive;
+    private $id_couleur;
 
-    public function getId(): ?int
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Domaine", inversedBy="id_domaine")
+     * @ORM\JoinColumn(name="id_domaine", referencedColumnName="id_domaine", nullable=true)
+     */
+    private $id_domaine;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="id_region")
+     * @ORM\JoinColumn(name="id_region", referencedColumnName="id_region", nullable=false)
+     */
+    private $id_region;
+
+    public function getId_Vin(): ?int
     {
-        return $this->id;
-    }
-
-    public function getRegion(): ?string
-    {
-        return $this->region;
-    }
-
-    public function setRegion(string $region): self
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    public function getCouleur(): ?string
-    {
-        return $this->couleur;
-    }
-
-    public function setCouleur(string $couleur): self
-    {
-        $this->couleur = $couleur;
-
-        return $this;
+        return $this->id_vin;
     }
 
     public function getAppellation(): ?string
@@ -110,79 +64,7 @@ class Vin
         $this->appellation = $appellation;
 
         return $this;
-    }
-
-    public function getChateau(): ?string
-    {
-        return $this->chateau;
-    }
-
-    public function setChateau(?string $chateau): self
-    {
-        $this->chateau = $chateau;
-
-        return $this;
-    }
-
-    public function getAnnee(): ?int
-    {
-        return $this->annee;
-    }
-
-    public function setAnnee(int $annee): self
-    {
-        $this->annee = $annee;
-
-        return $this;
-    }
-
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(?float $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getNote(): ?int
-    {
-        return $this->note;
-    }
-
-    public function setNote(?int $note): self
-    {
-        $this->note = $note;
-
-        return $this;
-    }
-
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(int $quantite): self
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
+    }    
 
     public function getImage(): ?string
     {
@@ -196,14 +78,38 @@ class Vin
         return $this;
     }
 
-    public function getArchive(): ?bool
+    public function getIdCouleur(): ?Couleur
     {
-        return $this->archive;
+        return $this->id_couleur;
     }
 
-    public function setArchive(bool $archive): self
+    public function setIdCouleur(?Couleur $id_couleur): self
     {
-        $this->archive = $archive;
+        $this->id_couleur = $id_couleur->getIdCouleur();
+
+        return $this;
+    }
+
+    public function getIdDomaine(): ?Domaine
+    {
+        return $this->id_domaine;
+    }
+
+    public function setIdDomaine(?Domaine $id_domaine): self
+    {
+        $this->id_domaine = $id_domaine->getIdDomaine();
+
+        return $this;
+    }
+
+    public function getIdRegion(): ?Region
+    {
+        return $this->id_region;
+    }
+
+    public function setIdRegion(?Region $id_region): self
+    {
+        $this->id_region = $id_region->getIdRegion();
 
         return $this;
     }
