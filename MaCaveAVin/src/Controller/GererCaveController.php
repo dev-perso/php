@@ -7,6 +7,7 @@ use App\Repository\PaysRepository;
 use App\Repository\RegionRepository;
 use App\Repository\CouleurRepository;
 use App\Repository\DomaineRepository;
+use App\Entity\Domaine;
 use App\Entity\Vin;
 use App\Entity\Cave;
 use App\Form\VinType;
@@ -48,16 +49,19 @@ class GererCaveController extends AbstractController
      */
     public function ajouterVin(Request $request, Security $security): Response
     {
+        // Récupère toutes les couleurs & régions disponibles
         $couleurs   = $this->couleur->findAll();
         $regions    = $this->region->findAll();
 
-        $vin    = new Vin();
-        $cave   = new Cave();
+        // On prépare les objets pour les push en BDD après l'envoi du formulaire
+        $domaine    = new Domaine();
+        $vin        = new Vin();
+        $cave       = new Cave();
 
         // Récupère le user
         $user   = $security->getUser();
 
-        // Cré le formulaire d'ajout du Vin
+        // Crée le formulaire d'ajout du Vin
         $form = $this->createForm(VinType::class, $vin);
         $form->handleRequest($request);
 
@@ -66,30 +70,51 @@ class GererCaveController extends AbstractController
             // Récupère les informations du formulaire
             $domaineFromForm = $_POST['domaine'];
             $data = $form->getData();
-            
-            $domaine = $this->domaine->createQueryBuilder('d')
+
+            $domaineFromDb = $this->domaine->createQueryBuilder('d')
                 ->where('d.domaine = :domaine')
                 ->setParameter('domaine', $domaineFromForm)
                 ->getQuery()
                 ->getResult();
 
-            
-            if ($domaine)
+            if ($domaineFromDb)
+                $vin->setIdDomaine($domaineFromDb[0]);
+            else
             {
-                $vin->setIdDomaine($domaine[0]);
+                // Crée le nouveau domaine
+                $domaine->setDomaine($domaineFromForm);
+                $this->em->persist($domaine);
+                $this->em->flush();
+
+                // Ajoute l'id du domaine au Vin
+                $vin->setIdDomaine($domaine);
             }
+
+            // Vérifie sur le Vin existe
+            $vinFromDb = $this->vin->createQueryBuilder('v')
+                ->where('v.appellation = :appellation')
+                ->andWhere('v.id_couleur = :id_couleur')
+                ->andWhere('v.id_domaine = :id_domaine')
+                ->andWhere('v.id_region = :id_region')
+                ->setParameter('appellation', $vin->getAppellation())
+                ->setParameter('id_couleur', $vin->getIdCouleur())
+                ->setParameter('id_domaine', $vin->getIdDomaine())
+                ->setParameter('id_region', $vin->getIdRegion())
+                ->getQuery()
+                ->getResult();
             
-            dump($vin);
+            /*$this->em->persist($vin);
+            $this->em->flush();
+            
+            
+            */
+            if (!empty($vinFromDb))
+                dump($vinFromDb);
+            else
+                dump("nothing");
             dump($data->getAppellation());
             /*
-            
-            $this->couleur[$couleur] = $this->domaine->createQueryBuilder('v')
-                ->select('count(v.id)')
-                ->where('v.couleur = :couleur');
 
-
-            $this->em->persist($vin);
-            $this->em->flush();
 
             $cave->setQuantite(1);
             $cave->setIdUser($user);

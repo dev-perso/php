@@ -78,7 +78,7 @@ class Vin
         return $this;
     }
 
-    public function getIdCouleur(): ?Couleur
+    public function getIdCouleur(): ?int
     {
         return $this->id_couleur;
     }
@@ -90,7 +90,7 @@ class Vin
         return $this;
     }
 
-    public function getIdDomaine(): ?Domaine
+    public function getIdDomaine(): ?int
     {
         return $this->id_domaine;
     }
@@ -102,7 +102,7 @@ class Vin
         return $this;
     }
 
-    public function getIdRegion(): ?Region
+    public function getIdRegion(): ?int
     {
         return $this->id_region;
     }

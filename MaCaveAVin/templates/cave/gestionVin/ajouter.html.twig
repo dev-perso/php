@@ -20,12 +20,15 @@
                             {{ form_row(form.id_couleur, {'attr' : {'class' : 'selectColor', }}) }}
                         </div>
                         <div class="col-sm-12 mb-3">
-                            {#{ form_row(form.id_domaine, {'attr' : {'class' : 'selectDomaine'}}) }#}
-                            <label for="vin_id_domaine" class="required">Domaine</label>
-                            <input type="text" id="vin_id_domaine" name="domaine" required="required" class="selectDomaine form-control">
+                            <label for="vin_id_domaine">Domaine</label>
+                            <input type="text" id="vin_id_domaine" name="domaine" class="selectDomaine form-control">
                         </div>
                         <div class="col-sm-12">
                             {{ form_row(form.id_region, {'attr' : {'class' : 'selectRegion '}}) }}
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <label for="cave_quantite" class="required">Quantité</label>
+                            <input type="number" id="cave_quantite" required="required" name="quantite" class="form-control">
                         </div>
                         <div class="col-sm-12">
                             {{ form_row(form.image, {'attr' : {'placeholder' : 'Choisir une image'}}) }}
