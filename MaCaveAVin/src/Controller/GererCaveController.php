@@ -132,20 +132,23 @@ class GererCaveController extends AbstractController
 
             if (!empty($caveFromDb))
             {   
-                // incrémenter la quantité du vin déjà dans la cave
-                dump($caveFromDb);
+                // Incrémente la quantité du vin déjà dans la cave
+                $quantiteFromForm += $caveFromDb[0]->getQuantite();
+                $caveFromDb[0]->setQuantite($quantiteFromForm);
+                
+                $this->em->persist($caveFromDb[0]);
+                $this->em->flush();
             }
             else
             {
-                // Ajouter à la cave
+                // Ajoute le vin à la cave du user
+                $cave->setQuantite($quantiteFromForm);
+                $cave->setIdUser($user);
+
+                $this->em->persist($cave);
+                $this->em->flush();
             }
-            // Ajoute les données dans la cave
-            /*$cave->setQuantite($quantiteFromForm);
-            $cave->setIdUser($user);
             
-            $this->em->persist($cave);
-            $this->em->flush();
-*/
             return $this->render("cave/gestionVin/ajouter.html.twig", 
             [
                 "couleurs"  => $couleurs,

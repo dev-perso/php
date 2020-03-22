@@ -26,9 +26,20 @@
                         <div class="col-sm-12">
                             {{ form_row(form.id_region, {'attr' : {'class' : 'selectRegion '}}) }}
                         </div>
-                        <div class="col-sm-12 mb-3">
+                        <div class="col-sm-6 mb-3">
                             <label for="cave_quantite" class="required">Quantité</label>
                             <input type="number" id="cave_quantite" required="required" name="quantite" class="form-control">
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="input-group">
+                                <label for="cave_prix" class="required">Prix</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" id="cave_prix" name="prix" class="form-control" aria-label="montant en Euros">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-12">
                             {{ form_row(form.image, {'attr' : {'placeholder' : 'Choisir une image'}}) }}
@@ -47,4 +58,29 @@
             </div>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+// Restricts input for the given textbox to the given inputFilter.
+function setInputFilter(textbox, inputFilter) {
+  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+    textbox.addEventListener(event, function() {
+      if (inputFilter(this.value)) {
+        this.oldValue = this.value;
+        this.oldSelectionStart = this.selectionStart;
+        this.oldSelectionEnd = this.selectionEnd;
+      } else if (this.hasOwnProperty("oldValue")) {
+        this.value = this.oldValue;
+        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+      } else {
+        this.value = "";
+      }
+    });
+  });
+}
+
+setInputFilter(document.getElementById("cave_prix"), function(value) {
+  return /^-?\d*[.,]?\d*$/.test(value); });
+</script>
 {% endblock %}
