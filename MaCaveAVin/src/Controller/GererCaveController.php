@@ -2,24 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Vin;
+use App\Entity\Cave;
+use App\Form\VinType;
+use Twig\Environment;
+use App\Entity\Domaine;
+use App\Form\CommenterVinType;
+use Doctrine\ORM\QueryBuilder;
 use App\Repository\VinRepository;
+use App\Repository\CaveRepository;
 use App\Repository\PaysRepository;
 use App\Repository\RegionRepository;
 use App\Repository\CouleurRepository;
 use App\Repository\DomaineRepository;
-use App\Entity\Domaine;
-use App\Entity\Vin;
-use App\Entity\Cave;
-use App\Form\VinType;
-use App\Form\CommenterVinType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Twig\Environment;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GererCaveController extends AbstractController
 {
@@ -33,7 +34,7 @@ class GererCaveController extends AbstractController
      */
     private $vin;
 
-    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine)
+    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave)
     {
         $this->em       = $em;
         $this->pays     = $pays;
@@ -41,6 +42,7 @@ class GererCaveController extends AbstractController
         $this->domaine  = $domaine;
         $this->region   = $region;
         $this->vin      = $vin;
+        $this->cave     = $cave;
     }
 
     /**
@@ -68,9 +70,11 @@ class GererCaveController extends AbstractController
         if ($form->isSubmitted() && $form->isValid() && $user)
         {
             // Récupère les informations du formulaire
-            $domaineFromForm = $_POST['domaine'];
-            $data = $form->getData();
+            $domaineFromForm    = $_POST['domaine'];
+            $quantiteFromForm   = $_POST['quantite'];
+            $data               = $form->getData();
 
+            // Cherche si le domaine existe
             $domaineFromDb = $this->domaine->createQueryBuilder('d')
                 ->where('d.domaine = :domaine')
                 ->setParameter('domaine', $domaineFromForm)
@@ -90,7 +94,7 @@ class GererCaveController extends AbstractController
                 $vin->setIdDomaine($domaine);
             }
 
-            // Vérifie sur le Vin existe
+            // Cherche si le Vin existe
             $vinFromDb = $this->vin->createQueryBuilder('v')
                 ->where('v.appellation = :appellation')
                 ->andWhere('v.id_couleur = :id_couleur')
@@ -103,22 +107,41 @@ class GererCaveController extends AbstractController
                 ->getQuery()
                 ->getResult();
             
-            /*$this->em->persist($vin);
-            $this->em->flush();
-            
-            
-            */
             if (!empty($vinFromDb))
-                dump($vinFromDb);
+            {
+                // Récupére le Vin déjà existant
+                $cave->setIdVin($vinFromDb[0]);
+            }
             else
-                dump("nothing");
-            dump($data->getAppellation());
-            /*
+            {
+                // Crée le Vin
+                $this->em->persist($vin);
+                $this->em->flush();
 
+                $cave->setIdVin($vin);
+            }
 
-            $cave->setQuantite(1);
+            // Cherche si l'utilisateur a déjà ce vin dans sa cave
+            $caveFromDb = $this->cave->createQueryBuilder('c')
+                ->where('c.id_user = :id_user')
+                ->andWhere('c.id_vin = :id_vin')
+                ->setParameter('id_user', $user->getIdUser())
+                ->setParameter('id_vin', $cave->getIdVin())
+                ->getQuery()
+                ->getResult();
+
+            if (!empty($caveFromDb))
+            {   
+                // incrémenter la quantité du vin déjà dans la cave
+                dump($caveFromDb);
+            }
+            else
+            {
+                // Ajouter à la cave
+            }
+            // Ajoute les données dans la cave
+            /*$cave->setQuantite($quantiteFromForm);
             $cave->setIdUser($user);
-            $cave->setIdVin($vin);
             
             $this->em->persist($cave);
             $this->em->flush();

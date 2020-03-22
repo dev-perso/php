@@ -137,7 +137,7 @@ class Cave
         return $this;
     }
 
-    public function getIdVin(): ?Vin
+    public function getIdVin(): ?int
     {
         return $this->id_vin;
     }
