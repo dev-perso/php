@@ -8,6 +8,7 @@ use App\Form\VinType;
 use Twig\Environment;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\VinRepository;
+use App\Repository\CaveRepository;
 use App\Repository\PaysRepository;
 use App\Repository\RegionRepository;
 use App\Repository\CouleurRepository;
@@ -31,7 +32,7 @@ class CaveAVinController extends AbstractController
      */
     private $vin;
 
-    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine)
+    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave)
     {
         $this->em       = $em;
         $this->pays     = $pays;
@@ -39,21 +40,40 @@ class CaveAVinController extends AbstractController
         $this->domaine  = $domaine;
         $this->region   = $region;
         $this->vin      = $vin;
+        $this->cave     = $cave;
     }
 
     /**
-     * @Route("/", name="caveavin")
+     * @Route("/test", name="caveavin")
      * @return Response
      */
-    public function index(): Response
+    public function index(Security $security): Response
     {
-        // Récupère les vins avec une quantité strictement supérieur à 0
-        $qb = $this->vin->createQueryBuilder('v')
-            ->where('v.quantite > :quantite')
-            ->setParameter('quantite', 0)
-            ->orderBy('v.annee', 'ASC');
+        // Récupère le user
+        $user   = $security->getUser();
+        $vinsUser = [];
+        $userCave = [];
 
-        $vins = $qb->getQuery();
+        // Récupère les vins avec une quantité strictement supérieur à 0
+        $vins = $this->cave->createQueryBuilder('c')
+            ->where('c.id_user = :id_user')
+            ->setParameter('id_user', $user->getIdUser())
+            ->getQuery()
+            ->getResult();
+
+        foreach ($vins as $vin)
+        {
+            $vinsUser['region'] = $this->region->find($this->vin->find($vin->getIdVin())->getIdRegion())->getRegion();
+            $vinsUser['couleur'] = $this->couleur->find($this->vin->find($vin->getIdVin())->getIdCouleur())->getCouleur();
+            $vinsUser['appellation'] = $this->vin->find($vin->getIdVin())->getAppellation();
+            $vinsUser['annee'] = "Ajouter dans la table vin";
+            $vinsUser['quantite'] = $vin->getQuantite();
+            $vinsUser['prix'] = $vin->getPrix();
+            $vinsUser['note'] = $vin->getNote();
+
+            array_push($userCave, $vinsUser);
+        }
+            /*
 
         // Count couleur
         foreach ($this->couleur as $couleur => $nombre)
@@ -80,11 +100,13 @@ class CaveAVinController extends AbstractController
                 ->getQuery()
                 ->getSingleScalarResult();
         }
-
-        return $this->render("cave/macave.html.twig", [
-            'vins'      => $vins->getResult(),
-            'couleurs'  => $this->couleur,
-            'regions'   => $this->region
+*/
+        return $this->render("cave/test.html.twig", [
+            /*'vins'      => $vins->getResult(),*/
+            'couleurs'  => $this->couleur->findAll(),
+            'regions'   => $this->region->findAll(),
+            'userCave'  => $userCave,
+            'userVins'  => $vinsUser
         ]);
     }
 
