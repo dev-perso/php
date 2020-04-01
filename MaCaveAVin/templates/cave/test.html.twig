@@ -1,4 +1,120 @@
-{{ dump(userCave) }}
-{{ dump(couleurs) }}
-{{ dump(regions) }}
-{{ dump(userVins) }}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/macave.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container-table-adapted mt-4">
+
+        {# Ajouter vin et accès aux archives #}
+        {% if app.user %}
+            <div class="row">
+                <div class="col-6">
+                    <a role="button" href="{{ path('caveavin.gestion.ajout') }}" class="btn btn-light btnWine">
+                        <img src="{{ asset('img/ajouter.png') }}"
+                            height="30px" 
+                            width="30px" /> Ajouter un vin
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+                    <a role="button" href="{{ path('caveavin.archive') }}" class="btn btn-light btnWine">
+                        <img src="{{ asset('img/archive.png') }}"
+                            height="30px" 
+                            width="30px" /> Archive
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+        {# Filtrer l'affichage
+        {% if app.user %}
+            <div class="row filterLine text-center">
+                <div class="col-12 areaFilterBtn" id="filterLine">
+                    <span class="text-left policeInfo textInfoFilter">
+                        Filtrer :
+                    </span>
+                    {%  for couleur, nombre in couleurs %}
+                        {% if nombre > 0 %}
+                            <button role="button" data-filter="{{ couleur }}" class="btn btn-light btnFilter">
+                                {{ couleur | capitalize }}
+                            </button>
+                        {% endif %}
+                    {% endfor %}
+                    {%  for region, nombre in regions %}
+                        {% if nombre > 0 %}
+                            <button role="button" data-filter="{{ region }}" class="btn btn-light btnFilter">
+                                {{ region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}
+                            </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+ #}
+        <div class="row">
+            <div class="col-12" id="actifFilter">
+
+            </div>
+        </div>
+
+        <input type="hidden" id="filtres" name="actifFiltres" />
+
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">Région</th>
+                    <th scope="col">Couleur</th>
+                    <th scope="col">Appelation</th>
+                    <th scope="col">Année</th>
+                    <th scope="col">Qté</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Note</th>
+                    {% if app.user %}
+                        <th scope="col">Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody id="macave">
+                {%  for vin in userVins %}
+                    <tr>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.couleur | capitalize }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.appellation }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.annee }}</td>
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.quantite }}</td>
+                        {%  if vin.prix is empty %}
+                            <td data-id="{{ vin.id }}" class="pointer">NC</td>
+                        {% else %}
+                            <td data-id="{{ vin.id }}" class="pointer">{{ vin.prix }} €</td>
+                        {% endif %}
+                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.note }}</td>
+                        <!-- Should be the last column -->
+                        {% if app.user %}
+                            <td>
+                                <img src="{{ asset('img/modifier.png') }}"
+                                    class="editWine" 
+                                    id="{{ 'edit' ~ vin.id }}" 
+                                    title="Modifier"
+                                    height="30px" 
+                                    width="30px" />
+                                <img src="{{ asset('img/utiliser.png') }}" 
+                                    class="useWine ml-3" 
+                                    id="{{ 'use' ~ vin.id }}" 
+                                    title="Utiliser" 
+                                    height="30px" 
+                                    width="30px" />
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+     <script src="{{ asset('js/macave.js') }}"></script>
+{% endblock %}

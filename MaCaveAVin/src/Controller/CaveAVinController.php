@@ -63,6 +63,7 @@ class CaveAVinController extends AbstractController
 
         foreach ($vins as $vin)
         {
+            $vinsUser['id'] = $vin->getIdVin();
             $vinsUser['region'] = $this->region->find($this->vin->find($vin->getIdVin())->getIdRegion())->getRegion();
             $vinsUser['couleur'] = $this->couleur->find($this->vin->find($vin->getIdVin())->getIdCouleur())->getCouleur();
             $vinsUser['appellation'] = $this->vin->find($vin->getIdVin())->getAppellation();
@@ -71,7 +72,7 @@ class CaveAVinController extends AbstractController
             $vinsUser['prix'] = $vin->getPrix();
             $vinsUser['note'] = $vin->getNote();
 
-            array_push($userCave, $vinsUser);
+            $userCave[] = $vinsUser;
         }
             /*
 
@@ -105,8 +106,7 @@ class CaveAVinController extends AbstractController
             /*'vins'      => $vins->getResult(),*/
             'couleurs'  => $this->couleur->findAll(),
             'regions'   => $this->region->findAll(),
-            'userCave'  => $userCave,
-            'userVins'  => $vinsUser
+            'userVins'  => $userCave
         ]);
     }
 
