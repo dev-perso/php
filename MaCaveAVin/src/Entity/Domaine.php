@@ -13,8 +13,6 @@ class Domaine
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Vin", mappedBy="id_domaine")
-     * @ORM\JoinColumn(name="id_domaine", referencedColumnName="id_domaine")
      */
     private $id_domaine;
 

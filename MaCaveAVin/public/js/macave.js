@@ -157,20 +157,22 @@ document.addEventListener("DOMContentLoaded", function()
             url += constraint + "--" + actifFiltre.value;
         else
             url += constraint;
-            
+           
         this.remove();
 
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        request.send();
+        console.log(request);
+        request.send();    
 
         request.onreadystatechange = function()
         {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
             {
                 const response      = JSON.parse(request.response);
-                var buttonFilter    = document.createElement('button');
+                console.log(response);
+                /*var buttonFilter    = document.createElement('button');
                 var span            = document.createElement('span');
                 var tableBody       = document.getElementById("macave");
                 let newTableBody    = "";
@@ -239,7 +241,9 @@ document.addEventListener("DOMContentLoaded", function()
                     actifFiltre.value = actifFiltre.value + "--" + response['filtres'][0];
                 else
                     actifFiltre.value = response['filtres'];
+                    */
             }
+            
         };
     
         request.onerror = function()

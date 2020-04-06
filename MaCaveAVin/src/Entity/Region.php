@@ -13,8 +13,6 @@ class Region
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Vin", mappedBy="id_region")
-     * @ORM\JoinColumn(name="id_region", referencedColumnName="id_region")
      */
     private $id_region;
 
@@ -25,10 +23,14 @@ class Region
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\Pays", inversedBy="id_pays")
-     * @ORM\JoinColumn(name="id_pays", referencedColumnName="id_pays", nullable=false)
      */
     private $id_pays;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Pays")
+     * @ORM\JoinColumn(name="id_pays", referencedColumnName="id_pays", nullable=false)
+     */
+   private $pays;
 
     public function getIdRegion(): ?int
     {
@@ -47,9 +49,14 @@ class Region
         return $this;
     }
 
-    public function getId_Pays(): ?Pays
+    public function getIdPays(): ?int
     {
         return $this->id_pays;
+    }
+
+    public function getEntityPays(): ?Pays
+    {
+        return $this->pays;
     }
 
     public function setIdPays(?Pays $id_pays): self

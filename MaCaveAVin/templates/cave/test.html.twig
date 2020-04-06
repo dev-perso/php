@@ -28,32 +28,32 @@
             </div>
         {% endif %}
 
-        {# Filtrer l'affichage
+        {# Filtrer l'affichage #}
         {% if app.user %}
             <div class="row filterLine text-center">
                 <div class="col-12 areaFilterBtn" id="filterLine">
                     <span class="text-left policeInfo textInfoFilter">
                         Filtrer :
                     </span>
-                    {%  for couleur, nombre in couleurs %}
-                        {% if nombre > 0 %}
-                            <button role="button" data-filter="{{ couleur }}" class="btn btn-light btnFilter">
-                                {{ couleur | capitalize }}
+                    {% if colors %}
+                        {%  for color in colors %}
+                            <button role="button" data-filter="{{ color }}" class="btn btn-light btnFilter">
+                                {{ color | capitalize }}
                             </button>
-                        {% endif %}
-                    {% endfor %}
-                    {%  for region, nombre in regions %}
-                        {% if nombre > 0 %}
+                        {% endfor %}
+                    {% endif %}
+                    {% if regions %}
+                        {%  for region in regions %}
                             <button role="button" data-filter="{{ region }}" class="btn btn-light btnFilter">
                                 {{ region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}
                             </button>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
 
- #}
+ 
         <div class="row">
             <div class="col-12" id="actifFilter">
 
@@ -78,31 +78,31 @@
                 </tr>
             </thead>
             <tbody id="macave">
-                {%  for vin in userVins %}
+                {%  for wine in userWines %}
                     <tr>
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}</td>
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.couleur | capitalize }}</td>
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.appellation }}</td>
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.annee }}</td>
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.quantite }}</td>
-                        {%  if vin.prix is empty %}
-                            <td data-id="{{ vin.id }}" class="pointer">NC</td>
+                        <td data-id="{{ wine.id }}" class="pointer">{{ wine.region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}</td>
+                        <td data-id="{{ wine.id }}" class="pointer">{{ wine.couleur | capitalize }}</td>
+                        <td data-id="{{ wine.id }}" class="pointer">{{ wine.appellation }}</td>
+                        <td data-id="{{ wine.id }}" class="pointer">{{ wine.annee }}</td>
+                        <td data-id="{{ wine.id }}" class="pointer">{{ wine.quantite }}</td>
+                        {%  if wine.prix is empty %}
+                            <td data-id="{{ wine.id }}" class="pointer">NC</td>
                         {% else %}
-                            <td data-id="{{ vin.id }}" class="pointer">{{ vin.prix }} €</td>
+                            <td data-id="{{ wine.id }}" class="pointer">{{ wine.prix }} €</td>
                         {% endif %}
-                        <td data-id="{{ vin.id }}" class="pointer">{{ vin.note }}</td>
+                        <td data-id="{{ wine.id }}" class="pointer">{{ wine.note }}</td>
                         <!-- Should be the last column -->
                         {% if app.user %}
                             <td>
                                 <img src="{{ asset('img/modifier.png') }}"
                                     class="editWine" 
-                                    id="{{ 'edit' ~ vin.id }}" 
+                                    id="{{ 'edit' ~ wine.id }}" 
                                     title="Modifier"
                                     height="30px" 
                                     width="30px" />
                                 <img src="{{ asset('img/utiliser.png') }}" 
                                     class="useWine ml-3" 
-                                    id="{{ 'use' ~ vin.id }}" 
+                                    id="{{ 'use' ~ wine.id }}" 
                                     title="Utiliser" 
                                     height="30px" 
                                     width="30px" />

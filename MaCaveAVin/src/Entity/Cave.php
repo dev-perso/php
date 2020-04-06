@@ -43,17 +43,25 @@ class Cave
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="id_user")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false)
      */
     private $id_user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false)
+     */
+    private $user;
+
+    /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\Vin", inversedBy="id_vin")
-     * @ORM\JoinColumn(name="id_vin", referencedColumnName="id_vin", nullable=false)
      */
     private $id_vin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vin")
+     * @ORM\JoinColumn(name="id_vin", referencedColumnName="id_vin", nullable=false)
+     */
+    private $vin;
 
     public function __construct()
     {
@@ -125,9 +133,14 @@ class Cave
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getIdUser(): ?int
     {
         return $this->id_user;
+    }
+
+    public function getEntityUser(): ?User
+    {
+        return $this->user;
     }
 
     public function setIdUser(?User $id_user): self
@@ -140,6 +153,11 @@ class Cave
     public function getIdVin(): ?int
     {
         return $this->id_vin;
+    }
+
+    public function getEntityVin(): ?Vin
+    {
+        return $this->vin;
     }
 
     public function setIdVin(?Vin $id_vin): self

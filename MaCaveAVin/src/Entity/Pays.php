@@ -14,8 +14,6 @@ class Pays
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Region", mappedBy="id_pays")
-     * @ORM\JoinColumn(name="id_pays", referencedColumnName="id_pays")
      */
     private $id_pays;
 
@@ -24,7 +22,7 @@ class Pays
      */
     private $pays;
 
-    public function getId_Pays(): ?int
+    public function getIdPays(): ?int
     {
         return $this->id_pays;
     }

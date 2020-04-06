@@ -13,8 +13,6 @@ class Couleur
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Vin", mappedBy="id_couleur")
-     * @ORM\JoinColumn(name="id_couleur", referencedColumnName="id_couleur")
      */
     private $id_couleur;
 

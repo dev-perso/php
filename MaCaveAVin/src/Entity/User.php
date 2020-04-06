@@ -22,8 +22,6 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Cave", mappedBy="id_user")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
      */
     private $id_user;
 
