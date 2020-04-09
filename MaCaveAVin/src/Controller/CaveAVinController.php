@@ -151,57 +151,36 @@ class CaveAVinController extends AbstractController
         $nbFilter   = 0;
         $allFilters = explode("--", $filtre);
         
-
-
-        // Récupère les id des vins de l'utilisateur avec une quantité strictement supérieur à 0
-       /* $idWines = $this->cave->createQueryBuilder('c')
-            ->where('c.id_user = :id_user')
-            ->andWhere('c.quantite > :quantite')
-            ->setParameter('id_user', $this->user->getIdUser())
-            ->setParameter('quantite', 0)
-            ->select('c.id_vin')
-            ->getQuery()
-            ->getResult();
-
-        function in_array_r($needle, $haystack, $strict = false) {
-            foreach ($haystack as $item) {
-                if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
-                    return true;
-                }
-            }
-        
-            return false;
-        }*/
-
-        //$test = in_array_r("Blanc", $colors) ? 'found' : 'not found';
-
-            //$qb = $this->vin->createQueryBuilder('v');
-        
         foreach ($allFilters as $oneFilter)
         {
-            $couleurs = $this->couleur->findBy(['couleur' => $oneFilter]);
-            $regions = $this->region->findBy(['region' => $oneFilter]);
+            $couleur = $this->couleur->findBy(['couleur' => $oneFilter]);
+            $region = $this->region->findBy(['region' => $oneFilter]);
+            $wineFiltered = [];
 
-            if ($couleurs)
-                $winesFiltered = array_merge($winesFiltered, $this->vin->createQueryBuilder('v')
+            if ($couleur)
+            {
+                $wineFiltered = array_merge($winesFiltered, $this->vin->createQueryBuilder('v')
                                                                 ->leftJoin('v.users', 'User')
                                                                 ->where('User.id_user = :id_user')
                                                                 ->andWhere('v.couleur = :couleur')
                                                                 ->setParameter('id_user', $this->user->getIdUser())
-                                                                ->setParameter('couleur', $couleurs)
+                                                                ->setParameter('couleur', $couleur)
                                                                 ->getQuery()
                                                                 ->getResult());
-                //$winesFiltered = array_merge($winesFiltered, $this->vin->findBy(['couleur' => $couleurs]));
-            else if ($regions)
-                $winesFiltered = array_merge($winesFiltered, $this->vin->createQueryBuilder('v')
+            }
+            else if ($region)
+            {
+                $wineFiltered = array_merge($winesFiltered, $this->vin->createQueryBuilder('v')
                                                                 ->leftJoin('v.users', 'User')
                                                                 ->where('User.id_user = :id_user')
                                                                 ->andWhere('v.region = :region')
                                                                 ->setParameter('id_user', $this->user->getIdUser())
-                                                                ->setParameter('region', $regions)
+                                                                ->setParameter('region', $region)
                                                                 ->getQuery()
                                                                 ->getResult());
-
+            }
+                
+            $winesFiltered = $wineFiltered;
             /*if (in_array_r($oneFilter, $colors))
             {
                 
@@ -269,8 +248,10 @@ class CaveAVinController extends AbstractController
 
         return $this->json(
         [
-            'winesFiltered'  => $winesFiltered,
-            'couleurs'  => $couleurs,
+            'filters'   => $allFilters,
+            'wines'     => $winesFiltered,
+            'couleurs'  => $this->couleur->findAll(),
+            'regions'   => $this->region->findAll(),
             'nbFilter'  => $nbFilter,
             'oneFilter' => $oneFilter
         ]);

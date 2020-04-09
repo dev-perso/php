@@ -171,8 +171,8 @@ document.addEventListener("DOMContentLoaded", function()
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
             {
                 const response      = JSON.parse(request.response);
-                console.log(response);
-                /*var buttonFilter    = document.createElement('button');
+                console.log("response", response);
+                var buttonFilter    = document.createElement('button');
                 var span            = document.createElement('span');
                 var tableBody       = document.getElementById("macave");
                 let newTableBody    = "";
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function()
                 else valueToDisplay = constraint;
                 span.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
                 buttonFilter.classList.add('actif-filtre');
-                buttonFilter.setAttribute("data-filter", response['filtres'][0]);
+                buttonFilter.setAttribute("data-filter", response['filters'][0]);
                 buttonFilter.appendChild(span);
                 actifFilter.appendChild(buttonFilter);
                 buttonFilter.addEventListener("click", removeFilter, false);
@@ -191,25 +191,26 @@ document.addEventListener("DOMContentLoaded", function()
                 // Suppression des lignes du tableau
                 tableBody.innerHTML = "";
 
-                response['vins'].forEach((vin) =>
+                response['wines'].forEach((wine) =>
                 {
+                    console.log(wine.entityRegion.region);
                     newTableBody += "<tr>";
-                    if (vin.region == "cote_rhone") vin.region = "Côte du rhône";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.region.charAt(0).toUpperCase() + vin.region.slice(1) + "</td>";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.couleur.charAt(0).toUpperCase() + vin.couleur.slice(1) + "</td>";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.appellation.charAt(0).toUpperCase() + vin.appellation.slice(1) + "</td>";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.annee + "</td>";
-                    newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.quantite + "</td>";
-                    if (vin.prix != null)
-                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.prix + "</td>";
+                    if (wine.entityRegion.region == "cote_rhone") wine.entityRegion.region = "Côte du rhône";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.entityRegion.region.charAt(0).toUpperCase() + wine.entityRegion.region.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.couleur.charAt(0).toUpperCase() + wine.couleur.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.appellation.charAt(0).toUpperCase() + wine.appellation.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.annee + "</td>";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.quantite + "</td>";
+                    if (wine.prix != null)
+                        newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.prix + "</td>";
                     else
-                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">NC</td>";
-                    if (vin.note != null)
-                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\">" + vin.note + "</td>";
+                        newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">NC</td>";
+                    if (wine.note != null)
+                        newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.note + "</td>";
                     else
-                        newTableBody += "<td data-id=" + vin.id + " class=\"pointer\"></td>";
-                    newTableBody += "<td><img src=\"../img/modifier.png\" class=\"editWine\" id=\"edit" + vin.id + "\" title=\"Modifier\" height=\"30px\" width=\"30px\" />" +
-                                    "<img src=\"../img/utiliser.png\" class=\"useWine ml-3\" id=\"use" + vin.id + "\" title=\"Utiliser\" height=\"30px\" width=\"30px\" /></td>";
+                        newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\"></td>";
+                    newTableBody += "<td><img src=\"../img/modifier.png\" class=\"editWine\" id=\"edit" + wine.idVin + "\" title=\"Modifier\" height=\"30px\" width=\"30px\" />" +
+                                    "<img src=\"../img/utiliser.png\" class=\"useWine ml-3\" id=\"use" + wine.idVin + "\" title=\"Utiliser\" height=\"30px\" width=\"30px\" /></td>";
                     newTableBody += "</tr>";
                 });
 
@@ -238,10 +239,10 @@ document.addEventListener("DOMContentLoaded", function()
                 }
                 
                 if (actifFiltre.value != "")
-                    actifFiltre.value = actifFiltre.value + "--" + response['filtres'][0];
+                    actifFiltre.value = actifFiltre.value + "--" + response['filters'][0];
                 else
-                    actifFiltre.value = response['filtres'];
-                    */
+                    actifFiltre.value = response['filters'];
+                    
             }
             
         };
