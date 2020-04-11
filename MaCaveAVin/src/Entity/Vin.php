@@ -71,6 +71,16 @@ class Vin
      */
     private $users;
 
+    /**
+     * int
+     */
+    private $quantity;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $annee;
+
     public function __construct()
     {
         //$this->users = new \Doctrine\Common\Collections\PersistentCollection();
@@ -164,6 +174,30 @@ class Vin
     public function setUsers(?PersistentCollection $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getAnnee(): ?int
+    {
+        return $this->annee;
+    }
+
+    public function setAnnee(int $annee): self
+    {
+        $this->annee = $annee;
 
         return $this;
     }

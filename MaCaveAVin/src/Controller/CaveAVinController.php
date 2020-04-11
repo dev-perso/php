@@ -94,7 +94,7 @@ class CaveAVinController extends AbstractController
         $userWine['region'] = $wine->getEntityVin()->getEntityRegion()->getRegion();
         $userWine['couleur'] = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
         $userWine['appellation'] = $wine->getEntityVin()->getAppellation();
-        $userWine['annee'] = "Ajouter dans la table vin";
+        $userWine['annee'] = $wine->getEntityVin()->getAnnee();
         $userWine['quantite'] = $wine->getQuantite();
         $userWine['prix'] = $wine->getPrix();
         $userWine['note'] = $wine->getNote();
@@ -159,28 +159,38 @@ class CaveAVinController extends AbstractController
 
             if ($couleur)
             {
-                $wineFiltered = array_merge($winesFiltered, $this->vin->createQueryBuilder('v')
-                                                                ->leftJoin('v.users', 'User')
-                                                                ->where('User.id_user = :id_user')
-                                                                ->andWhere('v.couleur = :couleur')
-                                                                ->setParameter('id_user', $this->user->getIdUser())
-                                                                ->setParameter('couleur', $couleur)
-                                                                ->getQuery()
-                                                                ->getResult());
+                $wineFiltered = $this->vin->createQueryBuilder('v')
+                                    ->leftJoin('v.users', 'User')
+                                    ->where('User.id_user = :id_user')
+                                    ->andWhere('v.couleur = :couleur')
+                                    ->setParameter('id_user', $this->user->getIdUser())
+                                    ->setParameter('couleur', $couleur)
+                                    ->getQuery()
+                                    ->getResult();
             }
             else if ($region)
             {
-                $wineFiltered = array_merge($winesFiltered, $this->vin->createQueryBuilder('v')
-                                                                ->leftJoin('v.users', 'User')
-                                                                ->where('User.id_user = :id_user')
-                                                                ->andWhere('v.region = :region')
-                                                                ->setParameter('id_user', $this->user->getIdUser())
-                                                                ->setParameter('region', $region)
-                                                                ->getQuery()
-                                                                ->getResult());
+                $wineFiltered = $this->vin->createQueryBuilder('v')
+                                    ->leftJoin('v.users', 'User')
+                                    ->where('User.id_user = :id_user')
+                                    ->andWhere('v.region = :region')
+                                    ->setParameter('id_user', $this->user->getIdUser())
+                                    ->setParameter('region', $region)
+                                    ->getQuery()
+                                    ->getResult();
             }
                 
-            $winesFiltered = $wineFiltered;
+            $quantite = $this->cave->createQueryBuilder('c')
+                                            ->where('c.id_vin = :id_vin')
+                                            ->andWhere('c.id_user = :id_user')
+                                            ->setParameter('id_vin', $wineFiltered[0]->getIdVin())
+                                            ->setParameter('id_user', $this->user->getIdUser())
+                                            ->select('c.quantite')
+                                            ->getQuery()
+                                            ->getArrayResult();
+
+            $wineFiltered[0]->setQuantity($quantite[0]['quantite']);
+            $winesFiltered = array_merge($winesFiltered, $wineFiltered);
             /*if (in_array_r($oneFilter, $colors))
             {
                 

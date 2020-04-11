@@ -197,10 +197,10 @@ document.addEventListener("DOMContentLoaded", function()
                     newTableBody += "<tr>";
                     if (wine.entityRegion.region == "cote_rhone") wine.entityRegion.region = "Côte du rhône";
                     newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.entityRegion.region.charAt(0).toUpperCase() + wine.entityRegion.region.slice(1) + "</td>";
-                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.couleur.charAt(0).toUpperCase() + wine.couleur.slice(1) + "</td>";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.entityCouleur.couleur.charAt(0).toUpperCase() + wine.entityCouleur.couleur.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.appellation.charAt(0).toUpperCase() + wine.appellation.slice(1) + "</td>";
                     newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.annee + "</td>";
-                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.quantite + "</td>";
+                    newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.quantity + "</td>";
                     if (wine.prix != null)
                         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.prix + "</td>";
                     else
