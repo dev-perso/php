@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/ajouter.css') }}">
 {% endblock %}
 
 
@@ -26,14 +27,14 @@
                         <div class="col-sm-12">
                             {{ form_row(form.id_region, {'attr' : {'class' : 'selectRegion '}}) }}
                         </div>
-                        <div class="col-sm-4 mb-3">
+                        <div class="col-sm-4">
                             {{ form_row(form.annee, {'attr' : {'class' : 'selectAnnee '}}) }}
                         </div>
-                        <div class="col-sm-4 mb-3">
+                        <div class="col-sm-4">
                             <label for="cave_quantite" class="required">Quantité</label>
                             <input type="number" id="cave_quantite" required="required" name="quantite" class="form-control">
                         </div>
-                        <div class="col-sm-4 mb-3">
+                        <div class="col-sm-4">
                             <div class="input-group">
                                 <label for="cave_prix" class="required">Prix</label>
                                 <div class="input-group mb-3">

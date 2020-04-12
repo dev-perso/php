@@ -102,6 +102,23 @@ class CaveAVinController extends AbstractController
         return $userWine;
     }
 
+    private function getWineInformations2($wine)
+    {
+        $userWine = [];
+        
+        
+        $userWine['idVin'] = $wine->getIdVin();
+        $userWine['entityRegion'] = $wine->getEntityVin()->getEntityRegion();
+        $userWine['entityCouleur'] = $wine->getEntityVin()->getEntityCouleur();
+        $userWine['appellation'] = $wine->getEntityVin()->getAppellation();
+        $userWine['annee'] = $wine->getEntityVin()->getAnnee();
+        $userWine['quantity'] = $wine->getQuantite();
+        $userWine['prix'] = $wine->getPrix();
+        $userWine['note'] = $wine->getNote();
+
+        return $userWine;
+    }
+
     /**
      * @Route("/caveavin/bouteille/{id}", name="caveavin.bouteille.information")
      * @return Response
@@ -144,19 +161,46 @@ class CaveAVinController extends AbstractController
      */
     public function filtreVin ($filtre): Response
     {
-        /*$regions    = $this->region->findAll();*/
         $idColors   = [];
         $idRegions  = [];
         $winesFiltered = [];
         $nbFilter   = 0;
         $allFilters = explode("--", $filtre);
         
+        if ($allFilters[0] == "noFilter")
+        {
+            $userWines = [];
+
+            // Récupère les vins avec une quantité strictement supérieur à 0
+            $wines = $this->cave->createQueryBuilder('c')
+                ->where('c.id_user = :id_user')
+                ->andWhere('c.quantite > :quantite')
+                ->setParameter('id_user', $this->user->getIdUser())
+                ->setParameter('quantite', 0)
+                ->getQuery()
+                ->getResult();
+                
+            foreach ($wines as $wine)
+            {
+                // Récupère les informations du vin
+                $userWines[] = $this->getWineInformations2($wine);
+            }
+        
+            return $this->json(
+            [
+                'wines'     => $userWines
+            ]);
+        }
+
+        // Pour chaque filtre à prendre en compte
         foreach ($allFilters as $oneFilter)
         {
             $couleur = $this->couleur->findBy(['couleur' => $oneFilter]);
             $region = $this->region->findBy(['region' => $oneFilter]);
             $wineFiltered = [];
+            $increment = true;
 
+            // Si le filtre est une couleur
             if ($couleur)
             {
                 $wineFiltered = $this->vin->createQueryBuilder('v')
@@ -168,6 +212,7 @@ class CaveAVinController extends AbstractController
                                     ->getQuery()
                                     ->getResult();
             }
+            // Sinon si le filtre est une région
             else if ($region)
             {
                 $wineFiltered = $this->vin->createQueryBuilder('v')
@@ -190,80 +235,21 @@ class CaveAVinController extends AbstractController
                                             ->getArrayResult();
 
             $wineFiltered[0]->setQuantity($quantite[0]['quantite']);
-            $winesFiltered = array_merge($winesFiltered, $wineFiltered);
-            /*if (in_array_r($oneFilter, $colors))
-            {
-                
-                $idColors[] = $this->couleur->createQueryBuilder('c')
-                    ->where('c.couleur = :couleur')
-                    ->setParameter('couleur', $oneFilter)
-                    ->select('c.id_couleur')
-                    ->getQuery()
-                    ->getResult();
-            }
-            else if (in_array_r($oneFilter, $regions))
-            {
-                $idRegions[] = $this->region->createQueryBuilder('c')
-                    ->where('c.region = :region')
-                    ->setParameter('region', $oneFilter)
-                    ->select('c.id_region')
-                    ->getQuery()
-                    ->getResult();
-            }*/
+
+            foreach($winesFiltered as $key => $value)
+                if ($value->getIdVin() == $wineFiltered[0]->getIdVin())
+                    $increment = false;
+
+            if ($increment == true)
+                $winesFiltered = array_merge($winesFiltered, $wineFiltered);
 
             $nbFilter++;
         }
-    
-        //$wines      = $this->vin->findAll(['user' => $this->user->getIdUser(), 'couleur' => $couleur, 'region' => $region]);
-
-            /*$qb->andWhere('v.quantite > :quantite')
-                ->setParameter('quantite', 0)
-                ->orderBy('v.annee', 'ASC')
-                ->getQuery();
-
-            $wines = $qb->getResult();
- 
-            foreach($idWines as $idWine)
-            {
-            }
-
-       
-        
-        // Count region
-        foreach ($this->region as $region => $nombre)
-        {
-            $this->region[$region] = $this->vin->createQueryBuilder('v')
-                ->select('count(v.id)')
-                ->where('v.region = :region')
-                ->andWhere('v.quantite > :quantite')
-                ->setParameter('region', $region)
-                ->setParameter('quantite', 0)
-                ->getQuery()
-                ->getSingleScalarResult();
-        }
-
-        // Count couleur
-        foreach ($this->couleur as $couleur => $nombre)
-        {
-            $this->couleur[$couleur] = $this->vin->createQueryBuilder('v')
-                ->select('count(v.id)')
-                ->where('v.couleur = :couleur')
-                ->andWhere('v.quantite > :quantite')
-                ->setParameter('couleur', $couleur)
-                ->setParameter('quantite', 0)
-                ->getQuery()
-                ->getSingleScalarResult();
-        }
-*/
 
         return $this->json(
         [
             'filters'   => $allFilters,
-            'wines'     => $winesFiltered,
-            'couleurs'  => $this->couleur->findAll(),
-            'regions'   => $this->region->findAll(),
-            'nbFilter'  => $nbFilter,
-            'oneFilter' => $oneFilter
+            'wines'     => $winesFiltered
         ]);
     }
 }

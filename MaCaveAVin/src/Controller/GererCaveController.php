@@ -73,7 +73,7 @@ class GererCaveController extends AbstractController
             $domaineFromForm    = $_POST['domaine'];
             $quantiteFromForm   = $_POST['quantite'];
             $data               = $form->getData();
-
+            
             // Cherche si le domaine existe
             $domaineFromDb = $this->domaine->createQueryBuilder('d')
                 ->where('d.domaine = :domaine')
@@ -114,6 +114,9 @@ class GererCaveController extends AbstractController
             }
             else
             {
+                dump($vin);
+
+
                 // Crée le Vin
                 $this->em->persist($vin);
                 $this->em->flush();

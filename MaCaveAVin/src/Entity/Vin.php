@@ -32,6 +32,7 @@ class Vin
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\JoinColumn(name="id_couleur", referencedColumnName="id_couleur")
      */
     private $id_couleur;
 

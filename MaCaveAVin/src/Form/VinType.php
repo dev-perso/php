@@ -38,7 +38,7 @@ class VinType extends AbstractType
                 'choice_label'  => 'couleur',
                 'label'         => 'Couleur',
                 'choice_value'  => 'id_couleur',
-                'placeholder'   => 'Choose color',
+                'placeholder'   => 'Select color',
                 'empty_data'  => null
             ])
             ->add('id_region', EntityType::class,
@@ -46,6 +46,7 @@ class VinType extends AbstractType
                 'class'         => Region::class,
                 'choice_label'  => 'region',
                 'label'         => 'Région',
+                'placeholder'   => 'Select region',
                 'choice_value'  => 'id_region'
             ])
         ;
