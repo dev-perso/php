@@ -79,7 +79,7 @@ class CaveAVinController extends AbstractController
                 $allRegionsInCave[] = $wine->getEntityVin()->getEntityRegion()->getRegion();
         }
         
-        return $this->render("cave/test.html.twig", [
+        return $this->render("cave/macave.html.twig", [
             'colors'    => $allColorsInCave,
             'regions'   => $allRegionsInCave,
             'userWines' => $userWines
@@ -89,23 +89,6 @@ class CaveAVinController extends AbstractController
     private function getWineInformations($wine)
     {
         $userWine = [];
-        
-        $userWine['id'] = $wine->getIdVin();
-        $userWine['region'] = $wine->getEntityVin()->getEntityRegion()->getRegion();
-        $userWine['couleur'] = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
-        $userWine['appellation'] = $wine->getEntityVin()->getAppellation();
-        $userWine['annee'] = $wine->getEntityVin()->getAnnee();
-        $userWine['quantite'] = $wine->getQuantite();
-        $userWine['prix'] = $wine->getPrix();
-        $userWine['note'] = $wine->getNote();
-
-        return $userWine;
-    }
-
-    private function getWineInformations2($wine)
-    {
-        $userWine = [];
-        
         
         $userWine['idVin'] = $wine->getIdVin();
         $userWine['entityRegion'] = $wine->getEntityVin()->getEntityRegion();
@@ -183,7 +166,7 @@ class CaveAVinController extends AbstractController
             foreach ($wines as $wine)
             {
                 // Récupère les informations du vin
-                $userWines[] = $this->getWineInformations2($wine);
+                $userWines[] = $this->getWineInformations($wine);
             }
         
             return $this->json(

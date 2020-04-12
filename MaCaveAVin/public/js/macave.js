@@ -155,6 +155,10 @@ document.addEventListener("DOMContentLoaded", function()
         var actifFiltre = document.getElementById("filtres");
         var url         = "/caveavin/filtre/";
 
+        // Bloque le filtre des autres boutons
+        lock(filter);
+
+        console.log("here")
         if (actifFiltre.value != "")
             url += constraint + "--" + actifFiltre.value;
         else
@@ -172,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function()
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
             {
                 const response      = JSON.parse(request.response);
-                console.log(response);
                 var buttonFilter    = document.createElement('button');
                 var span            = document.createElement('span');
                 var tableBody       = document.getElementById("macave");
@@ -230,6 +233,8 @@ document.addEventListener("DOMContentLoaded", function()
                     use[i].addEventListener("click", useWine, false);
                 }
 
+                unlock(filter);
+
                 for (var i = 0; i < tr.length; i++)
                 {
                     for (var j = 0; j < (tr[i].cells.length - 1); j++)
@@ -281,6 +286,23 @@ document.addEventListener("DOMContentLoaded", function()
     {
         filter[i].addEventListener("click", filterMyCave, false);
     }
+
+    var lock = (filter) =>
+    {
+        for (var i = 0; i < filter.length; i++)
+        {
+            filter[i].removeEventListener("click", filterMyCave);
+        }
+    }
+
+    var unlock = (filter) =>
+    {
+        for (var i = 0; i < filter.length; i++)
+        {
+            filter[i].addEventListener("click", filterMyCave, false);
+        }
+    }
+
 
     for (var i = 0; i < tr.length; i++)
     {
