@@ -44,6 +44,11 @@ document.addEventListener("DOMContentLoaded", function()
         var url             = "/caveavin/filtre/";
         var valueToDisplay  = "";
 
+        // Bloque le filtre des autres boutons
+        lockFilter(filter);
+        // Bloque le filtre des boutons pour retirer les filtres
+        lockActifFilter();
+
         for (var i = 0; i < actifFiltre.length; i++)
         {
             if (actifFiltre[i] != toRemove)
@@ -105,23 +110,16 @@ document.addEventListener("DOMContentLoaded", function()
                 var use     = document.getElementsByClassName("useWine");
                 var tr          = document.getElementsByTagName("tr");
 
-                for (var i = 0; i < edit.length; i++)
-                {
-                    edit[i].addEventListener("click", editWine, false);
-                }
-
-                for (var i = 0; i < use.length; i++)
-                {
-                    use[i].addEventListener("click", useWine, false);
-                }
-
-                for (var i = 0; i < tr.length; i++)
-                {
-                    for (var j = 0; j < (tr[i].cells.length - 1); j++)
-                    {
-                        tr[i].cells[j].addEventListener("click", getDescription, false);
-                    }
-                }
+                // Débloque les boutons des filtres
+                unlockFilter(filter);
+                // Permet d'obtenir la description des vins dans le tableau
+                getDescription(tr);
+                // Crée les événements d'édition du vin
+                editWine(edit);
+                // Crée les événements d'utilisation du vin
+                useWine(use);
+                // Débloque les boutons pour retirer les filtres
+                unlockActifFilter();
                 
                 // Réécris dans l'input hidden des filtres en cours
                 if (currentFilter.value != "")
@@ -155,10 +153,11 @@ document.addEventListener("DOMContentLoaded", function()
         var actifFiltre = document.getElementById("filtres");
         var url         = "/caveavin/filtre/";
 
-        // Bloque le filtre des autres boutons
-        lock(filter);
+        // Bloque le filtre des boutons de filtrage
+        lockFilter(filter);
+        // Bloque le filtre des boutons pour retirer les filtres
+        lockActifFilter();
 
-        console.log("here")
         if (actifFiltre.value != "")
             url += constraint + "--" + actifFiltre.value;
         else
@@ -223,25 +222,16 @@ document.addEventListener("DOMContentLoaded", function()
                 var use     = document.getElementsByClassName("useWine");
                 var tr      = document.getElementsByTagName("tr");
 
-                for (var i = 0; i < edit.length; i++)
-                {
-                    edit[i].addEventListener("click", editWine, false);
-                }
-
-                for (var i = 0; i < use.length; i++)
-                {
-                    use[i].addEventListener("click", useWine, false);
-                }
-
-                unlock(filter);
-
-                for (var i = 0; i < tr.length; i++)
-                {
-                    for (var j = 0; j < (tr[i].cells.length - 1); j++)
-                    {
-                        tr[i].cells[j].addEventListener("click", getDescription, false);
-                    }
-                }
+                // Débloque les boutons des filtres
+                unlockFilter(filter);
+                // Permet d'obtenir la description des vins dans le tableau
+                getDescription(tr);
+                // Crée les événements d'édition du vin
+                editWine(edit);
+                // Crée les événements d'utilisation du vin
+                useWine(use);
+                // Débloque les boutons pour retirer les filtres
+                unlockActifFilter();
                 
                 if (actifFiltre.value != "")
                     actifFiltre.value = actifFiltre.value + "--" + response['filters'][0];
@@ -272,22 +262,26 @@ document.addEventListener("DOMContentLoaded", function()
      * click sur les lignes du tableau pour Description
      */
 
-    for (var i = 0; i < use.length; i++)
+    // Crée l'événement d'utilisation d'un vin
+    var useWine = (use) =>
     {
-        use[i].addEventListener("click", useWine, false);
+        for (var i = 0; i < use.length; i++)
+        {
+            use[i].addEventListener("click", useWine, false);
+        }
     }
 
-    for (var i = 0; i < edit.length; i++)
+    // Crée l'événement d'édition d'un vin
+    var editWine = (edit) => 
     {
-        edit[i].addEventListener("click", editWine, false);
+        for (var i = 0; i < edit.length; i++)
+        {
+            edit[i].addEventListener("click", editWine, false);
+        }
     }
 
-    for (var i = 0; i < filter.length; i++)
-    {
-        filter[i].addEventListener("click", filterMyCave, false);
-    }
-
-    var lock = (filter) =>
+    // Bloque l'événement de filtre des vins
+    var lockFilter = (filter) =>
     {
         for (var i = 0; i < filter.length; i++)
         {
@@ -295,7 +289,8 @@ document.addEventListener("DOMContentLoaded", function()
         }
     }
 
-    var unlock = (filter) =>
+    // Crée l'événement de filtre des vins
+    var unlockFilter = (filter) =>
     {
         for (var i = 0; i < filter.length; i++)
         {
@@ -303,12 +298,45 @@ document.addEventListener("DOMContentLoaded", function()
         }
     }
 
-
-    for (var i = 0; i < tr.length; i++)
+    // Bloque l'événement de filtre des vins
+    var lockActifFilter = () =>
     {
-        for (var j = 0; j < (tr[i].cells.length - 1); j++)
+        var btnActifFilter = document.getElementsByClassName("actif-filtre");
+
+        for (var i = 0; i < btnActifFilter.length; i++)
         {
-            tr[i].cells[j].addEventListener("click", getDescription, false);
+            btnActifFilter[i].removeEventListener("click", removeFilter);
         }
     }
+
+    // Crée l'événement de filtre des vins
+    var unlockActifFilter = () =>
+    {
+        var btnActifFilter = document.getElementsByClassName("actif-filtre");
+
+        for (var i = 0; i < btnActifFilter.length; i++)
+        {
+            btnActifFilter[i].addEventListener("click", removeFilter, false);
+        }
+    }
+
+    // Redirige vers les descriptions du vin de la ligne cliqué
+    var getDescription = (tr) =>
+    {
+        for (var i = 0; i < tr.length; i++)
+        {
+            for (var j = 0; j < (tr[i].cells.length - 1); j++)
+            {
+                tr[i].cells[j].addEventListener("click", getDescription, false);
+            }
+        }
+    }
+
+    // Active les événements
+    unlockFilter(filter);   // des filtres
+    getDescription(tr);     // des descriptions
+    editWine(edit);         // des éditions du vin
+    useWine(use);           // de l'utilisation du vin
+
+    
 });
