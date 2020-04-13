@@ -57,13 +57,7 @@ class CaveAVinController extends AbstractController
         $allRegionsInCave   = [];
 
         // Récupère les vins avec une quantité strictement supérieur à 0
-        $wines = $this->cave->createQueryBuilder('c')
-            ->where('c.id_user = :id_user')
-            ->andWhere('c.quantite > :quantite')
-            ->setParameter('id_user', $this->user->getIdUser())
-            ->setParameter('quantite', 0)
-            ->getQuery()
-            ->getResult();
+        $wines = $this->cave->getWinesFromUserCave($this->user->getIdUser());
             
         foreach ($wines as $wine)
         {

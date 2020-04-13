@@ -36,15 +36,17 @@ class CaveRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Cave
+    /**
+    * @return Cave[] Returns an array of Cave objects
+    */
+    public function getWinesFromUserCave($idUser)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('c.id_user = :id_user')
+            ->andWhere('c.quantite > :quantite')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('quantite', 0)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

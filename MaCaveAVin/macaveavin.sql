@@ -1,22 +1,16 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 26 fév. 2020 à 13:52
--- Version du serveur :  5.7.21
--- Version de PHP :  7.3.13
+-- Hôte : 127.0.0.1:3308
+-- Généré le :  lun. 13 avr. 2020 à 14:22
+-- Version du serveur :  8.0.18
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-CREATE DATABASE macaveavin;
-USE macaveavin;
-
-ALTER DATABASE macaveavin CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,6 +21,151 @@ ALTER DATABASE macaveavin CHARACTER SET utf8 COLLATE utf8_general_ci;
 --
 -- Base de données :  `macaveavin`
 --
+CREATE DATABASE IF NOT EXISTS `macaveavin` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `macaveavin`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cave`
+--
+
+DROP TABLE IF EXISTS `cave`;
+CREATE TABLE IF NOT EXISTS `cave` (
+  `id_cave` int(11) NOT NULL AUTO_INCREMENT,
+  `quantite` int(11) UNSIGNED NOT NULL,
+  `note` enum('0','0,5','1','1,5','2','2,5','3','3,5','4','4,5','5') DEFAULT NULL,
+  `description` longtext,
+  `archive` tinyint(1) NOT NULL DEFAULT '0',
+  `prix` double DEFAULT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_vin` int(11) NOT NULL,
+  PRIMARY KEY (`id_cave`),
+  KEY `id_vin` (`id_vin`),
+  KEY `id_user` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `cave`
+--
+
+INSERT INTO `cave` (`id_cave`, `quantite`, `note`, `description`, `archive`, `prix`, `id_user`, `id_vin`) VALUES
+(4, 2, NULL, NULL, 0, NULL, 1, 21),
+(6, 2, NULL, NULL, 0, NULL, 1, 22);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `couleur`
+--
+
+DROP TABLE IF EXISTS `couleur`;
+CREATE TABLE IF NOT EXISTS `couleur` (
+  `id_couleur` int(11) NOT NULL AUTO_INCREMENT,
+  `couleur` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_couleur`),
+  UNIQUE KEY `couleur` (`couleur`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `couleur`
+--
+
+INSERT INTO `couleur` (`id_couleur`, `couleur`) VALUES
+(1, 'Blanc'),
+(2, 'Rosé'),
+(3, 'Rouge');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `domaine`
+--
+
+DROP TABLE IF EXISTS `domaine`;
+CREATE TABLE IF NOT EXISTS `domaine` (
+  `id_domaine` int(11) NOT NULL AUTO_INCREMENT,
+  `domaine` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_domaine`),
+  UNIQUE KEY `domaine` (`domaine`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `domaine`
+--
+
+INSERT INTO `domaine` (`id_domaine`, `domaine`) VALUES
+(1, ''),
+(3, 'Bouchard Père & Fils'),
+(8, 'Capuano-Ferreri'),
+(7, 'Charles Guyot'),
+(11, 'Château Carbonnieux'),
+(6, 'Château de la Charrière'),
+(5, 'Château de Landiras'),
+(10, 'Château de Rochemorin'),
+(18, 'Chateau Millegrand'),
+(9, 'Château Olivier'),
+(12, 'Comtesse du Barry'),
+(16, 'Domaine d\'Avrillé'),
+(2, 'Domaine Masse'),
+(17, 'Gérard Bertrand'),
+(13, 'Jean Renaud'),
+(4, 'Richard');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pays`
+--
+
+DROP TABLE IF EXISTS `pays`;
+CREATE TABLE IF NOT EXISTS `pays` (
+  `id_pays` int(11) NOT NULL AUTO_INCREMENT,
+  `pays` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_pays`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `pays`
+--
+
+INSERT INTO `pays` (`id_pays`, `pays`) VALUES
+(1, 'France'),
+(2, 'Etranger');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `region`
+--
+
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE IF NOT EXISTS `region` (
+  `id_region` int(11) NOT NULL AUTO_INCREMENT,
+  `region` varchar(255) NOT NULL,
+  `id_pays` int(11) NOT NULL,
+  PRIMARY KEY (`id_region`),
+  UNIQUE KEY `region` (`region`),
+  KEY `id_pays` (`id_pays`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `region`
+--
+
+INSERT INTO `region` (`id_region`, `region`, `id_pays`) VALUES
+(1, 'Alsace', 1),
+(2, 'Bordeaux', 1),
+(3, 'Bourgogne', 1),
+(4, 'Corse', 1),
+(5, 'Cote de Provence', 1),
+(6, 'Côte du Rhône', 1),
+(7, 'Jura', 1),
+(8, 'Languedoc Roussillon', 1),
+(9, 'Loire', 1),
+(10, 'Savoie', 1),
+(11, 'Sud Ouest', 1),
+(12, 'Etranger', 2);
 
 -- --------------------------------------------------------
 
@@ -36,21 +175,22 @@ ALTER DATABASE macaveavin CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(150) NOT NULL,
+  `prenom` varchar(150) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `role` enum('user','admin') NOT NULL DEFAULT 'user',
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `nom`, `prenom`, `email`, `username`, `password`) VALUES
-(1, 'Paris', 'Michael', 'paris.michael@hotmail.fr', 'panam', '$2y$13$RLTGRKz9rBYtKj2luWvLjOuCjRoMxlUyw7x9GpYPbe9HbQQYjtvo2');
+INSERT INTO `user` (`id_user`, `nom`, `prenom`, `email`, `username`, `password`, `role`) VALUES
+(1, 'Paris', 'Michael', 'paris.michael@hotmail.fr', 'panam', '$2y$13$RLTGRKz9rBYtKj2luWvLjOuCjRoMxlUyw7x9GpYPbe9HbQQYjtvo2', 'admin');
 
 -- --------------------------------------------------------
 
@@ -60,30 +200,51 @@ INSERT INTO `user` (`id`, `nom`, `prenom`, `email`, `username`, `password`) VALU
 
 DROP TABLE IF EXISTS `vin`;
 CREATE TABLE IF NOT EXISTS `vin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `region` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `couleur` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `appellation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `chateau` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_vin` int(11) NOT NULL AUTO_INCREMENT,
+  `appellation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `annee` int(11) NOT NULL,
-  `prix` double DEFAULT NULL,
-  `quantite` int(11) NOT NULL,
-  `description` text,
-  `image` longtext,
-  `note` smallint(6) DEFAULT NULL,
-  `archive` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `image` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `id_couleur` int(11) NOT NULL,
+  `id_domaine` int(11) NOT NULL,
+  `id_region` int(11) NOT NULL,
+  PRIMARY KEY (`id_vin`),
+  KEY `id_couleur` (`id_couleur`),
+  KEY `id_domaine` (`id_domaine`),
+  KEY `id_region` (`id_region`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `vin`
 --
 
-INSERT INTO `vin` (`id`, `region`, `couleur`, `appellation`, `chateau`, `annee`, `prix`, `quantite`, `description`, `image`, `note`, `archive`) VALUES
-(1, 'bourgogne', 'blanc', 'Chardonnay', NULL, 2017, 8, 2, NULL, NULL, 3, 1),
-(2, 'bourgogne', 'rouge', 'Bourgogne Chardonnay', NULL, 2020, NULL, 1, NULL, NULL, NULL, NULL),
-(3, 'languedoc', 'rouge', 'qzdqzd', NULL, 2020, NULL, 1, NULL, NULL, NULL, 0),
-(4, 'cote_rhone', 'rose', 'qzd', NULL, 2020, NULL, 1, NULL, NULL, NULL, 0);
+INSERT INTO `vin` (`id_vin`, `appellation`, `annee`, `image`, `id_couleur`, `id_domaine`, `id_region`) VALUES
+(21, 'Rosé d\'Anjou', 2018, NULL, 2, 16, 9),
+(22, 'Chardonnay', 2017, NULL, 1, 17, 8);
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `cave`
+--
+ALTER TABLE `cave`
+  ADD CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `id_vin` FOREIGN KEY (`id_vin`) REFERENCES `vin` (`id_vin`);
+
+--
+-- Contraintes pour la table `region`
+--
+ALTER TABLE `region`
+  ADD CONSTRAINT `id_pays` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id_pays`);
+
+--
+-- Contraintes pour la table `vin`
+--
+ALTER TABLE `vin`
+  ADD CONSTRAINT `id_couleur` FOREIGN KEY (`id_couleur`) REFERENCES `couleur` (`id_couleur`),
+  ADD CONSTRAINT `id_domaine` FOREIGN KEY (`id_domaine`) REFERENCES `domaine` (`id_domaine`),
+  ADD CONSTRAINT `id_region` FOREIGN KEY (`id_region`) REFERENCES `region` (`id_region`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
