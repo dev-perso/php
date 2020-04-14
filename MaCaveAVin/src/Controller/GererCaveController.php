@@ -49,7 +49,7 @@ class GererCaveController extends AbstractController
      * @Route("/caveavin/gestion/ajouter", name="caveavin.gestion.ajout")
      * @return Response
      */
-    public function ajouterVin(Request $request, Security $security): Response
+    public function addWine(Request $request, Security $security): Response
     {
         // Récupère toutes les couleurs & régions disponibles
         $couleurs   = $this->couleur->findAll();
@@ -114,9 +114,6 @@ class GererCaveController extends AbstractController
             }
             else
             {
-                dump($vin);
-
-
                 // Crée le Vin
                 $this->em->persist($vin);
                 $this->em->flush();

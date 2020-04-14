@@ -146,6 +146,7 @@ class Cave
     public function setIdUser(?User $id_user): self
     {
         $this->id_user = $id_user->getIdUser();
+        $this->user = $id_user;
 
         return $this;
     }
@@ -162,7 +163,8 @@ class Cave
 
     public function setIdVin(?Vin $id_vin): self
     {
-        $this->id_vin = $id_vin->getId_Vin();
+        $this->id_vin = $id_vin->getIdVin();
+        $this->vin = $id_vin;
 
         return $this;
     }

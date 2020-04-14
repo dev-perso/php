@@ -82,11 +82,6 @@ class Vin
      */
     private $annee;
 
-    public function __construct()
-    {
-        //$this->users = new \Doctrine\Common\Collections\PersistentCollection();
-    }
-
     public function getIdVin(): ?int
     {
         return $this->id_vin;
@@ -129,6 +124,7 @@ class Vin
     public function setIdCouleur(?Couleur $id_couleur): self
     {
         $this->id_couleur = $id_couleur->getIdCouleur();
+        $this->couleur = $id_couleur;
 
         return $this;
     }
@@ -146,6 +142,7 @@ class Vin
     public function setIdDomaine(?Domaine $id_domaine): self
     {
         $this->id_domaine = $id_domaine->getIdDomaine();
+        $this->domaine = $id_domaine;
 
         return $this;
     }
@@ -163,6 +160,7 @@ class Vin
     public function setIdRegion(?Region $id_region): self
     {
         $this->id_region = $id_region->getIdRegion();
+        $this->region = $id_region;
 
         return $this;
     }

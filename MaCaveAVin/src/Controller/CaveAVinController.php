@@ -80,6 +80,7 @@ class CaveAVinController extends AbstractController
         ]);
     }
 
+    // Get Wine Informations from object Vin
     private function getWineInformations($wine)
     {
         $userWine = [];
@@ -138,30 +139,22 @@ class CaveAVinController extends AbstractController
      */
     public function filtreVin ($filtre): Response
     {
-        $idColors   = [];
-        $idRegions  = [];
         $winesFiltered = [];
+        $winesToSend = [];
         $nbFilter   = 0;
         $allFilters = explode("--", $filtre);
-        
+
+        // Si on enlève le dernier filtre
         if ($allFilters[0] == "noFilter")
         {
             $userWines = [];
 
             // Récupère les vins avec une quantité strictement supérieur à 0
-            $wines = $this->cave->createQueryBuilder('c')
-                ->where('c.id_user = :id_user')
-                ->andWhere('c.quantite > :quantite')
-                ->setParameter('id_user', $this->user->getIdUser())
-                ->setParameter('quantite', 0)
-                ->getQuery()
-                ->getResult();
-                
+            $wines = $this->cave->getWinesFromUserCave($this->user->getIdUser());
+
             foreach ($wines as $wine)
-            {
                 // Récupère les informations du vin
                 $userWines[] = $this->getWineInformations($wine);
-            }
         
             return $this->json(
             [
@@ -175,7 +168,6 @@ class CaveAVinController extends AbstractController
             $couleur = $this->couleur->findBy(['couleur' => $oneFilter]);
             $region = $this->region->findBy(['region' => $oneFilter]);
             $wineFiltered = [];
-            $increment = true;
 
             // Si le filtre est une couleur
             if ($couleur)
@@ -201,32 +193,35 @@ class CaveAVinController extends AbstractController
                                     ->getQuery()
                                     ->getResult();
             }
-                
-            $quantite = $this->cave->createQueryBuilder('c')
-                                            ->where('c.id_vin = :id_vin')
-                                            ->andWhere('c.id_user = :id_user')
-                                            ->setParameter('id_vin', $wineFiltered[0]->getIdVin())
-                                            ->setParameter('id_user', $this->user->getIdUser())
-                                            ->select('c.quantite')
-                                            ->getQuery()
-                                            ->getArrayResult();
 
-            $wineFiltered[0]->setQuantity($quantite[0]['quantite']);
-
-            foreach($winesFiltered as $key => $value)
-                if ($value->getIdVin() == $wineFiltered[0]->getIdVin())
-                    $increment = false;
-
-            if ($increment == true)
-                $winesFiltered = array_merge($winesFiltered, $wineFiltered);
+            $winesFiltered = array_merge($winesFiltered, $wineFiltered);
 
             $nbFilter++;
         }
 
+        $winesFiltered = array_unique($winesFiltered, SORT_REGULAR);
+
+        foreach ($winesFiltered as $wine)
+        {
+            $quantite = $this->cave->createQueryBuilder('c')
+                ->where('c.id_vin = :id_vin')
+                ->andWhere('c.id_user = :id_user')
+                ->setParameter('id_vin', $wine->getIdVin())
+                ->setParameter('id_user', $this->user->getIdUser())
+                ->select('c.quantite')
+                ->getQuery()
+                ->getArrayResult();
+
+            $wine->setQuantity($quantite[0]['quantite']);
+
+            $winesToSend[] = $wine;
+        }
+
+
         return $this->json(
         [
             'filters'   => $allFilters,
-            'wines'     => $winesFiltered
+            'wines'     => $winesToSend
         ]);
     }
 }
