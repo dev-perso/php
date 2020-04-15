@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function()
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        console.log(request);
         request.send();    
 
         request.onreadystatechange = function()
@@ -173,6 +174,7 @@ document.addEventListener("DOMContentLoaded", function()
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
             {
                 const response      = JSON.parse(request.response);
+                console.log(response);
                 var buttonFilter    = document.createElement('button');
                 var span            = document.createElement('span');
                 var tableBody       = document.getElementById("macave");

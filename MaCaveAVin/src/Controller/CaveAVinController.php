@@ -72,7 +72,10 @@ class CaveAVinController extends AbstractController
             if (!in_array($wine->getEntityVin()->getEntityRegion()->getRegion(), $allRegionsInCave))
                 $allRegionsInCave[] = $wine->getEntityVin()->getEntityRegion()->getRegion();
         }
-        
+
+        // Tri les vins par Année
+        usort($userWines, array($this, "compareDate"));
+
         return $this->render("cave/macave.html.twig", [
             'colors'    => $allColorsInCave,
             'regions'   => $allRegionsInCave,
@@ -95,6 +98,27 @@ class CaveAVinController extends AbstractController
         $userWine['note'] = $wine->getNote();
 
         return $userWine;
+    }
+
+    // Compare la date et range dans l'ordre ASC
+    private function compareDate($firstWine, $secondWine)
+    {
+        if (is_array($firstWine))
+        {
+            if ($firstWine["annee"] == $secondWine["annee"])
+                return 0;
+
+            return ($firstWine["annee"] < $secondWine["annee"]) ? -1 : 1;
+        }
+        else if ($firstWine->getAnnee() !== null)
+        {
+            if ($firstWine->getAnnee() == $secondWine->getAnnee())
+                return 0;
+
+            return ($firstWine->getAnnee() < $secondWine->getAnnee()) ? -1 : 1;
+        }
+
+        return 0;
     }
 
     /**
@@ -155,7 +179,10 @@ class CaveAVinController extends AbstractController
             foreach ($wines as $wine)
                 // Récupère les informations du vin
                 $userWines[] = $this->getWineInformations($wine);
-        
+
+            // Tri les vins par Année
+            usort($userWines, array($this, "compareDate"));
+
             return $this->json(
             [
                 'wines'     => $userWines
@@ -202,6 +229,9 @@ class CaveAVinController extends AbstractController
                 $winesToSend[] = $wine;
             }
         }
+
+        // Tri les vins par Année
+        usort($winesToSend, array($this, "compareDate"));
 
         return $this->json(
         [
