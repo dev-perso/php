@@ -21,7 +21,7 @@ class VinRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Vins[] Returns an array of Vins objects
+    //  * @return Vin[] Returns an array of Vin objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,15 +37,57 @@ class VinRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Vins
+    /**
+     * @return Vin
+     * Cherche si le Vin existe
+     */
+    public function searchIfExist($appellation, $couleur, $domaine, $region, $annee)
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('v.appellation = :appellation')
+            ->andWhere('v.id_couleur = :id_couleur')
+            ->andWhere('v.id_domaine = :id_domaine')
+            ->andWhere('v.id_region = :id_region')
+            ->andWhere('v.annee = :annee')
+            ->setParameter('appellation', $appellation)
+            ->setParameter('id_couleur', $couleur)
+            ->setParameter('id_domaine', $domaine)
+            ->setParameter('id_region', $region)
+            ->setParameter('annee', $annee)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    /**
+     * @return Vin[] Returns an array of Vin objects
+     * Récupère tous les vins de l'utilisateur avec le filtre de la couleur en cours
+     */
+    public function getUserWineWithColorFilter($idUser, $couleur)
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.users', 'User')
+            ->where('User.id_user = :id_user')
+            ->andWhere('v.couleur = :couleur')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('couleur', $couleur)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Vin[] Returns an array of Vin objects
+     * Récupère tous les vins de l'utilisateur avec le filtre de la region en cours
+     */
+    public function getUserWineWithRegionFilter($idUser, $region)
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.users', 'User')
+            ->where('User.id_user = :id_user')
+            ->andWhere('v.region = :region')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('region', $region)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

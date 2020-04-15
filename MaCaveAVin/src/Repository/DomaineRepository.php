@@ -36,15 +36,18 @@ class DomaineRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Domaine
+    /**
+     * @return Array
+     * Cherche si le domaine existe
+     */
+    public function searchDomain($domain)
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('d.domaine = :domaine')
+            ->setParameter('domaine', $domain)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+
 }

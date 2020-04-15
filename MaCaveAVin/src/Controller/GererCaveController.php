@@ -72,14 +72,10 @@ class GererCaveController extends AbstractController
             // Récupère les informations du formulaire
             $domaineFromForm    = $_POST['domaine'];
             $quantiteFromForm   = $_POST['quantite'];
-            $data               = $form->getData();
-            
+            $prixFromForm       = str_replace(',', '.', $_POST['prix']);
+
             // Cherche si le domaine existe
-            $domaineFromDb = $this->domaine->createQueryBuilder('d')
-                ->where('d.domaine = :domaine')
-                ->setParameter('domaine', $domaineFromForm)
-                ->getQuery()
-                ->getResult();
+            $domaineFromDb = $this->domaine->searchDomain($domaineFromForm);
 
             if ($domaineFromDb)
                 $vin->setIdDomaine($domaineFromDb[0]);
@@ -95,17 +91,11 @@ class GererCaveController extends AbstractController
             }
 
             // Cherche si le Vin existe
-            $vinFromDb = $this->vin->createQueryBuilder('v')
-                ->where('v.appellation = :appellation')
-                ->andWhere('v.id_couleur = :id_couleur')
-                ->andWhere('v.id_domaine = :id_domaine')
-                ->andWhere('v.id_region = :id_region')
-                ->setParameter('appellation', $vin->getAppellation())
-                ->setParameter('id_couleur', $vin->getIdCouleur())
-                ->setParameter('id_domaine', $vin->getIdDomaine())
-                ->setParameter('id_region', $vin->getIdRegion())
-                ->getQuery()
-                ->getResult();
+            $vinFromDb = $this->vin->searchIfExist($vin->getAppellation(),
+                                                    $vin->getIdCouleur(),
+                                                    $vin->getIdDomaine(),
+                                                    $vin->getIdRegion(),
+                                                    $vin->getAnnee());
             
             if (!empty($vinFromDb))
             {
@@ -122,20 +112,17 @@ class GererCaveController extends AbstractController
             }
 
             // Cherche si l'utilisateur a déjà ce vin dans sa cave
-            $caveFromDb = $this->cave->createQueryBuilder('c')
-                ->where('c.id_user = :id_user')
-                ->andWhere('c.id_vin = :id_vin')
-                ->setParameter('id_user', $user->getIdUser())
-                ->setParameter('id_vin', $cave->getIdVin())
-                ->getQuery()
-                ->getResult();
+            $caveFromDb = $this->cave->doesWineIsInUserCave($user->getIdUser(), $cave->getIdVin());
 
             if (!empty($caveFromDb))
             {   
                 // Incrémente la quantité du vin déjà dans la cave
                 $quantiteFromForm += $caveFromDb[0]->getQuantite();
                 $caveFromDb[0]->setQuantite($quantiteFromForm);
-                
+
+                if ($prixFromForm != null)
+                    $caveFromDb[0]->setPrix((float)$prixFromForm);
+
                 $this->em->persist($caveFromDb[0]);
                 $this->em->flush();
             }
@@ -143,6 +130,7 @@ class GererCaveController extends AbstractController
             {
                 // Ajoute le vin à la cave du user
                 $cave->setQuantite($quantiteFromForm);
+                $cave->setPrix($prixFromForm);
                 $cave->setIdUser($user);
 
                 $this->em->persist($cave);

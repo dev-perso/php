@@ -37,8 +37,9 @@ class CaveRepository extends ServiceEntityRepository
     */
 
     /**
-    * @return Cave[] Returns an array of Cave objects
-    */
+     * @return Cave[] Returns an array of Cave objects
+     * Récupère les vins avec une quantité strictement supérieur à 0
+     */
     public function getWinesFromUserCave($idUser)
     {
         return $this->createQueryBuilder('c')
@@ -46,6 +47,37 @@ class CaveRepository extends ServiceEntityRepository
             ->andWhere('c.quantite > :quantite')
             ->setParameter('id_user', $idUser)
             ->setParameter('quantite', 0)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return int
+     * Récupère la quantité du vin du user
+     */
+    public function getWineQuantity($idUser, $idWine)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id_vin = :id_vin')
+            ->andWhere('c.id_user = :id_user')
+            ->setParameter('id_vin', $idWine)
+            ->setParameter('id_user', $idUser)
+            ->select('c.quantite')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * @return Cave
+     * Cherche si l'utilisateur possède le vin
+     */
+    public function doesWineIsInUserCave($idUser, $idWine)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id_user = :id_user')
+            ->andWhere('c.id_vin = :id_vin')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('id_vin', $idWine)
             ->getQuery()
             ->getResult();
     }

@@ -137,7 +137,7 @@ class CaveAVinController extends AbstractController
      * @Route("/caveavin/filtre/{filtre}", name="caveavin.filtre")
      * @return Response
      */
-    public function filtreVin ($filtre): Response
+    public function wineFilter ($filtre): Response
     {
         $winesFiltered = [];
         $winesToSend = [];
@@ -165,58 +165,43 @@ class CaveAVinController extends AbstractController
         // Pour chaque filtre à prendre en compte
         foreach ($allFilters as $oneFilter)
         {
-            $couleur = $this->couleur->findBy(['couleur' => $oneFilter]);
-            $region = $this->region->findBy(['region' => $oneFilter]);
+            // Tableau qui contiendra les vins filtrés
             $wineFiltered = [];
+
+            // Cherche le filtre en cours dans la table couleur et region
+            $couleur    = $this->couleur->findBy(['couleur' => $oneFilter]);
+            $region     = $this->region->findBy(['region' => $oneFilter]);
 
             // Si le filtre est une couleur
             if ($couleur)
-            {
-                $wineFiltered = $this->vin->createQueryBuilder('v')
-                                    ->leftJoin('v.users', 'User')
-                                    ->where('User.id_user = :id_user')
-                                    ->andWhere('v.couleur = :couleur')
-                                    ->setParameter('id_user', $this->user->getIdUser())
-                                    ->setParameter('couleur', $couleur)
-                                    ->getQuery()
-                                    ->getResult();
-            }
+                // Récupère tous les vins de l'utilisateur avec le filtre de la couleur en cours
+                $wineFiltered = $this->vin->getUserWineWithColorFilter($this->user->getIdUser(), $couleur);
             // Sinon si le filtre est une région
             else if ($region)
-            {
-                $wineFiltered = $this->vin->createQueryBuilder('v')
-                                    ->leftJoin('v.users', 'User')
-                                    ->where('User.id_user = :id_user')
-                                    ->andWhere('v.region = :region')
-                                    ->setParameter('id_user', $this->user->getIdUser())
-                                    ->setParameter('region', $region)
-                                    ->getQuery()
-                                    ->getResult();
-            }
+                // Récupère tous les vins de l'utilisateur avec le filtre de la region en cours
+                $wineFiltered = $this->vin->getUserWineWithRegionFilter($this->user->getIdUser(), $region);
 
             $winesFiltered = array_merge($winesFiltered, $wineFiltered);
 
             $nbFilter++;
         }
 
+        // Enlève tous les vins identiques
         $winesFiltered = array_unique($winesFiltered, SORT_REGULAR);
 
+        // Pour chaque vin on récupère la quantité
         foreach ($winesFiltered as $wine)
         {
-            $quantite = $this->cave->createQueryBuilder('c')
-                ->where('c.id_vin = :id_vin')
-                ->andWhere('c.id_user = :id_user')
-                ->setParameter('id_vin', $wine->getIdVin())
-                ->setParameter('id_user', $this->user->getIdUser())
-                ->select('c.quantite')
-                ->getQuery()
-                ->getArrayResult();
+            $quantite = $this->cave->getWineQuantity($this->user->getIdUser(), $wine->getIdVin());
 
-            $wine->setQuantity($quantite[0]['quantite']);
+            if ($quantite[0]['quantite'] > 0)
+            {
+                $wine->setQuantity($quantite[0]['quantite']);
 
-            $winesToSend[] = $wine;
+                // Réécris dans un tableau les vins filtrés
+                $winesToSend[] = $wine;
+            }
         }
-
 
         return $this->json(
         [
