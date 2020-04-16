@@ -34,7 +34,7 @@ class GererCaveController extends AbstractController
      */
     private $vin;
 
-    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave)
+    public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave, Security $security)
     {
         $this->em       = $em;
         $this->pays     = $pays;
@@ -43,6 +43,9 @@ class GererCaveController extends AbstractController
         $this->region   = $region;
         $this->vin      = $vin;
         $this->cave     = $cave;
+
+        // Récupère le user
+        $this->user     = $security->getUser();
     }
 
     /**
@@ -60,14 +63,11 @@ class GererCaveController extends AbstractController
         $vin        = new Vin();
         $cave       = new Cave();
 
-        // Récupère le user
-        $user   = $security->getUser();
-
         // Crée le formulaire d'ajout du Vin
         $form = $this->createForm(VinType::class, $vin);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $user)
+        if ($form->isSubmitted() && $form->isValid() && $this->user)
         {
             // Récupère les informations du formulaire
             $domaineFromForm    = $_POST['domaine'];
@@ -98,10 +98,8 @@ class GererCaveController extends AbstractController
                                                     $vin->getAnnee());
             
             if (!empty($vinFromDb))
-            {
                 // Récupére le Vin déjà existant
                 $cave->setIdVin($vinFromDb[0]);
-            }
             else
             {
                 // Crée le Vin
@@ -112,7 +110,7 @@ class GererCaveController extends AbstractController
             }
 
             // Cherche si l'utilisateur a déjà ce vin dans sa cave
-            $caveFromDb = $this->cave->doesWineIsInUserCave($user->getIdUser(), $cave->getIdVin());
+            $caveFromDb = $this->cave->doesWineIsInUserCave($this->user->getIdUser(), $cave->getIdVin());
 
             if (!empty($caveFromDb))
             {   
@@ -131,19 +129,13 @@ class GererCaveController extends AbstractController
                 // Ajoute le vin à la cave du user
                 $cave->setQuantite($quantiteFromForm);
                 $cave->setPrix($prixFromForm);
-                $cave->setIdUser($user);
+                $cave->setIdUser($this->user);
 
                 $this->em->persist($cave);
                 $this->em->flush();
             }
             
-            return $this->render("cave/gestionVin/ajouter.html.twig", 
-            [
-                "couleurs"  => $couleurs,
-                "regions"   => $regions,
-                "vin"       => $vin,
-                "form"      => $form->createView()
-            ]);
+            return $this->redirectToRoute("caveavin");
         }
 
         return $this->render("cave/gestionVin/ajouter.html.twig", 
@@ -159,26 +151,26 @@ class GererCaveController extends AbstractController
      * @Route("/caveavin/gestion/modifier/{id}", name="caveavin.gestion.modifier")
      * @return Response
      */
-    public function modifierVin(Request $request, $id)
+    public function editWine(Request $request, $id)
     {
         if ($id != null)
         {
-            $vin = $this->vin->find($id);
+            $wine = $this->vin->find($id);
 
-            $form = $this->createForm(VinType::class, $vin);
+            $form = $this->createForm(VinType::class, $wine);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid())
             {
                 // Update
-                $this->em->persist($vin);
+                $this->em->persist($wine);
                 $this->em->flush();
     
                 return $this->redirectToRoute("caveavin");
             }
 
             return $this->render("cave/gestionVin/modifier.html.twig", [
-                "vin"   => $vin,
+                "vin"   => $wine,
                 "form"  => $form->createView()
             ]);
         }
@@ -190,7 +182,7 @@ class GererCaveController extends AbstractController
      * @Route("/caveavin/gestion/utiliser/{id}", name="caveavin.gestion.utiliser")
      * @return Response
      */
-    public function utiliserVin(Request $request, $id)
+    public function useWine(Request $request, $id)
     {
         if ($id != null)
         {

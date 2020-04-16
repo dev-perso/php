@@ -7,7 +7,14 @@
 
 {% block body %}
     <div class="container mb-5">
+        {{ dump(vin) }}
+        {{ dump(form) }}
+
         <h1 class="mt-3 mb-3">Modifier le vin : {{ vin.appellation }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+        {#
         {{ form_start(form) }}
             <div class="row">
                 <div class="offset-lg-3 col-lg-6 p-3" style="border : 1px solid lightgrey; border-radius : 5px; background-color : #eeeeee">
@@ -77,6 +84,7 @@
                 {{ form_rest(form) }}
             </div>
         {{ form_end(form) }}
+        #}
     </div>
 {% endblock %}
 
