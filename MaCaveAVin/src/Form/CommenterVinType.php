@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Vin;
+use App\Entity\Cave;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +20,7 @@ class CommenterVinType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Vin::class,
+            'data_class' => null,
         ]);
     }
 }

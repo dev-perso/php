@@ -186,33 +186,35 @@ class GererCaveController extends AbstractController
     {
         if ($id != null)
         {
-            $vin = $this->vin->find($id);
+            $wine = $this->vin->find($id);
+            $userWine = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
 
-            $form = $this->createForm(CommenterVinType::class, $vin);
+            $form = $this->createForm(CommenterVinType::class, $userWine);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid())
             {
                 // Quantité
-                $quantite = $vin->getQuantite();
+                $quantite = $userWine[0]->getQuantite();
                 $quantite--;
-                $vin->setQuantite($quantite);
+                $userWine[0]->setQuantite($quantite);
 
                 // Archivage
-                $archive = $vin->getArchive();
+                $archive = $userWine[0]->getArchive();
                 if ($archive == false)
                     $archive = true;
-                $vin->setArchive($archive);
+                $userWine[0]->setArchive($archive);
 
                 // Update
-                $this->em->persist($vin);
+                $this->em->persist($userWine[0]);
                 $this->em->flush();
     
                 return $this->redirectToRoute("caveavin");
             }
 
             return $this->render("cave/gestionVin/commenter.html.twig", [
-                "vin"   => $vin,
+                "vin"   => $wine,
+                "userWine" => $userWine,
                 "form"  => $form->createView()
             ]);
         }
