@@ -72,7 +72,15 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            {{ form_row(form.prix) }}
+                            <div class="input-group">
+                                {{ form_label(form.prix) }}
+                                <div class="input-group mb-3">
+                                    {{ form_widget(form.prix, { 'attr': {'aria-label' : 'Montant en euro'}} ) }}
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             {{ form_row(form.note) }}
