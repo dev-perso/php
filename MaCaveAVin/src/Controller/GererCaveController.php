@@ -8,6 +8,7 @@ use App\Form\VinType;
 use Twig\Environment;
 use App\Entity\Domaine;
 use App\Form\CommenterVinType;
+use App\Form\CaveType;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\VinRepository;
 use App\Repository\CaveRepository;
@@ -155,22 +156,32 @@ class GererCaveController extends AbstractController
     {
         if ($id != null)
         {
+            $userWine = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
             $wine = $this->vin->find($id);
+            $regions = $this->region->findAll();
+            $couleurs = $this->couleur->findAll();
+            $yearFrom = 1900;
+            $yearNow = date('Y');
+            $arrayYear = array_combine(array_reverse(range($yearFrom, $yearNow)), array_reverse(range($yearFrom, $yearNow)));
 
-            $form = $this->createForm(VinType::class, $wine);
+            $form = $this->createForm(CaveType::class, $userWine[0]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid())
             {
                 // Update
-                $this->em->persist($wine);
+                $this->em->persist($userWine);
                 $this->em->flush();
     
                 return $this->redirectToRoute("caveavin");
             }
 
             return $this->render("cave/gestionVin/modifier.html.twig", [
+                "userWine" => $userWine,
                 "vin"   => $wine,
+                "regions" => $regions,
+                "couleurs" => $couleurs,
+                "years"  => $arrayYear,
                 "form"  => $form->createView()
             ]);
         }
