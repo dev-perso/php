@@ -156,33 +156,83 @@ class GererCaveController extends AbstractController
     {
         if ($id != null)
         {
-            $userWine = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
-            $wine = $this->vin->find($id);
-            $regions = $this->region->findAll();
-            $couleurs = $this->couleur->findAll();
-            $yearFrom = 1900;
-            $yearNow = date('Y');
-            $arrayYear = array_combine(array_reverse(range($yearFrom, $yearNow)), array_reverse(range($yearFrom, $yearNow)));
+            $userWine   = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
+            $wine       = $this->vin->find($id);
+            $regions    = $this->region->findAll();
+            $colors     = $this->couleur->findAll();
+
+            // Plage des années disponibles
+            $yearFrom   = 1900;
+            $yearNow    = date('Y');
+            $arrayYear  = array_combine(array_reverse(range($yearFrom, $yearNow)), array_reverse(range($yearFrom, $yearNow)));
 
             $form = $this->createForm(CaveType::class, $userWine[0]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid())
             {
-                // Update
-                $this->em->persist($userWine);
+                $appellation = $_POST['editAppellation'];
+                $domain = $_POST['editDomain'];
+                $region = $_POST['editRegion'];
+                $color = $_POST['editColor'];
+                $year = $_POST['editYear'];
+
+                $domainFromDb = $this->domaine->searchDomain($domain);
+
+                // Le domaine existe en BDD
+                if (isset($domainFromDb[0]))
+                    $domain = $domainFromDb[0]->getIdDomaine();
+                else // Le domaine n'existe pas en BDD
+                {
+                    $newDomain = new Domaine();
+                    $newDomain->setDomaine($domain);
+
+                    // Création du domaine
+                    $this->em->persist($newDomain);
+                    $this->em->flush();
+
+                    // Récupère l'id du nouveau domaine
+                    $domain = $newDomain->getIdDomaine();
+                }
+
+                $wineFromDb = $this->vin->searchIfExist($appellation, $color, $domain, $region, $year);
+
+                // Si le vin n'est pas en BDD
+                if (!isset($wineFromDb[0]))
+                {
+                    $newWine = new Vin();
+                    $newWine->setAppellation($appellation);
+                    $newWine->setAnnee($year);
+                    $newWine->setIdCouleur($this->couleur->find($color));
+                    $newWine->setIdDomaine($this->domaine->find($domain));
+                    $newWine->setIdRegion($this->region->find($region));
+
+                    // Ajout du nouveau vin dans la BDD
+                    $this->em->persist($newWine);
+                    $this->em->flush();
+
+                    $userWine[0]->setIdVin($newWine);
+                }
+
+                // Update de la table Cave
+                $this->em->persist($userWine[0]);
                 $this->em->flush();
     
-                return $this->redirectToRoute("caveavin");
+                //return $this->redirectToRoute("caveavin");
+                return $this->render("cave/test.html.twig",
+                    [
+                        "userWine" => $userWine[0],
+                        "wineFromDb" => $wineFromDb
+                    ]);
             }
 
             return $this->render("cave/gestionVin/modifier.html.twig", [
-                "userWine" => $userWine,
-                "vin"   => $wine,
-                "regions" => $regions,
-                "couleurs" => $couleurs,
-                "years"  => $arrayYear,
-                "form"  => $form->createView()
+                "userWine"  => $userWine,
+                "vin"       => $wine,
+                "regions"   => $regions,
+                "couleurs"  => $colors,
+                "years"     => $arrayYear,
+                "form"      => $form->createView()
             ]);
         }
 

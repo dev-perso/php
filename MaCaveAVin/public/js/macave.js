@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function()
                 // Débloque les boutons des filtres
                 unlockFilter(filter);
                 // Permet d'obtenir la description des vins dans le tableau
-                getDescription(tr);
+                eventGetDescription(tr);
                 // Crée les événements d'édition du vin
                 eventBtnEditWine(edit);
                 // Crée les événements d'utilisation du vin
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function()
                 // Débloque les boutons des filtres
                 unlockFilter(filter);
                 // Permet d'obtenir la description des vins dans le tableau
-                getDescription(tr);
+                eventGetDescription(tr);
                 // Crée les événements d'édition du vin
                 eventBtnEditWine(edit);
                 // Crée les événements d'utilisation du vin
@@ -251,36 +251,28 @@ document.addEventListener("DOMContentLoaded", function()
     var eventBtnUseWine = (use) =>
     {
         for (var i = 0; i < use.length; i++)
-        {
             use[i].addEventListener("click", useWine, false);
-        }
     }
 
     // Crée l'événement d'édition d'un vin
     var eventBtnEditWine = (edit) =>
     {
         for (var i = 0; i < edit.length; i++)
-        {
             edit[i].addEventListener("click", editWine, false);
-        }
     }
 
     // Bloque l'événement de filtre des vins
     var lockFilter = (filter) =>
     {
         for (var i = 0; i < filter.length; i++)
-        {
             filter[i].removeEventListener("click", filterMyCave);
-        }
     }
 
     // Crée l'événement de filtre des vins
     var unlockFilter = (filter) =>
     {
         for (var i = 0; i < filter.length; i++)
-        {
             filter[i].addEventListener("click", filterMyCave, false);
-        }
     }
 
     // Bloque l'événement de filtre des vins
@@ -289,9 +281,7 @@ document.addEventListener("DOMContentLoaded", function()
         var btnActifFilter = document.getElementsByClassName("actif-filtre");
 
         for (var i = 0; i < btnActifFilter.length; i++)
-        {
             btnActifFilter[i].removeEventListener("click", removeFilter);
-        }
     }
 
     // Crée l'événement de filtre des vins
@@ -300,26 +290,20 @@ document.addEventListener("DOMContentLoaded", function()
         var btnActifFilter = document.getElementsByClassName("actif-filtre");
 
         for (var i = 0; i < btnActifFilter.length; i++)
-        {
             btnActifFilter[i].addEventListener("click", removeFilter, false);
-        }
     }
 
     // Redirige vers les descriptions du vin de la ligne cliqué
-    var getDescription = (tr) =>
+    var eventGetDescription = (tr) =>
     {
         for (var i = 0; i < tr.length; i++)
-        {
             for (var j = 0; j < (tr[i].cells.length - 1); j++)
-            {
                 tr[i].cells[j].addEventListener("click", getDescription, false);
-            }
-        }
     }
 
     // Active les événements
     unlockFilter(filter);   // des filtres
-    getDescription(tr);     // des descriptions
+    eventGetDescription(tr);     // des descriptions
     eventBtnEditWine(edit); // des éditions du vin
     eventBtnUseWine(use);   // de l'utilisation du vin
 });
