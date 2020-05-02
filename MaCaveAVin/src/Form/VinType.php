@@ -25,7 +25,7 @@ class VinType extends AbstractType
                'choices'        => $this->buildYearChoices(),
                'label'          => 'Année',
                'required'       => true,
-               'placeholder'    => 'Select year'
+               'placeholder'    => 'Choisir l\'année'
             ])
             ->add('image', FileType::class, 
             [
@@ -38,7 +38,7 @@ class VinType extends AbstractType
                 'choice_label'  => 'couleur',
                 'label'         => 'Couleur',
                 'choice_value'  => 'id_couleur',
-                'placeholder'   => 'Select color',
+                'placeholder'   => 'Choisir la couleur',
                 'required'      => true
             ])
             ->add('id_region', EntityType::class,
@@ -46,7 +46,7 @@ class VinType extends AbstractType
                 'class'         => Region::class,
                 'choice_label'  => 'region',
                 'label'         => 'Région',
-                'placeholder'   => 'Select region',
+                'placeholder'   => 'Choisir la région',
                 'choice_value'  => 'id_region'
             ])
         ;

@@ -30,6 +30,7 @@
                                 {%  for region in regions %}
                                     {% if region.idregion == vin.getEntityRegion().idregion %}
                                         <option value="{{ region.idregion }}" selected="selected">{{ region.region }}</option>
+                                        <option value="{{ region.idregion }}">{{ region.region }}</option>
                                     {% else %}
                                         <option value="{{ region.idregion }}">{{ region.region }}</option>
                                     {% endif %}
@@ -42,6 +43,7 @@
                                 {%  for couleur in couleurs %}
                                     {% if couleur.idcouleur == vin.getEntityCouleur().idcouleur %}
                                         <option value="{{ couleur.idcouleur }}" selected="selected">{{ couleur.couleur }}</option>
+                                        <option value="{{ couleur.idcouleur }}">{{ couleur.couleur }}</option>
                                     {% else %}
                                         <option value="{{ couleur.idcouleur }}">{{ couleur.couleur }}</option>
                                     {% endif %}
@@ -56,6 +58,7 @@
                                 {%  for year in years %}
                                     {% if year == vin.annee %}
                                         <option value="{{ year }}" selected="selected">{{ year }}</option>
+                                        <option value="{{ year }}">{{ year }}</option>
                                     {% else %}
                                         <option value="{{ year }}">{{ year }}</option>
                                     {% endif %}
@@ -100,4 +103,26 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script type="text/javascript">
+        // Restricts input for the given textbox to the given inputFilter.
+        function setInputFilter(textbox, inputFilter) {
+            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+                textbox.addEventListener(event, function() {
+                    if (inputFilter(this.value)) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if (this.hasOwnProperty("oldValue")) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                    } else {
+                        this.value = "";
+                    }
+                });
+            });
+        }
+
+        setInputFilter(document.getElementById("cave_prix"), function(value) {
+            return /^-?\d*[.,]?\d*$/.test(value); });
+    </script>
 {% endblock %}

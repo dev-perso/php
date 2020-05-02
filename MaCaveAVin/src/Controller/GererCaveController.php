@@ -157,6 +157,10 @@ class GererCaveController extends AbstractController
         if ($id != null)
         {
             $userWine   = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
+
+            // Si le vin n'existe pas
+            if (!$userWine) return $this->redirectToRoute("caveavin");
+
             $wine       = $this->vin->find($id);
             $regions    = $this->region->findAll();
             $colors     = $this->couleur->findAll();
@@ -197,7 +201,7 @@ class GererCaveController extends AbstractController
 
                 $wineFromDb = $this->vin->searchIfExist($appellation, $color, $domain, $region, $year);
 
-                // Si le vin n'est pas en BDD
+                // Si le vin n'existe pas en BDD
                 if (!isset($wineFromDb[0]))
                 {
                     $newWine = new Vin();
@@ -213,17 +217,20 @@ class GererCaveController extends AbstractController
 
                     $userWine[0]->setIdVin($newWine);
                 }
+                else
+                    $userWine[0]->setIdVin($wineFromDb[0]);
+
 
                 // Update de la table Cave
                 $this->em->persist($userWine[0]);
                 $this->em->flush();
     
-                //return $this->redirectToRoute("caveavin");
-                return $this->render("cave/test.html.twig",
+                return $this->redirectToRoute("caveavin");
+                /*return $this->render("cave/test.html.twig",
                     [
                         "userWine" => $userWine[0],
                         "wineFromDb" => $wineFromDb
-                    ]);
+                    ]);*/
             }
 
             return $this->render("cave/gestionVin/modifier.html.twig", [
