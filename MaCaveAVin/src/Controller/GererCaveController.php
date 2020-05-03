@@ -7,7 +7,7 @@ use App\Entity\Cave;
 use App\Form\VinType;
 use Twig\Environment;
 use App\Entity\Domaine;
-use App\Form\CommenterVinType;
+use App\Form\UseWineType;
 use App\Form\CaveType;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\VinRepository;
@@ -226,11 +226,6 @@ class GererCaveController extends AbstractController
                 $this->em->flush();
     
                 return $this->redirectToRoute("caveavin");
-                /*return $this->render("cave/test.html.twig",
-                    [
-                        "userWine" => $userWine[0],
-                        "wineFromDb" => $wineFromDb
-                    ]);*/
             }
 
             return $this->render("cave/gestionVin/modifier.html.twig", [
@@ -254,14 +249,24 @@ class GererCaveController extends AbstractController
     {
         if ($id != null)
         {
-            $wine = $this->vin->find($id);
             $userWine = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
 
-            $form = $this->createForm(CommenterVinType::class, $userWine);
+            // Si le vin n'existe pas ou n'appartient pas à l'utilisateur
+            if (!$userWine[0]) return $this->redirectToRoute("caveavin");
+
+            $wine = $this->vin->find($id);
+
+            $form = $this->createForm(UseWineType::class, $userWine[0]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid())
             {
+                $note = $_POST['note'];
+                
+                // Note
+                if (!empty($note) && is_numeric($note) && (0 < $note) && ($note <= 5))
+                    $userWine[0]->setNote($note);
+
                 // Quantité
                 $quantite = $userWine[0]->getQuantite();
                 $quantite--;
@@ -271,18 +276,19 @@ class GererCaveController extends AbstractController
                 $archive = $userWine[0]->getArchive();
                 if ($archive == false)
                     $archive = true;
+
                 $userWine[0]->setArchive($archive);
 
                 // Update
                 $this->em->persist($userWine[0]);
-                $this->em->flush();
-    
+                $this->em->flush($userWine[0]);
+
                 return $this->redirectToRoute("caveavin");
             }
 
-            return $this->render("cave/gestionVin/commenter.html.twig", [
+            return $this->render("cave/gestionVin/use.html.twig", [
                 "vin"   => $wine,
-                "userWine" => $userWine,
+                "userWine" => $userWine[0],
                 "form"  => $form->createView()
             ]);
         }

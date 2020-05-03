@@ -16,15 +16,21 @@
                         <div class="col-sm-12 text-center">
                             <label for="note" class="labelNote">Note</label>
                             {% for i in 1..5 %}
-                                <img src="{{ asset('img/empty-star.png') }}" width="40px" height="40px" id="star-{{ i }}" data-value="{{ i }}">
+                                {% if i <= userWine.note %}
+                                    <img src="{{ asset('img/star.png') }}" width="40px" height="40px" id="star-{{ i }}" data-value="{{ i }}">
+                                {% else %}
+                                    <img src="{{ asset('img/empty-star.png') }}" width="40px" height="40px" id="star-{{ i }}" data-value="{{ i }}">
+                                {% endif %}
                             {% endfor %}
-                            <input type="hidden" name="vote" id="vote" value="">
+                            <input type="hidden" name="note" id="vote" value="">
                         </div>
                         <div class="col-sm-12">
                             {{ form_row(form.description) }}
                         </div>
                         <div class="col-12 text-center">
-                            {{ form_row(form.use) }}
+                            <button class="btnUse">
+                                {{ button|default('Utiliser') }}
+                            </button>
                         </div>
                     </div>
                 </div>
