@@ -1,6 +1,7 @@
 body .navAjustement
 {
     position: relative;
+    z-index: 100;
     justify-content: space-between;
     padding: .5rem 1rem;
     background-color: white!important;

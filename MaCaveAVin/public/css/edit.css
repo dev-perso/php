@@ -1,0 +1,54 @@
+body
+{
+    background-image: linear-gradient(to bottom, rgb(255,248,188), rgb(219,50,77));
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Roboto';
+}
+
+.imgDeco
+{
+    position : absolute;
+    top : 0px;
+    height : 100%;
+    width : 100%;
+    background-image: url("../img/background-devices.png");
+}
+
+.cellForm
+{
+    border : 1px solid lightgrey;
+    border-radius : 5px;
+    background-color : #ffffff;
+}
+
+.custom-file-label::after
+{
+    content : "Parcourir" !important;
+}
+
+option[selected=selected]
+{
+    font-style: italic;
+    display : none;
+}
+
+.modifier
+{
+    margin-bottom : 6px;
+}
+
+.btnEdit
+{
+    background: linear-gradient(180deg, #FFF8BC 0%, #DB324D 100%);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color : white;
+    width : 150px;
+    height : 40px;
+    border : none;
+    border-radius : 40px;
+}
