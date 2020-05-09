@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CaveRepository")
+ * @Vich\Uploadable
  */
 class Cave
 {
@@ -42,6 +44,18 @@ class Cave
     private $archive;
 
     /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="wine_image", fileNameProperty="image")
+     *
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $id_user;
@@ -62,6 +76,7 @@ class Cave
      * @ORM\JoinColumn(name="id_vin", referencedColumnName="id_vin", nullable=false)
      */
     private $vin;
+
 
     public function __construct()
     {
@@ -165,6 +180,36 @@ class Cave
     {
         $this->id_vin = $id_vin->getIdVin();
         $this->vin = $id_vin;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Cave
+     */
+    public function setImageFile(?File $imageFile): Cave
+    {
+        $this->imageFile = $imageFile;
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

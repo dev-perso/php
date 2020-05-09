@@ -34,12 +34,12 @@
                 <div class="col-2 profil">
                     {% if app.user %}
                         <div class="row rowProfil">
-                            <div class="col-12 text-center profilImg dropdown">
+                            <div class="col-12 text-center dropdown">
                                 {% if app.user.getProfileImg() %}
                                     <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}"
                                          height="40px"
                                          width="40px"
-                                         class="dropdown-toggle"
+                                         class="dropdown-toggle profileImg"
                                          id="dropdownMenuButton"
                                          data-toggle="dropdown"
                                          aria-haspopup="true"
@@ -61,7 +61,8 @@
                                             {% if app.user.getProfileImg() %}
                                                 <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}"
                                                      height="60px"
-                                                     width="60px" />
+                                                     width="60px"
+                                                     class="profileImg" />
                                             {% else %}
                                                 <img src="{{ asset('img/login.svg') }}"
                                                     height="60px"

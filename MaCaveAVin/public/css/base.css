@@ -22,6 +22,11 @@ body .navAjustement .profil .rowProfil
     width : 100%;
 }
 
+body .navAjustement .profil .rowProfil .profileImg
+{
+    border-radius : 30px;
+}
+
 body .navAjustement .profil .rowProfil .adjustDropdown
 {
     transform : translate3d(0px, 0px, 0px) !important;

@@ -29,18 +29,6 @@ class Vin
     private $appellation;
 
     /**
-     * @var File|null
-     * @Vich\UploadableField(mapping="wine_image", fileNameProperty="image")
-     *
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
-
-    /**
      * @ORM\Column(type="integer")
      * @ORM\JoinColumn(name="id_couleur", referencedColumnName="id_couleur")
      */
@@ -83,7 +71,7 @@ class Vin
     private $users;
 
     /**
-     * int
+     * @var int
      */
     private $quantity;
 
@@ -91,6 +79,8 @@ class Vin
      * @ORM\Column(type="integer")
      */
     private $annee;
+
+    private $imageFile;
 
     public function getIdVin(): ?int
     {
@@ -105,36 +95,6 @@ class Vin
     public function setAppellation(string $appellation): self
     {
         $this->appellation = $appellation;
-
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param File|null $imageFile
-     * @return Vin
-     */
-    public function setImageFile(?File $imageFile): Vin
-    {
-        $this->imageFile = $imageFile;
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
 
         return $this;
     }
@@ -227,5 +187,13 @@ class Vin
         $this->annee = $annee;
 
         return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 }

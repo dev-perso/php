@@ -2,11 +2,14 @@
 
 namespace App\Form;
 
+use App\Form\WineImgType;
+use App\Entity\Cave;
 use App\Entity\Vin;
 use App\Entity\Region;
 use App\Entity\Couleur;
 use App\Entity\Domaine;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,10 +30,11 @@ class VinType extends AbstractType
                'required'       => true,
                'placeholder'    => 'Choisir l\'année'
             ])
-            ->add('imageFile', FileType::class,
+            ->add('imageFile', CollectionType::class,
             [
+                'entry_type'    => WineImgType::class,
                 'required'      => false,
-                'label'         => 'Image du vin'
+                'allow_add' => true
             ])
             ->add('id_couleur', EntityType::class,
             [
