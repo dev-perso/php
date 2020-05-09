@@ -1,0 +1,14 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        wine_image:
+            uri_prefix: /img/wines
+            upload_destination: '%kernel.project_dir%/public/img/wines'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+        profile_image:
+            uri_prefix: /img/profiles
+            upload_destination: '%kernel.project_dir%/public/img/profiles'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container mb-5">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="offset-lg-3 col-lg-6 p-3 mt-4 cellForm">
+                    <h3 class="text-center">Modifier le profile</h3>
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            {{ form_row(form.nom) }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form_row(form.prenom) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            {{ form_row(form.username) }}
+                        </div>
+                        <div class="col-12 form-group">
+                            {{ form_row(form.imageFile, {'attr' : {'placeholder' : 'Choisir une image'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <button class="btnEdit">
+                            {{ button|default('Modifier') }}
+                        </button>
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

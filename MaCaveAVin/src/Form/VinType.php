@@ -27,10 +27,10 @@ class VinType extends AbstractType
                'required'       => true,
                'placeholder'    => 'Choisir l\'année'
             ])
-            ->add('image', FileType::class, 
+            ->add('imageFile', FileType::class,
             [
                 'required'      => false,
-                'label'         => 'Image'
+                'label'         => 'Image du vin'
             ])
             ->add('id_couleur', EntityType::class,
             [

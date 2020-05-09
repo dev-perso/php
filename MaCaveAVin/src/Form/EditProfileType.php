@@ -5,11 +5,10 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegisterType extends AbstractType
+class EditProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,29 +23,9 @@ class RegisterType extends AbstractType
                 'label'     => 'Prénom',
                 'required'  => true
             ])
-            ->add('email', null,
-            [
-                'label'     => 'Email',
-                'required'  => true
-            ])
-            ->add('confirm_email', null,
-            [
-                'label'     => 'Confirmation du mail',
-                'required'  => true
-            ])
             ->add('username', null,
             [
                 'label'     => 'Utilisateur',
-                'required'  => true
-            ])
-            ->add('password', PasswordType::class,
-            [
-                'label'     => 'Mot de passe',
-                'required'  => true
-            ])
-            ->add('confirm_password', PasswordType::class,
-            [
-                'label'     => 'Confirmation du mot de passe',
                 'required'  => true
             ])
             ->add('imageFile', FileType::class,

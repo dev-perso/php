@@ -7,9 +7,12 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VinsRepository")
+ * @Vich\Uploadable
  */
 class Vin
 {
@@ -26,7 +29,14 @@ class Vin
     private $appellation;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @var File|null
+     * @Vich\UploadableField(mapping="wine_image", fileNameProperty="image")
+     *
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -97,7 +107,25 @@ class Vin
         $this->appellation = $appellation;
 
         return $this;
-    }    
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Vin
+     */
+    public function setImageFile(?File $imageFile): Vin
+    {
+        $this->imageFile = $imageFile;
+        return $this;
+    }
 
     public function getImage(): ?string
     {

@@ -6,8 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -15,8 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     fields = {"email"},
  *     message = "This mail is already used"
  * )
+ * @Vich\Uploadable
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -73,6 +77,23 @@ class User implements UserInterface
      *     message = "This value should be equal to the Password")
      */
     private $confirm_password;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="profile_image", fileNameProperty="profile_img")
+     *
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $profile_img;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function getIdUser(): ?int
     {
@@ -164,6 +185,54 @@ class User implements UserInterface
     }
 
     /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return User
+     */
+    public function setImageFile(?File $imageFile): File
+    {
+        $this->imageFile = $imageFile;
+
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this->imageFile;
+    }
+
+    public function getProfileImg(): ?string
+    {
+        return $this->profile_img;
+    }
+
+    public function setProfileImg(?string $profile_img): self
+    {
+        $this->profile_img = $profile_img;
+
+        return $this;
+    }
+
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
      * Returns the roles granted to the user.
      *
      *     public function getRoles()
@@ -203,5 +272,40 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * String representation of object
+     * @link https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id_user,
+            $this->username,
+            $this->password,
+            $this->profile_img
+        ));
+    }
+
+    /**
+     * Constructs the object
+     * @link https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id_user,
+            $this->username,
+            $this->password,
+            $this->profile_img
+            ) = unserialize($serialized, array('allowed_classes' => false));
     }
 }

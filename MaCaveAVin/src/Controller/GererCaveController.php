@@ -139,7 +139,7 @@ class GererCaveController extends AbstractController
             return $this->redirectToRoute("caveavin");
         }
 
-        return $this->render("cave/gestionVin/ajouter.html.twig", 
+        return $this->render("cave/gestionVin/add.html.twig",
         [
             "couleurs"  => $couleurs,
             "regions"   => $regions,
@@ -228,7 +228,7 @@ class GererCaveController extends AbstractController
                 return $this->redirectToRoute("caveavin");
             }
 
-            return $this->render("cave/gestionVin/modifier.html.twig", [
+            return $this->render("cave/gestionVin/edit.html.twig", [
                 "userWine"  => $userWine,
                 "vin"       => $wine,
                 "regions"   => $regions,

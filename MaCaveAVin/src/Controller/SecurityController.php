@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Form\EditProfileType;
 use App\Repository\UserRepository;
+use DirectoryIterator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,16 +59,31 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/gestion/profil", name="gestion.profil")
+     * @Route("/gestion/profile", name="manage.profile")
      */
-    public function gestionProfil(Security $security) : Response
+    public function manageProfile(Request $request, Security $security) : Response
     {
         $user = $security->getUser();
 
         if ($user)
         {
-            return $this->render("security/gestionCompte/profil.html.twig", [
-                "user"  => $user
+            $user->setConfirmEmail($user->getEmail());
+            $user->setConfirmPassword($user->getPassword());
+
+            $form = $this->createForm(EditProfileType::class, $user);
+            $form->handleRequest($request);
+
+
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $this->em->persist($user);
+                $this->em->flush($user);
+
+                return $this->redirectToRoute("caveavin");
+            }
+
+            return $this->render("security/gestionCompte/profile.html.twig", [
+                'form' => $form->createView()
             ]);
         }
 
@@ -74,9 +91,9 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/gestion/profil/modifier", name="gestion.profil.modifier")
+     * @Route("/gestion/profile/modifier", name="manage.profile.edit")
      */
-    public function editProfil(Security $security) : Response
+    public function editProfile(Security $security) : Response
     {
         $user = $security->getUser();
 

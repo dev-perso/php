@@ -33,6 +33,11 @@
                             {{ form_row(form.confirm_password, {'attr' : {'placeholder' : 'Confirmation mot de passe'}}) }}
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_row(form.imageFile, {'attr' : {'placeholder' : 'Choisir une image'}}) }}
+                        </div>
+                    </div>
                     <div class="col-12 text-right">
                         <button class="btn btn-light"><i class="fa fa-plus"></i> {{ button|default('Inscription') }}</button>
                     </div>

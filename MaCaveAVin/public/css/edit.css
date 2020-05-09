@@ -12,6 +12,7 @@ body
 {
     position : absolute;
     top : 0px;
+    z-index : -999;
     height : 100%;
     width : 100%;
     background-image: url("../img/background-devices.png");
