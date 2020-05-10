@@ -46,7 +46,6 @@ class Cave
     /**
      * @var File|null
      * @Vich\UploadableField(mapping="wine_image", fileNameProperty="image")
-     *
      */
     private $imageFile;
 
@@ -76,6 +75,7 @@ class Cave
      * @ORM\JoinColumn(name="id_vin", referencedColumnName="id_vin", nullable=false)
      */
     private $vin;
+
 
 
     public function __construct()
@@ -187,7 +187,7 @@ class Cave
     /**
      * @return File|null
      */
-    public function getImageFile(): ?File
+    public function getImageFile()
     {
         return $this->imageFile;
     }
@@ -196,7 +196,7 @@ class Cave
      * @param File|null $imageFile
      * @return Cave
      */
-    public function setImageFile(?File $imageFile): Cave
+    public function setImageFile($imageFile): Cave
     {
         $this->imageFile = $imageFile;
         return $this;
@@ -213,4 +213,6 @@ class Cave
 
         return $this;
     }
+
+
 }

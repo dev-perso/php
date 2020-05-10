@@ -64,6 +64,8 @@ class GererCaveController extends AbstractController
         $vin        = new Vin();
         $cave       = new Cave();
 
+        $vin->getCave()->add($cave);
+
         // Crée le formulaire d'ajout du Vin
         $form = $this->createForm(VinType::class, $vin);
         $form->handleRequest($request);
@@ -129,13 +131,14 @@ class GererCaveController extends AbstractController
             {
                 // Ajoute le vin à la cave du user
                 $cave->setQuantite($quantiteFromForm);
-                $cave->setPrix($prixFromForm);
+                if (!empty($prixFromForm))
+                    $cave->setPrix((float)$prixFromForm);
                 $cave->setIdUser($this->user);
 
                 $this->em->persist($cave);
                 $this->em->flush();
             }
-            
+
             return $this->redirectToRoute("caveavin");
         }
 

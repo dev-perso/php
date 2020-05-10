@@ -2,19 +2,14 @@
 
 namespace App\Form;
 
-use App\Form\WineImgType;
-use App\Entity\Cave;
 use App\Entity\Vin;
 use App\Entity\Region;
 use App\Entity\Couleur;
-use App\Entity\Domaine;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class VinType extends AbstractType
@@ -29,12 +24,6 @@ class VinType extends AbstractType
                'label'          => 'Année',
                'required'       => true,
                'placeholder'    => 'Choisir l\'année'
-            ])
-            ->add('imageFile', CollectionType::class,
-            [
-                'entry_type'    => WineImgType::class,
-                'required'      => false,
-                'allow_add' => true
             ])
             ->add('id_couleur', EntityType::class,
             [
@@ -52,8 +41,14 @@ class VinType extends AbstractType
                 'label'         => 'Région',
                 'placeholder'   => 'Choisir la région',
                 'choice_value'  => 'id_region'
-            ])
-        ;
+            ]);
+
+
+        $builder->add('cave', CollectionType::class,
+        [
+            'entry_type' => WineImgType::class,
+            'entry_options' => ['label' => false],
+        ]);
     }
 
     public function buildYearChoices()

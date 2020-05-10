@@ -80,7 +80,12 @@ class Vin
      */
     private $annee;
 
-    private $imageFile;
+    private $cave;
+
+    public function __construct()
+    {
+        $this->cave = new ArrayCollection();
+    }
 
     public function getIdVin(): ?int
     {
@@ -189,11 +194,11 @@ class Vin
         return $this;
     }
 
-    /**
-     * @return File|null
-     */
-    public function getImageFile(): ?File
+    public function getCave()
     {
-        return $this->imageFile;
+        return $this->cave;
     }
+
+
+
 }
