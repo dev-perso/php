@@ -53,7 +53,7 @@ class GererCaveController extends AbstractController
      * @Route("/caveavin/gestion/ajouter", name="caveavin.gestion.ajout")
      * @return Response
      */
-    public function addWine(Request $request, Security $security): Response
+    public function addWine(Request $request): Response
     {
         // Récupère toutes les couleurs & régions disponibles
         $couleurs   = $this->couleur->findAll();
@@ -131,8 +131,12 @@ class GererCaveController extends AbstractController
             {
                 // Ajoute le vin à la cave du user
                 $cave->setQuantite($quantiteFromForm);
+
                 if (!empty($prixFromForm))
                     $cave->setPrix((float)$prixFromForm);
+                elseif ($prixFromForm == 0)
+                    $cave->setPrix(null);
+
                 $cave->setIdUser($this->user);
 
                 $this->em->persist($cave);
@@ -227,7 +231,7 @@ class GererCaveController extends AbstractController
                 // Update de la table Cave
                 $this->em->persist($userWine[0]);
                 $this->em->flush();
-    
+
                 return $this->redirectToRoute("caveavin");
             }
 
@@ -349,7 +353,7 @@ class GererCaveController extends AbstractController
                 ->getSingleScalarResult();
         }
         
-        return $this->render("cave/macave.html.twig", [
+        return $this->render("cave/cave.html.twig", [
             'vins'      => $vins->getResult(),
             'couleurs'  => $this->couleur,
             'regions'   => $this->region

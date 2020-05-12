@@ -15,8 +15,8 @@ class WineImgType extends AbstractType
         $builder
             ->add('imageFile', FileType::class,
             [
-                'required'      => false,
-                'label'         => 'Image du vin'
+                'required'          => false,
+                'label'             => 'Image du vin'
             ]);
     }
 

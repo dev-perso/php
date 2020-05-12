@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -45,6 +47,9 @@ class Cave
 
     /**
      * @var File|null
+     * @Assert\Image(
+     *     mimeTypes={"image/jpeg", "image/png"},
+     *     mimeTypesMessage = "PNG ou JPG uniquement")
      * @Vich\UploadableField(mapping="wine_image", fileNameProperty="image")
      */
     private $imageFile;
@@ -75,6 +80,11 @@ class Cave
      * @ORM\JoinColumn(name="id_vin", referencedColumnName="id_vin", nullable=false)
      */
     private $vin;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
 
 
@@ -199,6 +209,11 @@ class Cave
     public function setImageFile($imageFile): Cave
     {
         $this->imageFile = $imageFile;
+
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
         return $this;
     }
 
@@ -210,6 +225,18 @@ class Cave
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

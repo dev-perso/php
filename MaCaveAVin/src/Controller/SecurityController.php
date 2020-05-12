@@ -113,7 +113,7 @@ class SecurityController extends AbstractController
      */
     public function bienvenue() : Response
     {
-        return $this->render("cave/bienvenue.html.twig");
+        return $this->render("cave/welcome.html.twig");
     }
 
     /**

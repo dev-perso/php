@@ -95,7 +95,7 @@ class CaveAVinController extends AbstractController
                 ->getSingleScalarResult();
         }
 
-        return $this->render("cave/macave.html.twig", [
+        return $this->render("cave/cave.html.twig", [
             'vins'      => $vins->getResult(),
             'couleurs'  => $this->couleur,
             'regions'   => $this->region
@@ -111,7 +111,7 @@ class CaveAVinController extends AbstractController
         if ($id != null)
         {
             $vin = $this->vin->find($id);
-            return $this->render("cave/bouteille.html.twig",
+            return $this->render("cave/bottle.html.twig",
             [
                 'vin' => $vin
             ]);

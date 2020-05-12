@@ -27,7 +27,7 @@ class CaveAVinController extends AbstractController
      */
     private $em;
 
-    /*
+    /**
      * @var VinRepository
      */
     private $vin;
@@ -76,7 +76,7 @@ class CaveAVinController extends AbstractController
         // Tri les vins par Année
         usort($userWines, array($this, "compareDate"));
 
-        return $this->render("cave/macave.html.twig", [
+        return $this->render("cave/cave.html.twig", [
             'colors'    => $allColorsInCave,
             'regions'   => $allRegionsInCave,
             'userWines' => $userWines
@@ -125,14 +125,21 @@ class CaveAVinController extends AbstractController
      * @Route("/caveavin/bouteille/{id}", name="caveavin.bouteille.information")
      * @return Response
      */
-    public function informationVin ($id): Response
+    public function wineInformations ($id): Response
     {
         if ($id != null)
         {
-            $vin = $this->vin->find($id);
-            return $this->render("cave/bouteille.html.twig",
+            $userWine = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
+
+            // Si le vin n'existe pas ou n'appartient pas à l'utilisateur
+            if (!$userWine[0]) return $this->redirectToRoute("caveavin");
+
+            $wine = $this->vin->findBy(["id_vin" => $id]);
+
+            return $this->render("cave/bottle.html.twig",
             [
-                'vin' => $vin
+                'userWine'  => $userWine[0],
+                'wine'      => $wine[0]
             ]);
         }
         else

@@ -80,6 +80,9 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var File|null
+     * @Assert\Image(
+     *     mimeTypes={"image/jpeg", "image/png"},
+     *     mimeTypesMessage = "PNG ou JPG uniquement")
      * @Vich\UploadableField(mapping="profile_image", fileNameProperty="profile_img")
      *
      */

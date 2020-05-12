@@ -2,13 +2,28 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/macave.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bottle.css') }}">
 {% endblock %}
 
 {% block body %}
+    <div class="jumbotron">
+
+    </div>
+
     <div class="container mt-4">
         <div class="row">
+            <div class="col-4 wineImg text-center">
+                <img src="{{ vich_uploader_asset(userWine, 'imageFile') }}"
+                     height="400px"
+                     width="300px"
+                     class="dropdown-toggle profileImg"
+                     id="dropdownMenuButton"/>
+            </div>
 
+            {{ dump(userWine) }}
+
+            {{ dump(wine) }}
+            {#
             <h2 class="mt-3 mb-3">Consultation de la bouteille de {{ vin.appellation }}</h2 class="mt-3 mb-3">
             <div class="col-12">
                 Région : {{ vin.region }}
@@ -45,7 +60,7 @@
                     Retour
                 </a>
             </div>
-            
+#}
         </div>
     </div>
 {% endblock %}
