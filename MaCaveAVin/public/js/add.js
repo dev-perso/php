@@ -19,17 +19,83 @@ function setInputFilter(textbox, inputFilter) {
 setInputFilter(document.getElementById("cave_prix"), function(value) {
     return /^-?\d*[.,]?\d*$/.test(value); });
 
-/*
+
 document.addEventListener("DOMContentLoaded", function()
 {
-    const inputElement = document.getElementById("vin_cave_0_imageFile");
+    // Get elements type file
+    const inputElement  = document.getElementById("vin_cave_0_imageFile");
+    // Get the div element where preview will be added
+    var preview         = document.getElementById("preview");
+    var canvas          = document.getElementById("canvas");
+    // Create an image to prepare the preview thumbnail
+    var thumbnail       = document.createElement("img");
+
+    // Create event on add file
     inputElement.addEventListener("change", handleFiles, false);
-    function handleFiles() {
+
+    function handleFiles()
+    {
+        // The file to upload
         const file = this.files[0];
 
+        // Create FileReader to prepare Object to be preview
+        thumbnail.src   = window.URL.createObjectURL(file);
+        thumbnail.id    = "thumbnail";
+        var reader      = new FileReader();
+        reader.onload   = function(e) {thumbnail.src = e.target.result}
+
+        // Add the file in the FileReader object
+        reader.readAsDataURL(file);
+        // Add the preview and wait that image is loaded
+        preview.appendChild(thumbnail).addEventListener("load", function()
+        {
+
+
+        console.log(thumbnail);
+
+        /**
+         * Max dimension to resize the preview
+         * @type {number}
+         */
+        var MAX_WIDTH   = 400;
+        var MAX_HEIGHT  = 300;
+        var width       = thumbnail.clientWidth;
+        var height      = thumbnail.clientHeight;
+
+        console.log(width);
+        console.log("height", height);
+        if (width > height) {
+            if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width   = MAX_WIDTH;
+            }
+        } else {
+            if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+            }
+        }
+
+        canvas.width    = width;
+        canvas.height   = height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(thumbnail, 0, 0, width, height);
+
+
+
+
+
+
         console.log("file before ", file);
+        setTimeout(function() {
+
+            console.log("width", thumbnail.offsetWidth );
+        }, 100);
+        console.log("width", thumbnail.offsetWidth );
+    });
         // Create an image
-        var img = document.createElement("img");
+       /* var img = document.createElement("img");
         // Create a file reader
         var reader = new FileReader();
         // Set the image once loaded into file reader
@@ -69,5 +135,6 @@ document.addEventListener("DOMContentLoaded", function()
         // Load files into file reader
         reader.readAsDataURL(file);
         console.log("file after ", file);
-    }*/
-//});
+        */
+    }
+});
