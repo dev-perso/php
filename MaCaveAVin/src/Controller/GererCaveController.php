@@ -166,7 +166,7 @@ class GererCaveController extends AbstractController
             $userWine   = $this->cave->findBy(["id_user" => $this->user->getIdUser(), "id_vin" => $id]);
 
             // Si le vin n'existe pas
-            if (!$userWine) return $this->redirectToRoute("caveavin");
+            if (!$userWine[0]) return $this->redirectToRoute("caveavin");
 
             $wine       = $this->vin->find($id);
             $regions    = $this->region->findAll();
@@ -236,7 +236,7 @@ class GererCaveController extends AbstractController
             }
 
             return $this->render("cave/gestionVin/edit.html.twig", [
-                "userWine"  => $userWine,
+                "userWine"  => $userWine[0],
                 "vin"       => $wine,
                 "regions"   => $regions,
                 "couleurs"  => $colors,
