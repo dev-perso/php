@@ -19,6 +19,14 @@
                      class="dropdown-toggle profileImg"
                      id="dropdownMenuButton"/>
             </div>
+            <div class="col-8">
+                {% if userWine.getNote() is not empty %}
+                    {{ userWine.getNote() }}
+                {% else %}
+                    0
+                {% endif %}
+                {{ wine.getEntityRegion.getRegion() }}
+            </div>
 
             {{ dump(userWine) }}
 
