@@ -22,12 +22,20 @@
             <div class="col-8">
                 <div class="col-12 noteDescribe">
                     {% if userWine.getNote() is not empty %}
+                        {% set empty_star = 5 - userWine.getNote() %}
                         {{ userWine.getNote() }} Note basée sur le millésime {{ wine.getAnnee() }}
+                        <br>
+                        {% for i in 1..userWine.getNote() %}
+                            <img src="{{ asset('img/star.png') }}" width="40px" height="40px">
+                        {% endfor %}
+                        {% for i in 1..empty_star %}
+                            <img src="{{ asset('img/empty-star.png') }}" width="40px" height="40px">
+                        {% endfor %}
                     {% else %}
                         Vous n'avez pas encore assigné de note à ce vin
                     {% endif %}
                 </div>
-                <div class="col-12">
+                <div class="col-12 priceDescribe">
                     {% if userWine.getPrix() is not empty %}
                         {{ userWine.getPrix() }} €
                     {% else %}
