@@ -134,12 +134,13 @@ class CaveAVinController extends AbstractController
             // Si le vin n'existe pas ou n'appartient pas à l'utilisateur
             if (!$userWine[0]) return $this->redirectToRoute("caveavin");
 
+            // Peut être pas nécessaire
             $wine = $this->vin->findBy(["id_vin" => $id]);
 
             return $this->render("cave/bottle.html.twig",
             [
                 'userWine'  => $userWine[0],
-                'wine'      => $wine[0]
+                'wine'      => $wine[0] // Peut être pas nécessaire
             ]);
         }
         else

@@ -1,6 +1,33 @@
-.jumbotron
+.Bordeaux
+{
+    background-image: url("../img/bordeaux.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 9rem 2rem !important;
+}
+
+.Bourgogne
 {
     background-image: url("../img/bourgogne.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 9rem 2rem !important;
+}
+
+.Côtede
+{
+    background-image: url("../img/cotede.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 9rem 2rem !important;
+}
+
+.Loire
+{
+    background-image: url("../img/loire.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

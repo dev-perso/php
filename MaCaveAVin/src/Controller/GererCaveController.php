@@ -227,7 +227,6 @@ class GererCaveController extends AbstractController
                 else
                     $userWine[0]->setIdVin($wineFromDb[0]);
 
-
                 // Update de la table Cave
                 $this->em->persist($userWine[0]);
                 $this->em->flush();
