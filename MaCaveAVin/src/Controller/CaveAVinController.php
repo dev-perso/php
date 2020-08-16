@@ -153,15 +153,14 @@ class CaveAVinController extends AbstractController
      */
     public function archiveVin (): Response
     {
-        $qb = $this->vin->createQueryBuilder('v')
-            ->where('v.archive = :archive')
-            ->setParameter('archive', true)
-            ->orderBy('v.annee', 'ASC');
+        $qb = $this->cave->createQueryBuilder('c')
+            ->where('c.archive = :archive')
+            ->setParameter('archive', true);
 
-        $vins = $qb->getQuery();
+        $archiveWine = $qb->getQuery();
 
         return $this->render("cave/archive.html.twig", [
-            'vins' => $vins->getResult()
+            'archives' => $archiveWine->getResult()
         ]);
     }
 

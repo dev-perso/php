@@ -210,9 +210,8 @@ class Cave
     {
         $this->imageFile = $imageFile;
 
-        if ($this->imageFile instanceof UploadedFile) {
+        if ($this->imageFile instanceof UploadedFile)
             $this->updated_at = new \DateTime('now');
-        }
 
         return $this;
     }

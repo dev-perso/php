@@ -31,30 +31,30 @@
                 </tr>
             </thead>
             <tbody>
-                {%  for vin in vins %}
+                {%  for archive in archives %}
                     <tr>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.region | capitalize }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.couleur | capitalize }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.appellation }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.annee }}</td>
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.quantite }}</td>
-                        {%  if vin.prix is empty %}
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">NC</td>
+                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.region | capitalize }}</td>
+                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.couleur | capitalize }}</td>
+                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.appellation }}</td>
+                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.annee }}</td>
+                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.quantite }}</td>
+                        {%  if archive.prix is empty %}
+                            <td data-id="{{ archive.id }}" style="cursor : pointer;">NC</td>
                         {% else %}
-                            <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.prix }} €</td>
+                            <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.prix }} €</td>
                         {% endif %}
-                        <td data-id="{{ vin.id }}" style="cursor : pointer;">{{ vin.note }}</td>
+                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.note }}</td>
                         <!-- Should be the last column -->
                         <td>
                             <img src="{{ asset('img/modifier.png') }}"
                                 class="editWine pointer" 
-                                id="{{ 'edit' ~ vin.id }}" 
+                                id="{{ 'edit' ~ archive.id }}"
                                 title="Modifier"
                                 height="30px" 
                                 width="30px" />
                             <img src="{{ asset('img/remettre.png') }}" 
                                 class="addWine ml-3 pointer" 
-                                id="{{ 'add' ~ vin.id }}" 
+                                id="{{ 'add' ~ archive.id }}"
                                 title="Remettre" 
                                 height="30px" 
                                 width="30px" />
