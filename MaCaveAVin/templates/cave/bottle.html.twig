@@ -20,7 +20,7 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-4 wineImg text-center">
-                <img src="{{ vich_uploader_asset(userWine, 'imageFile') | imagine_filter('thumb') }}"
+                <img src="{{ asset('img/wines/' ~ userWine.image) }}"
                      height="400px"
                      width="300px"
                      class="dropdown-toggle profileImg"

@@ -52,6 +52,21 @@ class CaveRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Cave[] Returns an array of Cave objects
+     * Récupère les vins archivé par l'utilisateur
+     */
+    public function getArchiveFromUserCave($idUser)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id_user = :id_user')
+            ->andWhere('c.archive = :archive')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('archive', 1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return int
      * Récupère la quantité du vin du user
      */

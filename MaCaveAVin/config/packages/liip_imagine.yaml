@@ -2,14 +2,33 @@
 liip_imagine:
     resolvers:
         default:
-            web_path: ~
-    filter_sets:
-        cache: ~
-        thumb:
-            quality: 75
-            filters:
-                thumbnail:
-                    size: [200, 350]
-                    mode: outbound
-    # valid drivers options include "gd" or "gmagick" or "imagick"
+            web_path:
+                web_root: "%kernel.project_dir%/public"
+                cache_prefix: "media/cache/resolve"
+
+    loaders:
+        default:
+            filesystem:
+                data_root: "%kernel.project_dir%/public/img/wines"
+                bundle_resources:
+                    enabled: true
+
     driver: "gd"
+    cache: default
+    data_loader: default
+    default_image: null
+    controller:
+        filter_action:         liip_imagine.controller:filterAction
+        filter_runtime_action: liip_imagine.controller:filterRuntimeAction
+
+    filter_sets:
+        thumb:
+            quality: 5
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail:
+                    size:          [250, 300]
+                    mode:          outbound
+                    allow_upscale: true
+    # valid drivers options include "gd" or "gmagick" or "imagick"

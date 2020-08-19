@@ -33,28 +33,28 @@
             <tbody>
                 {%  for archive in archives %}
                     <tr>
-                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.region | capitalize }}</td>
-                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.couleur | capitalize }}</td>
-                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.appellation }}</td>
-                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.annee }}</td>
-                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.quantite }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getEntityRegion().getRegion() | capitalize }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getEntityCouleur().getCouleur() | capitalize }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getAppellation() }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getAnnee() }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.quantite }}</td>
                         {%  if archive.prix is empty %}
-                            <td data-id="{{ archive.id }}" style="cursor : pointer;">NC</td>
+                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">NC</td>
                         {% else %}
-                            <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.prix }} €</td>
+                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.prix }} €</td>
                         {% endif %}
-                        <td data-id="{{ archive.id }}" style="cursor : pointer;">{{ archive.note }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.note }}</td>
                         <!-- Should be the last column -->
                         <td>
                             <img src="{{ asset('img/modifier.png') }}"
                                 class="editWine pointer" 
-                                id="{{ 'edit' ~ archive.id }}"
+                                id="{{ 'edit' ~ archive.getEntityVin().getIdVin() }}"
                                 title="Modifier"
                                 height="30px" 
                                 width="30px" />
                             <img src="{{ asset('img/remettre.png') }}" 
                                 class="addWine ml-3 pointer" 
-                                id="{{ 'add' ~ archive.id }}"
+                                id="{{ 'add' ~ archive.getEntityVin().getIdVin() }}"
                                 title="Remettre" 
                                 height="30px" 
                                 width="30px" />
