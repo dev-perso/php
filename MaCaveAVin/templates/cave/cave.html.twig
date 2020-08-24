@@ -53,7 +53,6 @@
             </div>
         {% endif %}
 
- 
         <div class="row">
             <div class="col-12" id="actifFilter">
 
@@ -67,7 +66,7 @@
                 <tr>
                     <th scope="col">Région</th>
                     <th scope="col">Couleur</th>
-                    <th scope="col">Appelation</th>
+                    <th scope="col">Appellation</th>
                     <th scope="col">Année</th>
                     <th scope="col">Qté</th>
                     <th scope="col">Prix</th>
@@ -82,7 +81,13 @@
                     <tr>
                         <td data-id="{{ wine.idVin }}" class="pointer">{{ wine.entityRegion.region|replace({"cote_rhone": "Côte du rhône"})|capitalize }}</td>
                         <td data-id="{{ wine.idVin }}" class="pointer">{{ wine.entityCouleur.couleur | capitalize }}</td>
-                        <td data-id="{{ wine.idVin }}" class="pointer">{{ wine.appellation }}</td>
+                        <td data-id="{{ wine.idVin }}" class="pointer">
+                            {% if wine.appellation | length > 60 %}
+                                {{ wine.appellation | slice(0, 60) }}...
+                            {% else %}
+                                {{ wine.appellation }}
+                            {% endif %}
+                        </td>
                         <td data-id="{{ wine.idVin }}" class="pointer">{{ wine.annee }}</td>
                         <td data-id="{{ wine.idVin }}" class="pointer">{{ wine.quantity }}</td>
                         {%  if wine.prix is empty %}

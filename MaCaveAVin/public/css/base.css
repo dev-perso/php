@@ -8,7 +8,7 @@ body .navAjustement
     box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
 }
 
-body .navAjustement .profil
+body .navAjustement .profil, body .navAjustement .btnCounter
 {
     font-size : 12px;
     position : relative;
@@ -20,6 +20,33 @@ body .navAjustement .profil .rowProfil
     top : calc(50% - 20px);
     text-align: center;
     width : 100%;
+}
+
+body .navAjustement .whiteBtl, body .navAjustement .roseBtl, body .navAjustement .redBtl
+{
+    width : 25px;
+    height : 25px;
+    margin : 0px 5px;
+    display : inline-block;
+    position :relative;
+    top : calc(50% - 10px);
+    border-radius: 13px;
+    padding-top : 4px;
+}
+
+body .navAjustement .whiteBtl
+{
+    background-color : rgb(255,248,188);
+}
+
+body .navAjustement .roseBtl
+{
+    background-color : #db7599;
+}
+
+body .navAjustement .redBtl
+{
+    background-color : rgb(219,50,77);
 }
 
 body .navAjustement .profil .rowProfil .profileImg

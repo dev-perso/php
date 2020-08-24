@@ -32,6 +32,21 @@ class CaveAVinController extends AbstractController
      */
     private $vin;
 
+    /**
+     * Nombre de bouteilles : Blanc
+     */
+    private $whiteWinesNb;
+
+    /**
+     * Nombre de bouteilles : Rosé
+     */
+    private $roseWinesNb;
+
+    /**
+     * Nombre de bouteilles : Rouge
+     */
+    private $redWinesNb;
+
     public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave, Security $security)
     {
         $this->em       = $em;
@@ -56,31 +71,66 @@ class CaveAVinController extends AbstractController
         $allColorsInCave    = [];
         $allRegionsInCave   = [];
 
-        // Récupère les vins avec une quantité strictement supérieur à 0
+        // Récupére les vins avec une quantité strictement supérieur à 0
         $wines = $this->cave->getWinesFromUserCave($this->user->getIdUser());
-            
+
+        // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+        $this->refreshBottlesNumber($wines);
+
         foreach ($wines as $wine)
         {
-            // Récupère les informations du vin
+            // Récupére la couleur et la région du vin
+            $color  = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
+            $region = $wine->getEntityVin()->getEntityRegion()->getRegion();
+
+            // Récupére les informations du vin
             $userWines[] = $this->getWineInformations($wine);
             
-            // Récupère les couleurs des vins dans la cave
-            if (!in_array($wine->getEntityVin()->getEntityCouleur()->getCouleur(), $allColorsInCave))
-                $allColorsInCave[] = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
+            // Récupére les couleurs des vins dans la cave
+            if (!in_array($color, $allColorsInCave))
+                $allColorsInCave[] = $color;
 
-            // Récupère les régions des vins dans la cave
-            if (!in_array($wine->getEntityVin()->getEntityRegion()->getRegion(), $allRegionsInCave))
-                $allRegionsInCave[] = $wine->getEntityVin()->getEntityRegion()->getRegion();
+            // Récupére les régions des vins dans la cave
+            if (!in_array($region, $allRegionsInCave))
+                $allRegionsInCave[] = $region;
         }
 
         // Tri les vins par Année
         usort($userWines, array($this, "compareDate"));
 
         return $this->render("cave/cave.html.twig", [
-            'colors'    => $allColorsInCave,
-            'regions'   => $allRegionsInCave,
-            'userWines' => $userWines
+            'colors'        => $allColorsInCave,
+            'regions'       => $allRegionsInCave,
+            'userWines'     => $userWines,
+            'whiteWines'    => $this->whiteWinesNb,
+            'roseWines'     => $this->roseWinesNb,
+            'redWines'      => $this->redWinesNb
         ]);
+    }
+
+    // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+    private function refreshBottlesNumber($wines)
+    {
+        $whiteWines     = 0;
+        $roseWines      = 0;
+        $redWines       = 0;
+
+        foreach ($wines as $wine)
+        {
+            // Récupére la couleur du vin
+            $color = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
+
+            if ($color == "Blanc")
+                $whiteWines++;
+            elseif ($color == "Rosé")
+                $roseWines++;
+            elseif ($color == "Rouge")
+                $redWines++;
+        }
+
+        $this->whiteWinesNb = $whiteWines;
+        $this->roseWinesNb  = $roseWines;
+        $this->redWinesNb   = $redWines;
     }
 
     // Get Wine Informations from object Vin
@@ -134,13 +184,19 @@ class CaveAVinController extends AbstractController
             // Si le vin n'existe pas ou n'appartient pas à l'utilisateur
             if (!$userWine[0]) return $this->redirectToRoute("caveavin");
 
+            // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+            $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($this->user->getIdUser()));
+
             // Peut être pas nécessaire
             $wine = $this->vin->findBy(["id_vin" => $id]);
 
             return $this->render("cave/bottle.html.twig",
             [
-                'userWine'  => $userWine[0],
-                'wine'      => $wine[0] // Peut être pas nécessaire
+                'userWine'      => $userWine[0],
+                'wine'          => $wine[0], // Peut être pas nécessaire
+                'whiteWines'    => $this->whiteWinesNb,
+                'roseWines'     => $this->roseWinesNb,
+                'redWines'      => $this->redWinesNb
             ]);
         }
         else
@@ -156,19 +212,15 @@ class CaveAVinController extends AbstractController
         if ($this->user->getIdUser())
         {
             $wines = $this->cave->getArchiveFromUserCave($this->user->getIdUser());
-            /*$qb = $this->cave->createQueryBuilder('c')
-                ->where('c.archive = :archive')
-                ->setParameter('archive', true);
 
-            $archiveWine = $qb->getQuery();
-*/
-            /*$qb = $this->vin->createQueryBuilder('v')
-                ->where('v.archive = :archive')
-                ->setParameter('archive', true);
-            */
+            // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+            $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($this->user->getIdUser()));
+
             return $this->render("cave/archive.html.twig", [
-                //'archives' => $archiveWine->getResult()
-                'archives' => $wines
+                'archives'      => $wines,
+                'whiteWines'    => $this->whiteWinesNb,
+                'roseWines'     => $this->roseWinesNb,
+                'redWines'      => $this->redWinesNb
             ]);
         }
         else

@@ -216,11 +216,15 @@ document.addEventListener("DOMContentLoaded", function()
     // Construction d'une ligne du tableau en fonction du vin
     var constructTable = (wine) =>
     {
+        var largeString = "";
+        if (wine.appellation.length > 60)
+            largeString = "...";
+
         newTableBody = "<tr>";
         if (wine.entityRegion.region == "cote_rhone") wine.entityRegion.region = "Côte du rhône";
         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.entityRegion.region.charAt(0).toUpperCase() + wine.entityRegion.region.slice(1) + "</td>";
         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.entityCouleur.couleur.charAt(0).toUpperCase() + wine.entityCouleur.couleur.slice(1) + "</td>";
-        newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.appellation.charAt(0).toUpperCase() + wine.appellation.slice(1) + "</td>";
+        newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.appellation.charAt(0).toUpperCase() + wine.appellation.slice(1).substring(0, 59) + largeString + "</td>";
         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.annee + "</td>";
         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.quantity + "</td>";
         if (wine.prix != null)
