@@ -90,7 +90,6 @@ class SecurityController extends AbstractController
             $form = $this->createForm(EditProfileType::class, $user);
             $form->handleRequest($request);
 
-
             if ($form->isSubmitted() && $form->isValid())
             {
                 $this->em->persist($user);
@@ -112,23 +111,6 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute("caveavin");
     }
-
-    /**
-     * @Route("/gestion/profile/modifier", name="manage.profile.edit")
-     * N'a plus lieu d'être
-    public function editProfile(Security $security) : Response
-    {
-        $user = $security->getUser();
-
-        if ($user)
-        {
-            $user->setNom($_POST['nom']);
-            $this->em->persist($user);
-            $this->em->flush();
-        }
-        
-        return $this->redirectToRoute("caveavin");
-    } */
 
     /**
      * @Route("/bienvenue", name="bienvenue")

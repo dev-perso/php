@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Vin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Form\FormTypeInterface;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Vin|null find($id, $lockMode = null, $lockVersion = null)
