@@ -1,3 +1,8 @@
+body
+{
+    font-family: 'Roboto';
+}
+
 .btnWine, .btnFilter
 {
     background-color: white !important;

@@ -13,7 +13,7 @@
         {% set region = tmpregion[0] %}
     {% endif %}
 
-    <div class="jumbotron {{ region }}">
+    <div class="jumbotron {{ region | replace({'ô': 'o'}) }}">
 
     </div>
 

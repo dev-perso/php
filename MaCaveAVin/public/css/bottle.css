@@ -16,9 +16,27 @@
     padding: 9rem 2rem !important;
 }
 
-.Côtede
+.Cotede
 {
     background-image: url("../img/cotede.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 9rem 2rem !important;
+}
+
+.Cotedu
+{
+    background-image: url("../img/coterhone.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 9rem 2rem !important;
+}
+
+.LanguedocRoussillon
+{
+    background-image: url("../img/languedoc.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -33,6 +51,8 @@
     background-size: cover;
     padding: 9rem 2rem !important;
 }
+
+
 
 .wineImg
 {
