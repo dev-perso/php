@@ -27,11 +27,15 @@
             <div class="row">
 
                 {# Compteur #}
-                <div class="col-2 btnCounter">
-                    <div class="whiteBtl">{{ whiteWines }}</div>
-                    <div class="roseBtl">{{ roseWines }}</div>
-                    <div class="redBtl">{{ redWines }}</div>
-                </div>
+                {% if app.request.requesturi == "/bienvenue" or app.request.requesturi == "/connexion" %}
+                    <div class="col-2 btnCounter"></div>
+                {% else %}
+                    <div class="col-2 btnCounter">
+                        <div class="whiteBtl">{{ whiteWines }}</div>
+                        <div class="roseBtl">{{ roseWines }}</div>
+                        <div class="redBtl">{{ redWines }}</div>
+                    </div>
+                {% endif %}
 
                 {# Titre #}
                 <div class="col-8">

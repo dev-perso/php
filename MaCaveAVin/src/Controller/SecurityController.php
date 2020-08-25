@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\EditProfileType;
+use App\Repository\CaveRepository;
 use App\Repository\UserRepository;
 use DirectoryIterator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,10 +29,26 @@ class SecurityController extends AbstractController
      */
     private $user;
 
-    public function __construct(EntityManagerInterface $em, UserRepository $user)
+    /**
+     * Nombre de bouteilles : Blanc
+     */
+    private $whiteWinesNb;
+
+    /**
+     * Nombre de bouteilles : Rosé
+     */
+    private $roseWinesNb;
+
+    /**
+     * Nombre de bouteilles : Rouge
+     */
+    private $redWinesNb;
+
+    public function __construct(EntityManagerInterface $em, UserRepository $user, CaveRepository $cave)
     {
         $this->em   = $em;
-        $this->user  = $user;
+        $this->user = $user;
+        $this->cave = $cave;
     }
 
     /**
@@ -82,8 +99,14 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute("caveavin");
             }
 
+            // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+            $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($user->getIdUser()));
+
             return $this->render("security/gestionCompte/profile.html.twig", [
-                'form' => $form->createView()
+                'form'          => $form->createView(),
+                'whiteWines'    => $this->whiteWinesNb,
+                'roseWines'     => $this->roseWinesNb,
+                'redWines'      => $this->redWinesNb
             ]);
         }
 
@@ -92,7 +115,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/gestion/profile/modifier", name="manage.profile.edit")
-     */
+     * N'a plus lieu d'être
     public function editProfile(Security $security) : Response
     {
         $user = $security->getUser();
@@ -105,7 +128,7 @@ class SecurityController extends AbstractController
         }
         
         return $this->redirectToRoute("caveavin");
-    }
+    } */
 
     /**
      * @Route("/bienvenue", name="bienvenue")
@@ -132,5 +155,30 @@ class SecurityController extends AbstractController
     public function deconnexion() : Response
     {
         // Route de déconnexion
+    }
+
+    // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+    private function refreshBottlesNumber($wines)
+    {
+        $whiteWines     = 0;
+        $roseWines      = 0;
+        $redWines       = 0;
+
+        foreach ($wines as $wine)
+        {
+            // Récupére la couleur du vin
+            $color = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
+
+            if ($color == "Blanc")
+                $whiteWines++;
+            elseif ($color == "Rosé")
+                $roseWines++;
+            elseif ($color == "Rouge")
+                $redWines++;
+        }
+
+        $this->whiteWinesNb = $whiteWines;
+        $this->roseWinesNb  = $roseWines;
+        $this->redWinesNb   = $redWines;
     }
 }

@@ -35,6 +35,21 @@ class GererCaveController extends AbstractController
      */
     private $vin;
 
+    /**
+     * Nombre de bouteilles : Blanc
+     */
+    private $whiteWinesNb;
+
+    /**
+     * Nombre de bouteilles : Rosé
+     */
+    private $roseWinesNb;
+
+    /**
+     * Nombre de bouteilles : Rouge
+     */
+    private $redWinesNb;
+
     public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave, Security $security)
     {
         $this->em       = $em;
@@ -146,12 +161,18 @@ class GererCaveController extends AbstractController
             return $this->redirectToRoute("caveavin");
         }
 
+        // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+        $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($this->user->getIdUser()));
+
         return $this->render("cave/gestionVin/add.html.twig",
         [
-            "couleurs"  => $couleurs,
-            "regions"   => $regions,
-            "vin"       => $vin,
-            "form"      => $form->createView()
+            "couleurs"      => $couleurs,
+            "regions"       => $regions,
+            "vin"           => $vin,
+            "form"          => $form->createView(),
+            'whiteWines'    => $this->whiteWinesNb,
+            'roseWines'     => $this->roseWinesNb,
+            'redWines'      => $this->redWinesNb
         ]);
     }
 
@@ -234,13 +255,19 @@ class GererCaveController extends AbstractController
                 return $this->redirectToRoute("caveavin");
             }
 
+            // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+            $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($this->user->getIdUser()));
+
             return $this->render("cave/gestionVin/edit.html.twig", [
-                "userWine"  => $userWine[0],
-                "vin"       => $wine,
-                "regions"   => $regions,
-                "couleurs"  => $colors,
-                "years"     => $arrayYear,
-                "form"      => $form->createView()
+                "userWine"      => $userWine[0],
+                "vin"           => $wine,
+                "regions"       => $regions,
+                "couleurs"      => $colors,
+                "years"         => $arrayYear,
+                "form"          => $form->createView(),
+                'whiteWines'    => $this->whiteWinesNb,
+                'roseWines'     => $this->roseWinesNb,
+                'redWines'      => $this->redWinesNb
             ]);
         }
 
@@ -292,10 +319,16 @@ class GererCaveController extends AbstractController
                 return $this->redirectToRoute("caveavin");
             }
 
+            // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+            $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($this->user->getIdUser()));
+
             return $this->render("cave/gestionVin/use.html.twig", [
-                "vin"   => $wine,
-                "userWine" => $userWine[0],
-                "form"  => $form->createView()
+                "vin"           => $wine,
+                "userWine"      => $userWine[0],
+                "form"          => $form->createView(),
+                'whiteWines'    => $this->whiteWinesNb,
+                'roseWines'     => $this->roseWinesNb,
+                'redWines'      => $this->redWinesNb
             ]);
         }
 
@@ -351,11 +384,42 @@ class GererCaveController extends AbstractController
                 ->getQuery()
                 ->getSingleScalarResult();
         }
-        
+
+        // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+        $this->refreshBottlesNumber($this->cave->getWinesFromUserCave($this->user->getIdUser()));
+
         return $this->render("cave/cave.html.twig", [
-            'vins'      => $vins->getResult(),
-            'couleurs'  => $this->couleur,
-            'regions'   => $this->region
+            'vins'          => $vins->getResult(),
+            'couleurs'      => $this->couleur,
+            'regions'       => $this->region,
+            'whiteWines'    => $this->whiteWinesNb,
+            'roseWines'     => $this->roseWinesNb,
+            'redWines'      => $this->redWinesNb
         ]);
+    }
+
+    // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+    private function refreshBottlesNumber($wines)
+    {
+        $whiteWines     = 0;
+        $roseWines      = 0;
+        $redWines       = 0;
+
+        foreach ($wines as $wine)
+        {
+            // Récupére la couleur du vin
+            $color = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
+
+            if ($color == "Blanc")
+                $whiteWines++;
+            elseif ($color == "Rosé")
+                $roseWines++;
+            elseif ($color == "Rouge")
+                $redWines++;
+        }
+
+        $this->whiteWinesNb = $whiteWines;
+        $this->roseWinesNb  = $roseWines;
+        $this->redWinesNb   = $redWines;
     }
 }

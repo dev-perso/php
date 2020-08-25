@@ -47,6 +47,17 @@ class CaveAVinController extends AbstractController
      */
     private $redWinesNb;
 
+    /**
+     * CaveAVinController constructor.
+     * @param EntityManagerInterface $em
+     * @param VinRepository $vin
+     * @param CouleurRepository $couleur
+     * @param PaysRepository $pays
+     * @param RegionRepository $region
+     * @param DomaineRepository $domaine
+     * @param CaveRepository $cave
+     * @param Security $security
+     */
     public function __construct(EntityManagerInterface $em, VinRepository $vin, CouleurRepository $couleur, PaysRepository $pays, RegionRepository $region, DomaineRepository $domaine, CaveRepository $cave, Security $security)
     {
         $this->em       = $em;
