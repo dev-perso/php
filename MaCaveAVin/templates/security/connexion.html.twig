@@ -12,7 +12,7 @@
 
             {# Sign in #}
             <div class="offset-3 col-6">
-                <div class="leftPanel-signIn">
+                <div class="leftPanel-signIn" id="signInForm">
                     <h2>Se connecter</h2>
                     <h3>Vous avez déjà un compte ?</h3>
 
@@ -33,13 +33,21 @@
 
                         {# Connection Bouton #}
                         <div class="form-group text-center">
-                            <button type="submit" class="signInBtn">Connexion</button>
+                            <button type="submit" class="signInBtn">CONNEXION</button>
                         </div>
                     </form>
                 </div>
 
-                <div class="rightPanel-signIn">
-                    <div class=""></div>
+                <div class="rightPanel-signIn" id="signUpForm">
+                    <div class="mainTextRightPanel">
+                        Bonjour
+                    </div>
+                        <h4>Hello, Friend!</h4>
+
+                    {# Creation account Bouton #}
+                    <div class="form-group text-center">
+                        <button type="button" class="createAccountBtn" id="register">S'ENREGISTRER</button>
+                    </div>
                 </div>
 
             </div>
