@@ -6,25 +6,72 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid divContainerConnect">
+
+    <div class="container-fluid connectContainer">
         <div class="row rowConnect">
-            <div class="offset-4 col-4 divConnect">
-                <h1 class="text-center">Connexion</h1>
-                <form action="{{ path('connexion') }}" method="post">
-                    <div class="form-group">
-                        <label for="_username">Username</label>
-                        <input type="text" class="form-control" required name="_username">
-                    </div>
-                    <div class="form-group">
-                        <label for="_password">Password</label>
-                        <input type="password" class="form-control" required name="_password">
-                    </div>
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-light">Connexion</button>
-                    </div>
-                </form>
+
+            {# Sign in #}
+            <div class="offset-3 col-6">
+                <div class="leftPanel-signIn">
+                    <h2>Se connecter</h2>
+                    <h3>Vous avez déjà un compte ?</h3>
+
+                    {# Connection Form #}
+                    <form action="{{ path('connexion') }}" method="post">
+
+                        {# Username input #}
+                        <div class="form-group usernameInput">
+                            <i class="fa fa-user"></i>
+                            <input type="text" class="connectInput" required name="_username" placeholder="Identifiant">
+                        </div>
+
+                        {# Password input #}
+                        <div class="form-group passwordInput">
+                            <i class="fa fa-lock"></i>
+                            <input type="password" class="connectInput" required name="_password" placeholder="Mot de passe">
+                        </div>
+
+                        {# Connection Bouton #}
+                        <div class="form-group text-center">
+                            <button type="submit" class="signInBtn">Connexion</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="rightPanel-signIn">
+                    <div class=""></div>
+                </div>
+
             </div>
+
+            {# Sign up #}
+            {#<div class="offset-3 col-3 divConnect">
+
+            </div>
+            <div class="col-3">
+<h2>Se créer un compte</h2>
+                    <h3>Vous n'avez pas de compte ?</h3>
+
+                    <form action="{{ path('connexion') }}" method="post">
+                        <div class="form-group">
+                            <label for="_username">Username</label>
+                            <input type="text" class="form-control" required name="_username">
+                        </div>
+                        <div class="form-group">
+                            <label for="_password">Password</label>
+                            <input type="password" class="form-control" required name="_password">
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-light">Connexion</button>
+                        </div>
+                    </form>
+
+            </div>#}
         </div>
     </div>
-    
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/connexion.js') }}"></script>
 {% endblock %}

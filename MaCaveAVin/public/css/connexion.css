@@ -1,3 +1,9 @@
+@font-face
+{
+    font-family: 'Amarillo';
+    src: url('../font/Amarillo.otf') format('opentype');
+}
+
 body
 {
     background-image: url("../img/background-grapes.jpg");
@@ -5,10 +11,28 @@ body
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    font-family: 'Roboto';
 }
 
+h2
+{
+    font-family: 'Roboto';
+    text-align : center;
+    font-weight: bold;
+    font-size: 36px;
+}
 
-.divContainerConnect
+h3
+{
+    font-family: 'Amarillo';
+    text-align : center;
+    font-size: 12px;
+    color: #93032E;
+    margin-top : -10px;
+    margin-left : 20px;
+}
+
+.divContainerConnect, .connectContainer
 {
     position : fixed;
     display: table;
@@ -25,11 +49,100 @@ body
     font-family: 'Roboto';
 }
 
-.divConnect
+.leftPanel-signIn
 {
-    background-color : rgba(255, 255, 255, 0.8);
+    background-color : rgba(255, 255, 255, 1);
     box-shadow : 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
     border : 1px solid transparent;
-    border-radius : 20px;
+    border-radius : 20px 0px 0px 20px;
     padding : 30px;
+    display: inline-block;
+    height: 390px;
+    width: 50%;
 }
+
+.leftPanel-signIn form
+{
+    height: 100%;
+    width : 100%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top : 50px;
+}
+
+.leftPanel-signIn form .usernameInput, .leftPanel-signIn form .passwordInput
+{
+    text-align : center;
+    position : relative;
+}
+
+.leftPanel-signIn form .usernameInput i, .leftPanel-signIn form .passwordInput i
+{
+    color : #cccccc;
+    position : absolute;
+    top : calc(50% - 9px);
+    height : 18px;
+    width : auto;
+}
+
+
+.leftPanel-signIn form label
+{
+    display: inline-block;
+    width: 100px;
+    text-align : left;
+}
+
+.leftPanel-signIn form input
+{
+    display: inline-block;
+    width: auto;
+}
+
+.leftPanel-signIn form .connectInput
+{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border : none;
+    border-radius: 10px;
+    padding : 6px 6px 6px 30px;
+    margin-left : -10px;
+}
+
+.leftPanel-signIn form .connectInput:focus
+{
+    border-bottom : 3px solid #555;
+    outline: none;
+}
+
+.leftPanel-signIn form .signInBtn
+{
+    background-color: #93032E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+    border : none;
+
+    padding: 10px 40px;
+    margin-top : 50px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.rightPanel-signIn
+{
+    background-color : rgb(255, 236, 74);
+    box-shadow : 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
+    border : 1px solid transparent;
+    border-radius : 0px 20px 20px 0px;
+    padding : 30px;
+    display: inline-block;
+    height: 390px;
+    width: 50%;
+    float : right;
+}
+

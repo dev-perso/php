@@ -7,15 +7,7 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Archive</h1>
-
-        <div class="row">
-            <div class="col-12 text-center">
-                <a role="button" href="{{ path('caveavin') }}" class="btn btn-outline-dark">
-                    <i class="fa fa-chevron-left"></i> Retour à la cave
-                </a>
-            </div>
-        </div>
+        <h1 class="text-center">Archive</h1>
 
         <table class="table table-striped mt-5">
             <thead>
@@ -33,17 +25,17 @@
             <tbody>
                 {%  for archive in archives %}
                     <tr>
-                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getEntityRegion().getRegion() | capitalize }}</td>
-                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getEntityCouleur().getCouleur() | capitalize }}</td>
-                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getAppellation() }}</td>
-                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.getEntityVin().getAnnee() }}</td>
-                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.quantite }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.getEntityVin().getEntityRegion().getRegion() | capitalize }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.getEntityVin().getEntityCouleur().getCouleur() | capitalize }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.getEntityVin().getAppellation() }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.getEntityVin().getAnnee() }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.quantite }}</td>
                         {%  if archive.prix is empty %}
-                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">NC</td>
+                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">NC</td>
                         {% else %}
-                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.prix }} €</td>
+                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.prix }} €</td>
                         {% endif %}
-                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" style="cursor : pointer;">{{ archive.note }}</td>
+                        <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.note }}</td>
                         <!-- Should be the last column -->
                         <td>
                             <img src="{{ asset('img/modifier.png') }}"
