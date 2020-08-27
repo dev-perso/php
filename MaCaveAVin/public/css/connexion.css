@@ -148,7 +148,7 @@ h3
     position : relative;
 }
 
-.rightPanel-signIn .mainTextRightPanel
+.rightPanel-signIn .mainTextRightPanel, .rightPanel-signIn .mainTextLeftPanel, .leftPanel-signUp .mainTextRightPanel, .leftPanel-signUp .mainTextLeftPanel
 {
     width: 100%;
     height: 170px;
@@ -160,7 +160,7 @@ h3
     color: #38040E;
 }
 
-.rightPanel-signIn h4
+.rightPanel-signIn h4, .leftPanel-signUp h4
 {
     text-align: right;
     margin-right : 20px;
@@ -169,24 +169,35 @@ h3
     color: #38040E;
 }
 
-.rightPanel-signIn .createAccountBtn
+.rightPanel-signIn .createAccountBtn, .leftPanel-signUp .createAccountBtn, .rightPanel-signIn .switchConnectPanel, .leftPanel-signUp .switchConnectPanel
 {
     background-color: #ffffff;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 40px;
     border : none;
-
     padding: 10px 40px;
     margin-top : 65px;
-
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
     line-height: 21px;
     text-align: center;
-
-    color: #93032E;
     outline: none;
+}
+
+.rightPanel-signIn .createAccountBtn, .leftPanel-signUp .createAccountBtn
+{
+    color: #93032E;
+}
+
+.rightPanel-signIn .switchConnectPanel, .leftPanel-signUp .switchConnectPanel
+{
+    color: #F3DA0B;
+}
+
+.rightPanel-signIn #signUp-signIn, .leftPanel-signUp #signIn-signUp
+{
+    display: none;
 }
 
 .leftPanel-signUp
@@ -202,8 +213,19 @@ h3
     float : right;
     position : relative;
     transform: translateX(-100%);
-    transition: transform 500ms ease-out 50ms;
+    transition: transform 500ms ease-out;
+}
 
+.leftPanel-signUp .mainTextLeftPanel, .rightPanel-signIn .mainTextRightPanel
+{
+    width: 100%;
+    height: 170px;
+    line-height: 280px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 64px;
+    text-align: center;
+    color: #38040E;
 }
 
 .rightPanel-signUp
