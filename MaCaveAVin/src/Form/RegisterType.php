@@ -14,46 +14,46 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', null,
+            /*->add('nom', null,
             [
-                'label'     => 'Nom',
+                'label'     => false,
                 'required'  => true
             ])
             ->add('prenom', null,
             [
-                'label'     => 'Prénom',
+                'label'     => false,
                 'required'  => true
-            ])
+            ])*/
             ->add('email', null,
             [
-                'label'     => 'Email',
+                'label'     => false,
                 'required'  => true
             ])
-            ->add('confirm_email', null,
+            /*->add('confirm_email', null,
             [
-                'label'     => 'Confirmation du mail',
+                'label'     => false,
                 'required'  => true
-            ])
+            ])*/
             ->add('username', null,
             [
-                'label'     => 'Utilisateur',
+                'label'     => false,
                 'required'  => true
             ])
             ->add('password', PasswordType::class,
             [
-                'label'     => 'Mot de passe',
+                'label'     => false,
                 'required'  => true
-            ])
-            ->add('confirm_password', PasswordType::class,
+            ]);
+            /*->add('confirm_password', PasswordType::class,
             [
-                'label'     => 'Confirmation du mot de passe',
+                'label'     => false,
                 'required'  => true
-            ])
-            ->add('imageFile', FileType::class,
+            ]);*/
+            /*->add('imageFile', FileType::class,
             [
                 'label'     => 'Image du profile',
                 'required'  => false
-            ]);
+            ]);*/
     }
 
     public function configureOptions(OptionsResolver $resolver)

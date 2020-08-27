@@ -10,35 +10,92 @@
     <div class="container-fluid connectContainer">
         <div class="row rowConnect">
 
-            {# Sign in #}
             <div class="offset-3 col-6">
                 <div class="leftPanel-signIn" id="signInForm">
-                    <h2>Se connecter</h2>
-                    <h3>Vous avez déjà un compte ?</h3>
 
-                    {# Connection Form #}
-                    <form action="{{ path('connexion') }}" method="post">
+                    {# Sign in Form #}
+                    <div id="form-signIn">
+                        <h2>SE CONNECTER</h2>
+                        <h3>Vous avez déjà un compte ?</h3>
 
-                        {# Username input #}
-                        <div class="form-group usernameInput">
-                            <i class="fa fa-user"></i>
-                            <input type="text" class="connectInput" required name="_username" placeholder="Identifiant">
+                        {# Connection Form #}
+                        <form action="{{ path('connexion') }}" method="post">
+
+                            {# Username input #}
+                            <div class="form-group usernameInput">
+                                <i class="fa fa-user"></i>
+                                <input type="text" class="connectInput" required name="_username" placeholder="Identifiant">
+                            </div>
+
+                            {# Password input #}
+                            <div class="form-group passwordInput">
+                                <i class="fa fa-lock"></i>
+                                <input type="password" class="connectInput" required name="_password" placeholder="Mot de passe">
+                            </div>
+
+                            {# Connection Bouton #}
+                            <div class="form-group text-center">
+                                <button type="submit" class="signInBtn">CONNEXION</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    {# Sign up Form #}
+                    <div id="form-signUp">
+                        <h2>SE CREER UN COMPTE</h2>
+                        <h3>Vous n'avez pas de compte ?</h3>
+
+                        <form action="{{ path('register') }}" method="post">
+                            <div class="row">
+                                <div class="form-group emailInput">
+                                    <i class="fa fa-envelope"></i>
+                                    <input type="text" class="registerInput" required name="email" placeholder="Email">
+                                </div>
+
+                                <div class="form-group usernameInput">
+                                    <i class="fa fa-user"></i>
+                                    <input type="text" class="registerInput" required name="username" placeholder="Identifiant">
+                                </div>
+
+                                <div class="form-group passwordInput">
+                                    <i class="fa fa-lock"></i>
+                                    <input type="password" class="registerInput" required name="password" placeholder="Mot de passe">
+                                </div>
+
+                                <div class="form-group text-center signUpDiv">
+                                    <button class="btn btn-light signUpBtn">{{ button|default('INSCRIPTION') }}</button>
+                                </div>
+                            </div>
+                        </form>
+                        {#{{ form_start(form) }}
+                        <div class="row">
+                            <div class="form-group emailInput">
+                                <i class="fa fa-envelope"></i>
+                                {{ form_widget(form.email, {'attr' : {'placeholder' : 'Email', 'class' : 'registerInput '}}) }}
+                            </div>
+
+                            <div class="form-group usernameInput">
+                                <i class="fa fa-user"></i>
+                                {{ form_widget(form.username, {'attr' : {'placeholder' : 'Identifiant', 'class' : 'registerInput '}}) }}
+                            </div>
+
+                            <div class="form-group passwordInput">
+                                <i class="fa fa-lock"></i>
+                                {{ form_widget(form.password, {'attr' : {'placeholder' : 'Mot de passe', 'class' : 'registerInput '}}) }}
+                            </div>
+
+                            <div class="form-group text-center signUpDiv">
+                                <button class="btn btn-light signUpBtn">{{ button|default('INSCRIPTION') }}</button>
+                            </div>
+                            {{ form_rest(form) }}
                         </div>
-
-                        {# Password input #}
-                        <div class="form-group passwordInput">
-                            <i class="fa fa-lock"></i>
-                            <input type="password" class="connectInput" required name="_password" placeholder="Mot de passe">
-                        </div>
-
-                        {# Connection Bouton #}
-                        <div class="form-group text-center">
-                            <button type="submit" class="signInBtn">CONNEXION</button>
-                        </div>
-                    </form>
+                        {{ form_end(form) }}#}
+                    </div>
                 </div>
 
                 <div class="rightPanel-signIn" id="signUpForm">
+
+                    {# Switch to Sign up #}
                     <div id="signIn-signUp">
                         <div class="mainTextRightPanel">
                             Bonjour
@@ -58,7 +115,7 @@
                         </div>
                         <h4>Welcome</h4>
 
-                        {# Switch Bouton #}
+                        {# Connection Bouton #}
                         <div class="form-group text-center">
                             <button type="button" class="switchConnectPanel" id="connect">CONNEXION</button>
                         </div>

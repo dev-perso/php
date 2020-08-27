@@ -52,27 +52,11 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/inscription", name="inscription")
+     * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder)
+    public function register()
     {
-        $user = new User();
-        $form = $this->createForm(RegisterType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $hash = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
-            $this->em->persist($user);
-            $this->em->flush();
-
-            return $this->redirectToRoute("caveavin");
-        }
-
-        return $this->render('security/gestionCompte/register.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->redirectToRoute("connexion");
     }
 
     /**
@@ -118,14 +102,16 @@ class SecurityController extends AbstractController
      */
     public function bienvenue() : Response
     {
-        return $this->render("cave/welcome.html.twig");
+        return $this->render("cave/welcome.html.twig",[
+            'test' => 'truc'
+        ]);
     }
 
     /**
      * @Route("/connexion", name="connexion")
      * @return Response
      */
-    public function connexion() : Response
+    public function connexion(Request $request) : Response
     {
         return $this->render("security/connexion.html.twig");
     }
