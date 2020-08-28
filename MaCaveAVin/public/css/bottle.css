@@ -1,6 +1,6 @@
 .Alsace
 {
-    background-image: url("../img/alsace.jpg");
+    background-image: url("../img/region/alsace.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -9,7 +9,7 @@
 
 .Bordeaux
 {
-    background-image: url("../img/bordeaux.jpg");
+    background-image: url("../img/region/bordeaux.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -18,7 +18,7 @@
 
 .Bourgogne
 {
-    background-image: url("../img/bourgogne.jpg");
+    background-image: url("../img/region/bourgogne.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -27,7 +27,7 @@
 
 .Cotede
 {
-    background-image: url("../img/cotede.jpg");
+    background-image: url("../img/region/cotede.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -36,7 +36,7 @@
 
 .Cotedu
 {
-    background-image: url("../img/coterhone.jpg");
+    background-image: url("../img/region/coterhone.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -45,7 +45,7 @@
 
 .LanguedocRoussillon
 {
-    background-image: url("../img/languedoc.jpg");
+    background-image: url("../img/region/languedoc.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -54,7 +54,7 @@
 
 .Loire
 {
-    background-image: url("../img/loire.jpg");
+    background-image: url("../img/region/loire.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

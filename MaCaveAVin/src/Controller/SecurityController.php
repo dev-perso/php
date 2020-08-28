@@ -53,9 +53,29 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function register()
+    public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
+        $form = $request->request;
+        $user = new User();
+
+        // Ajout des valeurs à l'objet User
+        $user->setPrenom($form->get('firstname'))
+            ->setNom($form->get('lastname'))
+            ->setEmail($form->get('email'))
+            ->setUsername($form->get('username'));
+
+        // Hashage du poassword du user
+        $hash = $encoder->encodePassword($user, $form->get('password'));
+        $user->setPassword($hash);
+
+        // Ajout du User dans la BDD
+        $this->em->persist($user);
+        $this->em->flush();
+
         return $this->redirectToRoute("connexion");
     }
 
@@ -102,9 +122,7 @@ class SecurityController extends AbstractController
      */
     public function bienvenue() : Response
     {
-        return $this->render("cave/welcome.html.twig",[
-            'test' => 'truc'
-        ]);
+        return $this->render("cave/welcome.html.twig");
     }
 
     /**

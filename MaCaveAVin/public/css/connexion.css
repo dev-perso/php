@@ -77,10 +77,22 @@ h3
     width : 100%;
     display: inline-block;
     vertical-align: middle;
-    margin-top : 30px;
+    margin-top : 5px;
 }
 
-.leftPanel-signIn form .usernameInput, .leftPanel-signIn form .passwordInput, .rightPanel-signUp form .emailInput, .rightPanel-signUp form .usernameInput, .rightPanel-signUp form .passwordInput, .rightPanel-signUp form .signUpDiv
+.rightPanel-signUp form .form-group
+{
+    margin-bottom: 0.4rem !important;
+}
+
+.leftPanel-signIn form .usernameInput,
+.leftPanel-signIn form .passwordInput,
+.rightPanel-signUp form .firstnameInput,
+.rightPanel-signUp form .lastnameInput,
+.rightPanel-signUp form .emailInput,
+.rightPanel-signUp form .usernameInput,
+.rightPanel-signUp form .passwordInput,
+.rightPanel-signUp form .signUpDiv
 {
     text-align : center;
     position : relative;
@@ -96,7 +108,9 @@ h3
     font-size : 18px;
 }
 
-.rightPanel-signUp form .usernameInput i, .rightPanel-signUp form .passwordInput i
+.rightPanel-signUp form .usernameInput i, .rightPanel-signUp form .passwordInput i,
+.rightPanel-signUp form .firstnameInput i,
+.rightPanel-signUp form .lastnameInput i
 {
     color : #cccccc;
     position : absolute;
@@ -177,7 +191,7 @@ h3
     border : none;
 
     padding: 10px 40px;
-    margin-top : 15px;
+    margin-top : 18px;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -203,7 +217,7 @@ h3
     transition: transform 500ms ease-out;
 }
 
-.rightPanel-signIn .mainTextRightPanel, .rightPanel-signIn .mainTextLeftPanel, .leftPanel-signUp .mainTextRightPanel, .leftPanel-signUp .mainTextLeftPanel
+.rightPanel-signIn .mainTextRightPanel, .leftPanel-signUp .mainTextRightPanel
 {
     width: 100%;
     height: 170px;
@@ -215,13 +229,34 @@ h3
     color: #38040E;
 }
 
-.rightPanel-signIn h4, .leftPanel-signUp h4
+.rightPanel-signIn .mainTextLeftPanel, .leftPanel-signUp .mainTextLeftPanel
+{
+    width: 100%;
+    height: 170px;
+    line-height: 280px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 64px;
+    text-align: center;
+    color: #FFEC4A;
+}
+
+.rightPanel-signIn h4
 {
     text-align: right;
     margin-right : 20px;
     font-weight: bold;
     font-size: 24px;
     color: #38040E;
+}
+
+.leftPanel-signUp h4
+{
+    text-align: right;
+    margin-right : 20px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #FFEC4A;
 }
 
 .rightPanel-signIn .createAccountBtn, .leftPanel-signUp .createAccountBtn, .rightPanel-signIn .switchConnectPanel, .leftPanel-signUp .switchConnectPanel
@@ -242,12 +277,12 @@ h3
 
 .rightPanel-signIn .createAccountBtn, .leftPanel-signUp .createAccountBtn
 {
-    color: #93032E;
+    color: #38040E;
 }
 
 .rightPanel-signIn .switchConnectPanel, .leftPanel-signUp .switchConnectPanel
 {
-    color: #F3DA0B;
+    color: #38040E;
 }
 
 .rightPanel-signIn #signUp-signIn, .leftPanel-signUp #signIn-signUp, .leftPanel-signIn #form-signUp, .rightPanel-signUp #form-signIn
@@ -257,7 +292,7 @@ h3
 
 .leftPanel-signUp
 {
-    background-color : rgb(255, 236, 74);
+    background-color : #38040E;
     box-shadow : 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 0 rgba(60,64,67,0.15);
     border : 1px solid transparent;
     border-radius : 20px 0px 0px 20px;
@@ -269,18 +304,6 @@ h3
     position : relative;
     transform: translateX(-100%);
     transition: transform 500ms ease-out;
-}
-
-.leftPanel-signUp .mainTextLeftPanel, .rightPanel-signIn .mainTextRightPanel
-{
-    width: 100%;
-    height: 170px;
-    line-height: 280px;
-    vertical-align: middle;
-    font-weight: bold;
-    font-size: 64px;
-    text-align: center;
-    color: #38040E;
 }
 
 .rightPanel-signUp

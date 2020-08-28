@@ -47,49 +47,43 @@
 
                         <form action="{{ path('register') }}" method="post">
                             <div class="row">
+
+                                {# Firstname #}
+                                <div class="form-group firstnameInput">
+                                    <i class="fa fa-tag"></i>
+                                    <input type="text" class="registerInput" required name="firstname" placeholder="Prénom">
+                                </div>
+
+                                {# Lastname #}
+                                <div class="form-group lastnameInput">
+                                    <i class="fa fa-tag"></i>
+                                    <input type="text" class="registerInput" required name="lastname" placeholder="Nom">
+                                </div>
+
+                                {# Email #}
                                 <div class="form-group emailInput">
                                     <i class="fa fa-envelope"></i>
                                     <input type="text" class="registerInput" required name="email" placeholder="Email">
                                 </div>
 
+                                {# Username #}
                                 <div class="form-group usernameInput">
                                     <i class="fa fa-user"></i>
                                     <input type="text" class="registerInput" required name="username" placeholder="Identifiant">
                                 </div>
 
+                                {# Password #}
                                 <div class="form-group passwordInput">
                                     <i class="fa fa-lock"></i>
                                     <input type="password" class="registerInput" required name="password" placeholder="Mot de passe">
                                 </div>
 
+                                {# Submit Bouton #}
                                 <div class="form-group text-center signUpDiv">
                                     <button class="btn btn-light signUpBtn">{{ button|default('INSCRIPTION') }}</button>
                                 </div>
                             </div>
                         </form>
-                        {#{{ form_start(form) }}
-                        <div class="row">
-                            <div class="form-group emailInput">
-                                <i class="fa fa-envelope"></i>
-                                {{ form_widget(form.email, {'attr' : {'placeholder' : 'Email', 'class' : 'registerInput '}}) }}
-                            </div>
-
-                            <div class="form-group usernameInput">
-                                <i class="fa fa-user"></i>
-                                {{ form_widget(form.username, {'attr' : {'placeholder' : 'Identifiant', 'class' : 'registerInput '}}) }}
-                            </div>
-
-                            <div class="form-group passwordInput">
-                                <i class="fa fa-lock"></i>
-                                {{ form_widget(form.password, {'attr' : {'placeholder' : 'Mot de passe', 'class' : 'registerInput '}}) }}
-                            </div>
-
-                            <div class="form-group text-center signUpDiv">
-                                <button class="btn btn-light signUpBtn">{{ button|default('INSCRIPTION') }}</button>
-                            </div>
-                            {{ form_rest(form) }}
-                        </div>
-                        {{ form_end(form) }}#}
                     </div>
                 </div>
 
