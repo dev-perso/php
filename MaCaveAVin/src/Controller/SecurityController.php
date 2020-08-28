@@ -76,6 +76,8 @@ class SecurityController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
+        $this->addFlash('success', 'User ' . $form->get('username') . ' created');
+
         return $this->redirectToRoute("connexion");
     }
 

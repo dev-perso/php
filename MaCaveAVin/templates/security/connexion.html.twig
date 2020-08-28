@@ -7,10 +7,16 @@
 
 {% block body %}
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success text-center adaptedAlert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <div class="container-fluid connectContainer">
         <div class="row rowConnect">
 
-            <div class="offset-3 col-6">
+            <div class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-1 col-10">
                 <div class="leftPanel-signIn" id="signInForm">
 
                     {# Sign in Form #}

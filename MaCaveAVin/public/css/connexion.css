@@ -14,22 +14,80 @@ body
     font-family: 'Roboto';
 }
 
+@media (min-width: 1820px)
+{
+    h2
+    {
+        font-size: 36px;
+    }
+
+    h3
+    {
+        font-size: 12px;
+    }
+
+    h4
+    {
+        font-size: 24px;
+    }
+
+    .rightPanel-signIn .mainTextRightPanel,
+    .leftPanel-signUp .mainTextRightPanel,
+    .rightPanel-signIn .mainTextLeftPanel,
+    .leftPanel-signUp .mainTextLeftPanel
+    {
+        font-size: 64px;
+    }
+
+}
+
+@media (max-width: 1819px)
+{
+    h2
+    {
+        font-size: 25px;
+    }
+
+    h3
+    {
+        font-size: 10px;
+    }
+
+    h4
+    {
+        font-size: 18px;
+    }
+
+    .rightPanel-signIn .mainTextRightPanel,
+    .leftPanel-signUp .mainTextRightPanel,
+    .rightPanel-signIn .mainTextLeftPanel,
+    .leftPanel-signUp .mainTextLeftPanel
+    {
+        font-size: 40px;
+    }
+}
+
 h2
 {
     font-family: 'Roboto';
     text-align : center;
     font-weight: bold;
-    font-size: 36px;
 }
 
 h3
 {
     font-family: 'Amarillo';
     text-align : center;
-    font-size: 12px;
     color: #93032E;
     margin-top : -10px;
     margin-left : 20px;
+}
+
+
+
+.adaptedAlert
+{
+    margin-bottom : -50px;
 }
 
 .divContainerConnect, .connectContainer
@@ -224,7 +282,6 @@ h3
     line-height: 280px;
     vertical-align: middle;
     font-weight: bold;
-    font-size: 64px;
     text-align: center;
     color: #38040E;
 }
@@ -236,7 +293,6 @@ h3
     line-height: 280px;
     vertical-align: middle;
     font-weight: bold;
-    font-size: 64px;
     text-align: center;
     color: #FFEC4A;
 }
@@ -246,7 +302,6 @@ h3
     text-align: right;
     margin-right : 20px;
     font-weight: bold;
-    font-size: 24px;
     color: #38040E;
 }
 
@@ -255,7 +310,6 @@ h3
     text-align: right;
     margin-right : 20px;
     font-weight: bold;
-    font-size: 24px;
     color: #FFEC4A;
 }
 

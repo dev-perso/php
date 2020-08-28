@@ -27,7 +27,8 @@
             <div class="row">
 
                 {# Compteur #}
-                {% if app.request.requesturi == "/bienvenue" or app.request.requesturi == "/connexion" or app.request.requesturi == "/inscription" %}
+                {% set url = app.request.requesturi %}
+                {% if "/bienvenue" in url or "/connexion" in url or "/inscription" in url %}
                     <div class="col-2 btnCounter"></div>
                 {% else %}
                     <div class="col-2 btnCounter">
