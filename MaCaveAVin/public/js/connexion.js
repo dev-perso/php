@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function()
 {
-    var register    = document.getElementById("register");
-    var connect     = document.getElementById("connect");
-    var signUpForm  = document.getElementById("signUpForm");
-    var signInForm  = document.getElementById("signInForm");
+    var register            = document.getElementById("register");
+    var connect             = document.getElementById("connect");
+    var signUpForm          = document.getElementById("signUpForm");
+    var signInForm          = document.getElementById("signInForm");
 
     register.addEventListener("click", switchRegisterPanel, false);
     connect.addEventListener("click", switchConnectPanel, false);

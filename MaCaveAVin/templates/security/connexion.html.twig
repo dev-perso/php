@@ -121,37 +121,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-            {# Sign up #}
-            {#<div class="offset-3 col-3 divConnect">
-
-            </div>
-            <div class="col-3">
-<h2>Se créer un compte</h2>
-                    <h3>Vous n'avez pas de compte ?</h3>
-
-                    <form action="{{ path('connexion') }}" method="post">
-                        <div class="form-group">
-                            <label for="_username">Username</label>
-                            <input type="text" class="form-control" required name="_username">
-                        </div>
-                        <div class="form-group">
-                            <label for="_password">Password</label>
-                            <input type="password" class="form-control" required name="_password">
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-light">Connexion</button>
-                        </div>
-                    </form>
-
-            </div>#}
         </div>
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('js/connexion.js') }}"></script>
 {% endblock %}

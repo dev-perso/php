@@ -52,6 +52,7 @@ body .navAjustement .redBtl
 body .navAjustement .profil .rowProfil .profileImg
 {
     border-radius : 30px;
+    cursor: pointer;
 }
 
 body .navAjustement .profil .rowProfil .adjustDropdown

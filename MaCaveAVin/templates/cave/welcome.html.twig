@@ -18,5 +18,6 @@
 {% endblock %}
 
 {% block javascripts %}
-     <script src="{{ asset('js/macave.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('js/macave.js') }}"></script>
 {% endblock %}
