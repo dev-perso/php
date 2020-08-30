@@ -7,23 +7,32 @@
 
 {% block body %}
 
-Bienvenue sur votre Cave à vin
-    <div class="container">
+    <div class="container main">
+
+        {# Ligne accès à la cave #}
         <div class="row">
-            <div class="col-12 cave">
+            <div class="col-12 cave" id="caveBtn">
                 Ma cave
             </div>
         </div>
-        <div class="row">
-            <div class="col-6 cave">
-                profil
+
+        {# Ligne accès au profil ou aux archives #}
+        <div class="row secondRow">
+
+            {# Profil #}
+            <div class="col-6">
+                <div class="profile" id="profileBtn">
+                    Profil
+                </div>
             </div>
-            <div class="col-6 cave">
+
+            {# Archives #}
+            <div class="col-6 archive" id="archiveBtn">
                 Déjà bu
             </div>
         </div>
-
     </div>
+
 {% endblock %}
 
 {% block javascripts %}
