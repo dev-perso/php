@@ -30,17 +30,17 @@ class SecurityController extends AbstractController
     private $user;
 
     /**
-     * Nombre de bouteilles : Blanc
+     * Nombre de bouteilles de vin Blanc
      */
     private $whiteWinesNb;
 
     /**
-     * Nombre de bouteilles : Rosé
+     * Nombre de bouteilles de vin Rosé
      */
     private $roseWinesNb;
 
     /**
-     * Nombre de bouteilles : Rouge
+     * Nombre de bouteilles de vin Rouge
      */
     private $redWinesNb;
 
@@ -68,20 +68,22 @@ class SecurityController extends AbstractController
             ->setEmail($form->get('email'))
             ->setUsername($form->get('username'));
 
-        // Hashage du password du user
-        if (strlen($form->get('password')) >= 8 && preg_match('\d+', $form->get('password')) && preg_match('[A-Z]', $form->get('password')))
+        // Hashage du password si celui-ci rempli les conditions de validations
+        if ((strlen($form->get('password')) >= 8) && (preg_match('/[0-9]/', $form->get('password')) == 1) && (preg_match('/[A-Z]/', $form->get('password')) == 1) && (preg_match('/[a-z]/', $form->get('password'))))
         {
             $hash = $encoder->encodePassword($user, $form->get('password'));
             $user->setPassword($hash);
+
+            // Message temporaire de validation
+            $this->addFlash('success', 'User ' . $form->get('username') . ' created');
+
+            // Ajout du User dans la BDD
+            $this->em->persist($user);
+            $this->em->flush();
         }
         else
+            // Message temporaire d'erreur
             $this->addFlash('error', 'Votre mot de passe doit faire 8 caractères minimum et contenir au moins une Majuscule, une minuscule et un chiffre');
-
-        // Ajout du User dans la BDD
-        $this->em->persist($user);
-        $this->em->flush();
-
-        $this->addFlash('success', 'User ' . $form->get('username') . ' created');
 
         return $this->redirectToRoute("connexion");
     }

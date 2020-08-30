@@ -119,11 +119,13 @@ document.addEventListener("DOMContentLoaded", function()
         if(password.length>=8 && uppercaseFlag && lowcaseFlag && numbercaseFlag)
         {
             passwordRequirements.querySelector('.alert-danger').style.background = '#c3e6cb';
+            passwordRequirements.querySelector('.alert-danger').style.border = '1px solid #c3e6cb';
             registerBtn.disabled = false;
         }
         else
         {
             passwordRequirements.querySelector('.alert-danger').style.background = '#f8d7da';
+            passwordRequirements.querySelector('.alert-danger').style.border = '1px solid #f5c6cb';
             registerBtn.disabled = true;
         }
 

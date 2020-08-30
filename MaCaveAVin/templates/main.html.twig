@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+
+Bienvenue sur votre Cave à vin
+    <div class="container">
+        <div class="row">
+            <div class="col-12 cave">
+                Ma cave
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 cave">
+                profil
+            </div>
+            <div class="col-6 cave">
+                Déjà bu
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

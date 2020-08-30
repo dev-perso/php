@@ -73,10 +73,28 @@ class CaveAVinController extends AbstractController
     }
 
     /**
-     * @Route("/", name="caveavin")
+     * @Route("/", name="main")
+     */
+    public function main(): Response
+    {
+        // Récupére les vins avec une quantité strictement supérieur à 0
+        $wines = $this->cave->getWinesFromUserCave($this->user->getIdUser());
+
+        // Rafraichie la valeur du nombre de bouteille par couleur dans la cave de l'utilisateur
+        $this->refreshBottlesNumber($wines);
+
+        return $this->render("main.html.twig", [
+            'whiteWines'    => $this->whiteWinesNb,
+            'roseWines'     => $this->roseWinesNb,
+            'redWines'      => $this->redWinesNb
+        ]);
+    }
+
+    /**
+     * @Route("/caveavin", name="caveavin")
      * @return Response
      */
-    public function index(): Response
+    public function cave(): Response
     {
         $userWines          = [];
         $allColorsInCave    = [];
