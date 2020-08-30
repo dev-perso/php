@@ -68,9 +68,14 @@ class SecurityController extends AbstractController
             ->setEmail($form->get('email'))
             ->setUsername($form->get('username'));
 
-        // Hashage du poassword du user
-        $hash = $encoder->encodePassword($user, $form->get('password'));
-        $user->setPassword($hash);
+        // Hashage du password du user
+        if (strlen($form->get('password')) >= 8 && preg_match('\d+', $form->get('password')) && preg_match('[A-Z]', $form->get('password')))
+        {
+            $hash = $encoder->encodePassword($user, $form->get('password'));
+            $user->setPassword($hash);
+        }
+        else
+            $this->addFlash('error', 'Votre mot de passe doit faire 8 caractères minimum et contenir au moins une Majuscule, une minuscule et un chiffre');
 
         // Ajout du User dans la BDD
         $this->em->persist($user);

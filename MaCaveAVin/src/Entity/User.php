@@ -40,7 +40,7 @@ class User implements UserInterface, \Serializable
     private $prenom;
 
     /**
-     * @ORM\Column(name="email", type="string", length=100)
+     * @ORM\Column(name="email", type="string", length=100, unique=true)
      * @Assert\EqualTo(
      *     propertyPath="confirm_email",
      *     message = "This value should be equal to the Email Confirmation")
@@ -64,7 +64,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *      min = "8",
-     *      minMessage = "You password should be at least {{ limit }} characters long")
+     *      minMessage = "Your password should be at least {{ limit }} characters long")
      * @Assert\EqualTo(
      *     propertyPath = "confirm_password",
      *     message = "This value should be equal to the Confirmation")

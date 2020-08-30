@@ -7,8 +7,16 @@
 
 {% block body %}
 
+    {# Message de validation #}
     {% for message in app.flashes('success') %}
         <div class="alert alert-success text-center adaptedAlert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# Message d'erreur #}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger text-center adaptedAlert">
             {{ message }}
         </div>
     {% endfor %}
@@ -81,7 +89,15 @@
                                 {# Password #}
                                 <div class="form-group passwordInput">
                                     <i class="fa fa-lock"></i>
-                                    <input type="password" class="registerInput" required name="password" placeholder="Mot de passe">
+                                    <input type="password" class="registerInput" required name="password" id="passwordInput" placeholder="Mot de passe">
+                                    <div class="passwordRequirements" id="requirements" style="display:none">
+                                        <div class="alert alert-danger" role="alert">
+                                            <div id="passLength">8 caractères</div>
+                                            <div id="passMin">1 Minuscule</div>
+                                            <div id="passMaj">1 Majuscule</div>
+                                            <div id="passNum">1 Chiffre</div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {# Submit Bouton #}
