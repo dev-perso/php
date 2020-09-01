@@ -10,9 +10,12 @@
     <div class="container main">
 
         {# Ligne accès à la cave #}
-        <div class="row">
+        <div class="row firstRow">
+            <div class="col-12 cavePanel" id="cavePanel">
+                <span>Ma cave</span>
+            </div>
             <div class="col-12 cave" id="caveBtn">
-                Ma cave
+                <span>Ma cave</span>
             </div>
         </div>
 
@@ -20,14 +23,18 @@
         <div class="row secondRow">
 
             {# Profil #}
-            <div class="col-12">
+            <div class="col-6">
+                <div class="profilePanel" id="profilePanel"></div>
                 <div class="profile" id="profileBtn">
-                    Profil
+                    <span>Profil</span>
                 </div>
+            </div>
 
             {# Archives #}
+            <div class="col-6">
+                <div class="archivePanel" id="archivePanel"></div>
                 <div class="archive" id="archiveBtn">
-                    Déjà bu
+                    <span>Déjà bu</span>
                 </div>
             </div>
         </div>

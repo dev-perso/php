@@ -1,14 +1,60 @@
+body
+{
+    font-family: 'Roboto';
+}
+
 .main
 {
     margin-top: 30px;
+}
+
+.firstRow
+{
+    position : relative;
+}
+
+.cavePanel, .profilePanel, .archivePanel
+{
+    position : absolute !important;
+    cursor : pointer;
+    text-align: center;
+    height : 300px;
+    line-height: 300px;
+    z-index: 999;
+    border-radius : 50px;
+}
+
+.cavePanel
+{
+    width : 100%;
+    background-color : rgba(56, 4, 14, 0.6);
+}
+
+.profilePanel
+{
+    width : 92%;
+    left : 0px;
+    background-color : rgba(255, 248, 188, 0.6);
+}
+
+.archivePanel
+{
+    width : 92%;
+    right : 0px;
+    top : 0px;
+    background-color : rgba(219, 50, 77, 0.6);
 }
 
 .cave
 {
     width : 100%;
     height : 300px;
-    background-color : rgba(56, 4, 14, 0.6);
+    line-height: 300px;
+    background-image : url("../img/main/cave.jpg");
+    background-size : cover;
     border-radius : 50px;
+    text-align: center;
+    cursor : pointer;
 }
 
 .secondRow
@@ -24,23 +70,42 @@
 
 .secondRow .profile
 {
-    width : 46%;
+    width : 92%;
     height : 300px;
-    background-color : rgba(255, 248, 188, 0.6);
+    line-height: 300px;
+    background-image : url("../img/main/profile.jpg");
+    background-size : cover;
     border-radius : 50px;
     display : inline-block;
     position : absolute;
     left : 0px;
+    top : 0px;
+    text-align: center;
+    cursor : pointer;
 }
 
 .secondRow .archive
 {
-    width : 46%;
+    width : 92%;
     height : 300px;
-    background-color : rgba(219, 50, 77, 0.6);
+    line-height: 300px;
+    background-image : url("../img/main/archive.jpg");
+    background-size : cover;
     border-radius : 50px;
     display : inline-block;
     position : absolute;
     right : 0px;
+    top : 0px;
+    text-align: center;
+    cursor : pointer;
+}
 
+.cave span, .cavePanel span, .secondRow .profile span, .secondRow .archive span
+{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    font-weight: bold;
+    font-size: 64px;
+    color : white;
 }

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function()
     const inputElement  = document.getElementById("vin_cave_0_imageFile");
     // Get the div element where preview will be added
     var preview         = document.getElementById("preview");
-    var previewImg          = document.getElementById("previewImg");
+    var previewImg      = document.getElementById("previewImg");
 
     // Create event on add file
     inputElement.addEventListener("change", handleFiles, false);

@@ -61,6 +61,15 @@
     padding: 9rem 2rem !important;
 }
 
+.SudOuest
+{
+    background-image: url("../img/region/sudouest.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 9rem 2rem !important;
+}
+
 
 
 .wineImg
