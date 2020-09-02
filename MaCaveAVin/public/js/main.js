@@ -9,32 +9,32 @@ document.addEventListener("DOMContentLoaded", function()
 
     cavePanel.addEventListener("mouseenter", e =>
     {
-        cavePanel.style.display = "none";
+        cavePanel.style.opacity = "0";
     });
 
-    cave.addEventListener("mouseout", e =>
+    cavePanel.addEventListener("mouseout", e =>
     {
-        cavePanel.style.display = "inline";
+        cavePanel.style.opacity = "0.6";
     });
 
     profilePanel.addEventListener("mouseenter", e =>
     {
-        profilePanel.style.display = "none";
+        profilePanel.style.opacity = "0";
     });
 
-    profile.addEventListener("mouseout", e =>
+    profilePanel.addEventListener("mouseout", e =>
     {
-        profilePanel.style.display = "inline";
+        profilePanel.style.opacity = "0.6";
     });
 
     archivePanel.addEventListener("mouseenter", e =>
     {
-        archivePanel.style.display = "none";
+        archivePanel.style.opacity = "0";
     });
 
-    archive.addEventListener("mouseout", e =>
+    archivePanel.addEventListener("mouseout", e =>
     {
-        archivePanel.style.display = "inline";
+        archivePanel.style.opacity = "0.6";
     });
 
     cave.addEventListener("click", e =>

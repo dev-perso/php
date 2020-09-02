@@ -12,15 +12,18 @@ body
 {
     position : relative;
 }
+.cavePanel
+{
+    position : absolute !important;
+}
 
 .cavePanel, .profilePanel, .archivePanel
 {
-    position : absolute !important;
     cursor : pointer;
     text-align: center;
     height : 300px;
     line-height: 300px;
-    z-index: 999;
+    z-index: 999999;
     border-radius : 50px;
 }
 
@@ -31,18 +34,61 @@ body
 }
 
 .profilePanel
-{
-    width : 92%;
-    left : 0px;
-    background-color : rgba(255, 248, 188, 0.6);
-}
+ {
+     left : 0px;
+     background-color : rgba(255, 248, 188, 0.6);
+ }
 
 .archivePanel
 {
-    width : 92%;
     right : 0px;
-    top : 0px;
     background-color : rgba(219, 50, 77, 0.6);
+}
+
+@media (min-width: 768px)
+{
+    .profilePanel, .archivePanel
+    {
+        position : absolute !important;
+    }
+
+    .archivePanel
+    {
+        top : 0px;
+    }
+
+    .secondRow .profile, .secondRow .archive
+    {
+        width : 92%;
+    }
+
+    .profilePanel, .archivePanel
+    {
+        width : 92%;
+    }
+}
+
+@media (max-width: 767px)
+{
+    .archivePanel
+    {
+        position : absolute !important;
+        margin-top: 50px;
+    }
+    .secondRow .profile, .secondRow .archive
+    {
+        width : 100%;
+    }
+
+    .secondRow .archive
+    {
+        margin-top: 50px;
+    }
+
+    .profilePanel, .archivePanel
+    {
+        width : 100%;
+    }
 }
 
 .cave
@@ -70,7 +116,6 @@ body
 
 .secondRow .profile
 {
-    width : 92%;
     height : 300px;
     line-height: 300px;
     background-image : url("../img/main/profile.jpg");
@@ -86,7 +131,6 @@ body
 
 .secondRow .archive
 {
-    width : 92%;
     height : 300px;
     line-height: 300px;
     background-image : url("../img/main/archive.jpg");
@@ -100,7 +144,7 @@ body
     cursor : pointer;
 }
 
-.cave span, .cavePanel span, .secondRow .profile span, .secondRow .archive span
+.cave span, .cavePanel span, .secondRow .profile span, .profilePanel span, .secondRow .archive span, .archivePanel span
 {
     display: inline-block;
     vertical-align: middle;
@@ -108,4 +152,7 @@ body
     font-weight: bold;
     font-size: 64px;
     color : white;
+    height : 100%;
+    width: 100%;
+    line-height: 300px;
 }
