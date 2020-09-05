@@ -88,6 +88,20 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/register/{email}", name="register.email")
+     * @return Response
+     */
+    public function checkEmail($email)
+    {
+        $dbEmail = $this->user->getEmailExist($email);
+
+        return $this->json(
+        [
+            'email' => $dbEmail
+        ]);
+    }
+
+    /**
      * @Route("/gestion/profile", name="manage.profile")
      */
     public function manageProfile(Request $request, Security $security) : Response

@@ -181,17 +181,18 @@ h3
     font-size : 18px;
 }
 
-.rightPanel-signUp form .passwordInput .confirm-check, .rightPanel-signUp form .passwordInput .confirm-times
+.rightPanel-signUp form .emailInput .confirm-check, .rightPanel-signUp form .emailInput .confirm-times, .rightPanel-signUp form .passwordInput .confirm-check, .rightPanel-signUp form .passwordInput .confirm-times
 {
     right: 20%;
+    display: none;
 }
 
-.rightPanel-signUp form .passwordInput .confirm-check
+.rightPanel-signUp form .emailInput .confirm-check, .rightPanel-signUp form .passwordInput .confirm-check
 {
     color : #155724;
 }
 
-.rightPanel-signUp form .passwordInput .confirm-times
+.rightPanel-signUp form .emailInput .confirm-times, .rightPanel-signUp form .passwordInput .confirm-times
 {
     color: #721c24;
 }

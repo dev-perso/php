@@ -65,7 +65,9 @@
                                 {# Email #}
                                 <div class="form-group emailInput">
                                     <i class="fa fa-envelope"></i>
-                                    <input type="text" class="registerInput" required name="email" placeholder="Email">
+                                    <input type="text" class="registerInput" required name="email" id="emailInput" placeholder="Email">
+                                    <i class="fa fa-check confirm-check" id="emailCheck"></i>
+                                    <i class="fa fa-times confirm-times" id="emailTimes"></i>
                                 </div>
 
                                 {# Password #}
@@ -85,9 +87,9 @@
                                 {# Confirm Password #}
                                 <div class="form-group passwordInput">
                                     <i class="fa fa-lock"></i>
-                                    <input type="password" class="registerInput" required name="confirm_password" placeholder="Confirmation">
-                                    <i class="fa fa-check confirm-check"></i>
-                                    <i class="fa fa-times confirm-times"></i>
+                                    <input type="password" class="registerInput" required name="confirm_password" id="confirm" placeholder="Confirmation">
+                                    <i class="fa fa-check confirm-check" id="confirmCheck"></i>
+                                    <i class="fa fa-times confirm-times" id="confirmTimes"></i>
                                 </div>
 
                                 {# Submit Bouton #}

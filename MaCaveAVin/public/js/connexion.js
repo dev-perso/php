@@ -1,40 +1,113 @@
 document.addEventListener("DOMContentLoaded", function()
 {
+    // Email
+    var emailInput              = document.getElementById("emailInput");
+    var emailCheck              = document.getElementById("emailCheck");
+    var emailTimes              = document.getElementById("emailTimes");
+
+    // Password
     var passwordInput           = document.getElementById("passwordInput");
-    var confirmPasswordInput    = document.getElementById("confirm_password");
+
+    // Password requirements
     var passwordRequirements    = document.getElementById("requirements");
     var lengthRequirement       = document.getElementById('passLength');
     var minRequirement          = document.getElementById('passMin');
     var majRequirement          = document.getElementById('passMaj');
     var numRequirement          = document.getElementById('passNum');
 
+    // Confirm Password
+    var confirmPasswordInput    = document.getElementById("confirm");
+    var confirmCheck            = document.getElementById("confirmCheck");
+    var confirmTimes            = document.getElementById("confirmTimes");
+
+    // Boutons
     var registerBtn             = document.getElementById('registerBtn');
     var register                = document.getElementById("register");
     var connect                 = document.getElementById("connect");
+
+    // Forms
     var signUpForm              = document.getElementById("signUpForm");
     var signInForm              = document.getElementById("signInForm");
 
-    register.addEventListener("click", switchRegisterPanel, false);
-    connect.addEventListener("click", switchConnectPanel, false);
-
-    function switchRegisterPanel()
+    /**
+     * Email event
+     */
+    emailInput.addEventListener('focus', e =>
     {
-        signUpForm.classList.remove('rightPanel-signIn');
-        signUpForm.classList.add('leftPanel-signUp');
+        var email = emailInput.value;
 
-        signInForm.classList.remove('leftPanel-signIn');
-        signInForm.classList.add('rightPanel-signUp');
+        if (emailIsValid(email))
+        {
+            if (emailExist(email))
+                console.log("ok");
+            else
+                console.log("ko");
+        }
+        else
+        {
+            emailCheck.style.display = "none";
+            emailTimes.style.display = "block";
+        }
+
+
+    });
+
+    emailInput.addEventListener('blur', e =>
+    {
+        emailTimes.style.display = "none";
+        emailCheck.style.display = 'none';
+    });
+
+    emailInput.addEventListener("keyup", e =>
+    {
+        var email = emailInput.value;
+
+        if (emailIsValid(email))
+        {
+            if (emailExist(email))
+                console.log("ok");
+            else
+                console.log("ko");
+            emailCheck.style.display = "block";
+            emailTimes.style.display = "none";
+        }
+        else
+        {
+            emailCheck.style.display = "none";
+            emailTimes.style.display = "block";
+        }
+    });
+
+    function emailIsValid(email)
+    {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 
-    function switchConnectPanel()
+    function emailExist(email)
     {
-        signUpForm.classList.remove('leftPanel-signUp');
-        signUpForm.classList.add('rightPanel-signIn');
+        var request = new XMLHttpRequest();
+        var url     = "/register/email/" + email;
 
-        signInForm.classList.remove('rightPanel-signUp');
-        signInForm.classList.add('leftPanel-signIn');
+        request.open('POST', url, true);
+        request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.send();
+
+        request.onreadystatechange = function()
+        {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+            {
+
+                const response = JSON.parse(request.response);
+                console.log(response);
+            }
+        }
     }
 
+    /**
+     * Password event
+     */
     passwordInput.addEventListener('focus', e =>
     {
         passwordRequirements.style.display = 'block';
@@ -51,7 +124,9 @@ document.addEventListener("DOMContentLoaded", function()
         isStrongPwd2(password);
     });
 
-
+    /**
+     * Password requirements event
+     */
     function isStrongPwd2(password)
     {
         const regexMaj  = RegExp('[A-Z]');
@@ -119,9 +194,16 @@ document.addEventListener("DOMContentLoaded", function()
 
         if(password.length>=8 && uppercaseFlag && lowcaseFlag && numbercaseFlag)
         {
+            var passwordValue = passwordInput.value;
+            var confirmValue = confirmPasswordInput.value;
+
             passwordRequirements.querySelector('.alert-danger').style.background = '#c3e6cb';
             passwordRequirements.querySelector('.alert-danger').style.border = '1px solid #c3e6cb';
-            registerBtn.disabled = false;
+
+            if (isEqual(passwordValue, confirmValue))
+                registerBtn.disabled = false;
+            else
+                registerBtn.disabled = true;
         }
         else
         {
@@ -131,5 +213,83 @@ document.addEventListener("DOMContentLoaded", function()
         }
     }
 
+    /**
+     * Confirm password event
+     */
+    confirmPasswordInput.addEventListener('focus', e =>
+    {
+        var password = passwordInput.value;
+        var confirm = confirmPasswordInput.value;
 
+        if (isEqual(password, confirm))
+        {
+            confirmCheck.style.display = "block";
+            confirmTimes.style.display = "none";
+        }
+        else
+        {
+            confirmCheck.style.display = "none";
+            confirmTimes.style.display = "block";
+        }
+    });
+
+    confirmPasswordInput.addEventListener('blur', e =>
+    {
+        confirmTimes.style.display = "none";
+        confirmCheck.style.display = 'none';
+    });
+
+    confirmPasswordInput.addEventListener("keyup", e =>
+    {
+        var password = passwordInput.value;
+        var confirm = confirmPasswordInput.value;
+
+        if (isEqual(password, confirm))
+        {
+            confirmCheck.style.display = "block";
+            confirmTimes.style.display = "none";
+            isStrongPwd2(password);
+        }
+        else
+        {
+            confirmCheck.style.display = "none";
+            confirmTimes.style.display = "block";
+            isStrongPwd2(password);
+        }
+    });
+
+    function isEqual (password, confirm)
+    {
+        if (password == confirm)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Buttons event
+     */
+    register.addEventListener("click", switchRegisterPanel, false);
+    connect.addEventListener("click", switchConnectPanel, false);
+
+    /**
+     * Forms event
+     */
+    function switchRegisterPanel()
+    {
+        signUpForm.classList.remove('rightPanel-signIn');
+        signUpForm.classList.add('leftPanel-signUp');
+
+        signInForm.classList.remove('leftPanel-signIn');
+        signInForm.classList.add('rightPanel-signUp');
+    }
+
+    function switchConnectPanel()
+    {
+        signUpForm.classList.remove('leftPanel-signUp');
+        signUpForm.classList.add('rightPanel-signIn');
+
+        signInForm.classList.remove('rightPanel-signUp');
+        signInForm.classList.add('leftPanel-signIn');
+    }
 });
