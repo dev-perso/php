@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function()
 {
     var passwordInput           = document.getElementById("passwordInput");
+    var confirmPasswordInput    = document.getElementById("confirm_password");
     var passwordRequirements    = document.getElementById("requirements");
     var lengthRequirement       = document.getElementById('passLength');
     var minRequirement          = document.getElementById('passMin');
@@ -128,17 +129,7 @@ document.addEventListener("DOMContentLoaded", function()
             passwordRequirements.querySelector('.alert-danger').style.border = '1px solid #f5c6cb';
             registerBtn.disabled = true;
         }
-
     }
 
-    function contains(password, allowedChars)
-    {
-        for (i = 0; i < password.length; i++)
-        {
-            var char = password.charAt(i);
-            if (allowedChars.indexOf(char) >= 0) { return true; }
-        }
-        return false;
-    }
 
 });

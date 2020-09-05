@@ -62,22 +62,6 @@
                         <form action="{{ path('register') }}" method="post">
                             <div class="row">
 
-                                {# Firstname #}
-                                {#
-                                <div class="form-group firstnameInput">
-                                    <i class="fa fa-tag"></i>
-                                    <input type="text" class="registerInput" required name="firstname" placeholder="Prénom">
-                                </div>
-                                #}
-
-                                {# Lastname #}
-                                {#
-                                <div class="form-group lastnameInput">
-                                    <i class="fa fa-tag"></i>
-                                    <input type="text" class="registerInput" required name="lastname" placeholder="Nom">
-                                </div>
-                                #}
-
                                 {# Email #}
                                 <div class="form-group emailInput">
                                     <i class="fa fa-envelope"></i>
@@ -102,6 +86,8 @@
                                 <div class="form-group passwordInput">
                                     <i class="fa fa-lock"></i>
                                     <input type="password" class="registerInput" required name="confirm_password" placeholder="Confirmation">
+                                    <i class="fa fa-check confirm-check"></i>
+                                    <i class="fa fa-times confirm-times"></i>
                                 </div>
 
                                 {# Submit Bouton #}
