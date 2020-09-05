@@ -87,20 +87,23 @@ document.addEventListener("DOMContentLoaded", function()
     function emailExist(email)
     {
         var request = new XMLHttpRequest();
-        var url     = "/register/email/" + email;
+        var url     = "/register/email";
 
-        request.open('POST', url, true);
+        console.log(url)
+        request.open('POST', url);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        request.send();
+        request.send('email=' + email);
 
         request.onreadystatechange = function()
         {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
             {
-
                 const response = JSON.parse(request.response);
-                console.log(response);
+                if (response.email.length > 0)
+                    console.log('exist');
+                else
+                    console.log('not exist');
             }
         }
     }

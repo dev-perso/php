@@ -88,16 +88,17 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/register/{email}", name="register.email")
+     * @Route("/register/email", name="register.email")
      * @return Response
      */
-    public function checkEmail($email)
+    public function checkEmail(): Response
     {
-        $dbEmail = $this->user->getEmailExist($email);
+        //$dbEmail = $this->user->getEmailExist($email);
+        $email = $_POST['email'];
 
         return $this->json(
         [
-            'email' => $dbEmail
+            'email' => $this->user->getEmailExist($email)
         ]);
     }
 

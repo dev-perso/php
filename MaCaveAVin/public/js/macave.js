@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function()
         }
         else
             url += "noFilter";
-        
+
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -306,8 +306,8 @@ document.addEventListener("DOMContentLoaded", function()
     }
 
     // Active les événements
-    unlockFilter(filter);   // des filtres
-    eventGetDescription(tr);     // des descriptions
-    eventBtnEditWine(edit); // des éditions du vin
-    eventBtnUseWine(use);   // de l'utilisation du vin
+    unlockFilter(filter);       // des filtres
+    eventGetDescription(tr);    // des descriptions
+    eventBtnEditWine(edit);     // des éditions du vin
+    eventBtnUseWine(use);       // de l'utilisation du vin
 });
