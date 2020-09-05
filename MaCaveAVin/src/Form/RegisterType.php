@@ -34,11 +34,6 @@ class RegisterType extends AbstractType
                 'label'     => false,
                 'required'  => true
             ])*/
-            ->add('username', null,
-            [
-                'label'     => false,
-                'required'  => true
-            ])
             ->add('password', PasswordType::class,
             [
                 'label'     => false,

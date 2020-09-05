@@ -14,6 +14,11 @@ body
     font-family: 'Roboto';
 }
 
+button:hover
+{
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
 @media (min-width: 1820px)
 {
     h2
@@ -135,12 +140,12 @@ h3
     width : 100%;
     display: inline-block;
     vertical-align: middle;
-    margin-top : 5px;
+    margin-top : 30px;
 }
 
 .rightPanel-signUp form .form-group
 {
-    margin-bottom: 0.4rem !important;
+    margin-bottom: 1rem !important;
 }
 
 .leftPanel-signIn form .usernameInput,
@@ -155,7 +160,7 @@ h3
     text-align : center;
     position : relative;
     width : 100%;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .leftPanel-signIn form .usernameInput i, .leftPanel-signIn form .passwordInput i
@@ -179,7 +184,7 @@ h3
 .rightPanel-signUp form .passwordInput .passwordRequirements
 {
     position: absolute;
-    top: -88px;
+    top: -92px;
     border-radius: 10px;
     text-align: center;
     width: calc(100% - 20%);
@@ -213,7 +218,7 @@ h3
     color : #155724;
 }
 
-.rightPanel-signUp form .emailInput i
+.rightPanel-signUp form .emailInput i, .leftPanel-signIn form .usernameInput i
 {
     color : #cccccc;
     position : absolute;
@@ -224,7 +229,7 @@ h3
 .leftPanel-signIn form input, .rightPanel-signUp form input
 {
     display: inline-block;
-    width: auto;
+    width: 70%;
 }
 
 .leftPanel-signIn form .connectInput, .rightPanel-signUp form .connectInput
@@ -239,7 +244,7 @@ h3
 
 .leftPanel-signIn form .connectInput:focus
 {
-    border-bottom : 3px solid #555;
+    box-shadow: 0px 4px 4px rgba(100, 100, 100, 1);
     outline: none;
 }
 
@@ -255,7 +260,7 @@ h3
 
 .rightPanel-signUp form .registerInput:focus
 {
-    border-bottom : 3px solid #555;
+    box-shadow: 0px 4px 4px rgba(100, 100, 100, 1);
     outline: none;
 }
 
@@ -267,7 +272,7 @@ h3
     border : none;
 
     padding: 10px 40px;
-    margin-top : 50px;
+    margin-top : 60px;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -286,7 +291,7 @@ h3
     border : none;
 
     padding: 10px 40px;
-    margin-top : 18px;
+    margin-top : 31px;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;

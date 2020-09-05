@@ -45,7 +45,7 @@ body
     background-color : rgba(219, 50, 77, 0.6);
 }
 
-@media (min-width: 768px)
+@media (min-width: 992px)
 {
     .profilePanel, .archivePanel
     {
@@ -68,7 +68,7 @@ body
     }
 }
 
-@media (max-width: 767px)
+@media (max-width: 991px)
 {
     .archivePanel
     {

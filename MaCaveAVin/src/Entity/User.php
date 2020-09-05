@@ -56,11 +56,6 @@ class User implements UserInterface, \Serializable
     private $confirm_email;
 
     /**
-     * @ORM\Column(type="string", length=50, unique=true)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *      min = "8",
@@ -147,18 +142,6 @@ class User implements UserInterface, \Serializable
     public function setConfirmEmail(string $confirm_email): self
     {
         $this->confirm_email = $confirm_email;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
 
         return $this;
     }
@@ -287,7 +270,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id_user,
-            $this->username,
+            $this->email,
             $this->password,
             $this->profile_img
         ));
@@ -306,7 +289,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id_user,
-            $this->username,
+            $this->email,
             $this->password,
             $this->profile_img
             ) = unserialize($serialized, array('allowed_classes' => false));

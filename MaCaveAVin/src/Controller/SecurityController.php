@@ -65,8 +65,7 @@ class SecurityController extends AbstractController
         // Ajout des valeurs à l'objet User
         $user->setPrenom($form->get('firstname'))
             ->setNom($form->get('lastname'))
-            ->setEmail($form->get('email'))
-            ->setUsername($form->get('username'));
+            ->setEmail($form->get('email'));
 
         // Hashage du password si celui-ci rempli les conditions de validations
         if ((strlen($form->get('password')) >= 8) && (preg_match('/[0-9]/', $form->get('password')) == 1) && (preg_match('/[A-Z]/', $form->get('password')) == 1) && (preg_match('/[a-z]/', $form->get('password'))))
@@ -75,9 +74,9 @@ class SecurityController extends AbstractController
             $user->setPassword($hash);
 
             // Message temporaire de validation
-            $this->addFlash('success', 'User ' . $form->get('username') . ' created');
+            $this->addFlash('success', 'Email ' . $form->get('email') . ' created');
 
-            // Ajout du User dans la BDD
+            // Ajout du UserF dans la BDD
             $this->em->persist($user);
             $this->em->flush();
         }

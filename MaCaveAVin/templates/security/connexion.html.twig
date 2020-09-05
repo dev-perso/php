@@ -35,10 +35,10 @@
                         {# Connection Form #}
                         <form action="{{ path('connexion') }}" method="post">
 
-                            {# Username input #}
+                            {# Email input #}
                             <div class="form-group usernameInput">
-                                <i class="fa fa-user"></i>
-                                <input type="text" class="connectInput" required name="_username" placeholder="Identifiant">
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" class="connectInput" required name="_username" placeholder="Email">
                             </div>
 
                             {# Password input #}
@@ -63,27 +63,25 @@
                             <div class="row">
 
                                 {# Firstname #}
+                                {#
                                 <div class="form-group firstnameInput">
                                     <i class="fa fa-tag"></i>
                                     <input type="text" class="registerInput" required name="firstname" placeholder="Prénom">
                                 </div>
+                                #}
 
                                 {# Lastname #}
+                                {#
                                 <div class="form-group lastnameInput">
                                     <i class="fa fa-tag"></i>
                                     <input type="text" class="registerInput" required name="lastname" placeholder="Nom">
                                 </div>
+                                #}
 
                                 {# Email #}
                                 <div class="form-group emailInput">
                                     <i class="fa fa-envelope"></i>
                                     <input type="text" class="registerInput" required name="email" placeholder="Email">
-                                </div>
-
-                                {# Username #}
-                                <div class="form-group usernameInput">
-                                    <i class="fa fa-user"></i>
-                                    <input type="text" class="registerInput" required name="username" placeholder="Identifiant">
                                 </div>
 
                                 {# Password #}
@@ -98,6 +96,12 @@
                                             <div class="requirement" id="passNum"><i class="fa fa-times"></i><i class="fa fa-check" style="display:none"></i>1 Chiffre</div>
                                         </div>
                                     </div>
+                                </div>
+
+                                {# Confirm Password #}
+                                <div class="form-group passwordInput">
+                                    <i class="fa fa-lock"></i>
+                                    <input type="password" class="registerInput" required name="confirm_password" placeholder="Confirmation">
                                 </div>
 
                                 {# Submit Bouton #}

@@ -126,3 +126,8 @@ body .navAjustement .connexion .connexionBtn, body .navAjustement .deconnexion .
 {
     color : blue;
 }
+
+.profilImg .pointer, .rowProfil .pointer
+{
+    cursor: pointer;
+}
