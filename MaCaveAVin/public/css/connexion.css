@@ -163,6 +163,16 @@ h3
     font-size: 14px;
 }
 
+.rightPanel-signUp form .emailInput .emailUsed
+{
+    font-size : 10px;
+    color: #721c24;
+    position : absolute;
+    width: 100%;
+    top: -15px;
+    display: none;
+}
+
 .leftPanel-signIn form .usernameInput i, .leftPanel-signIn form .passwordInput i
 {
     color : #cccccc;

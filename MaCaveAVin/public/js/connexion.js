@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function()
     var emailInput              = document.getElementById("emailInput");
     var emailCheck              = document.getElementById("emailCheck");
     var emailTimes              = document.getElementById("emailTimes");
+    var emailUsed               = document.getElementById("emailUsed");
+    var emailUsable             = false;
 
     // Password
     var passwordInput           = document.getElementById("passwordInput");
@@ -37,19 +39,13 @@ document.addEventListener("DOMContentLoaded", function()
         var email = emailInput.value;
 
         if (emailIsValid(email))
-        {
-            if (emailExist(email))
-                console.log("ok");
-            else
-                console.log("ko");
-        }
+            emailExist(email)
         else
         {
             emailCheck.style.display = "none";
             emailTimes.style.display = "block";
+            emailUsed.style.display = "none";
         }
-
-
     });
 
     emailInput.addEventListener('blur', e =>
@@ -63,18 +59,12 @@ document.addEventListener("DOMContentLoaded", function()
         var email = emailInput.value;
 
         if (emailIsValid(email))
-        {
-            if (emailExist(email))
-                console.log("ok");
-            else
-                console.log("ko");
-            emailCheck.style.display = "block";
-            emailTimes.style.display = "none";
-        }
+            emailExist(email)
         else
         {
             emailCheck.style.display = "none";
             emailTimes.style.display = "block";
+            emailUsed.style.display = "none";
         }
     });
 
@@ -86,8 +76,9 @@ document.addEventListener("DOMContentLoaded", function()
 
     function emailExist(email)
     {
-        var request = new XMLHttpRequest();
-        var url     = "/register/email";
+        var request     = new XMLHttpRequest();
+        var url         = "/register/email";
+        var validEmail  = false;
 
         console.log(url)
         request.open('POST', url);
@@ -101,11 +92,24 @@ document.addEventListener("DOMContentLoaded", function()
             {
                 const response = JSON.parse(request.response);
                 if (response.email.length > 0)
-                    console.log('exist');
+                {
+                    emailCheck.style.display = "none";
+                    emailTimes.style.display = "block";
+                    emailUsed.style.display = "block";
+                    emailUsable = false;
+                    isStrongPwd2(passwordInput.value);
+                }
                 else
-                    console.log('not exist');
+                {
+                    emailCheck.style.display = "block";
+                    emailTimes.style.display = "none";
+                    emailUsed.style.display = "none";
+                    emailUsable = true;
+                    isStrongPwd2(passwordInput.value);
+                }
             }
         }
+        return validEmail;
     }
 
     /**
@@ -203,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function()
             passwordRequirements.querySelector('.alert-danger').style.background = '#c3e6cb';
             passwordRequirements.querySelector('.alert-danger').style.border = '1px solid #c3e6cb';
 
-            if (isEqual(passwordValue, confirmValue))
+            if (isEqual(passwordValue, confirmValue) && emailUsable)
                 registerBtn.disabled = false;
             else
                 registerBtn.disabled = true;

@@ -93,7 +93,6 @@ class SecurityController extends AbstractController
      */
     public function checkEmail(): Response
     {
-        //$dbEmail = $this->user->getEmailExist($email);
         $email = $_POST['email'];
 
         return $this->json(
