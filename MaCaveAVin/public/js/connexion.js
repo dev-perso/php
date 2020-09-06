@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function()
             emailCheck.style.display = "none";
             emailTimes.style.display = "block";
             emailUsed.style.display = "none";
+            registerBtn.disabled = true;
         }
     });
 
@@ -65,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function()
             emailCheck.style.display = "none";
             emailTimes.style.display = "block";
             emailUsed.style.display = "none";
+            registerBtn.disabled = true;
         }
     });
 

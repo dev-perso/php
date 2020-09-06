@@ -62,7 +62,7 @@ class SecurityController extends AbstractController
         $form = $request->request;
         $user = new User();
 
-        // Ajout des valeurs à l'objet User
+        // Check si l'email existe en BDD
         if (empty($this->user->getEmailExist($form->get('email'))))
             $user->setEmail($form->get('email'));
         else

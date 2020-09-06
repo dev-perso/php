@@ -162,10 +162,9 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(150) NOT NULL,
-  `prenom` varchar(150) NOT NULL,
+  `nom` varchar(150) DEFAULT NULL,
+  `prenom` varchar(150) DEFAULT NULL,
   `email` varchar(150) NOT NULL,
-  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `profile_img` varchar(255) DEFAULT NULL,
   `role` enum('user','admin') NOT NULL DEFAULT 'user',
