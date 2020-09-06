@@ -78,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function()
     {
         var request     = new XMLHttpRequest();
         var url         = "/register/email";
-        var validEmail  = false;
 
         console.log(url)
         request.open('POST', url);
@@ -109,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function()
                 }
             }
         }
-        return validEmail;
     }
 
     /**
