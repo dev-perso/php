@@ -68,12 +68,14 @@ document.addEventListener("DOMContentLoaded", function()
         }
     });
 
+    // Regex pour un email valide
     function emailIsValid(email)
     {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
 
+    // Check si l'email saisi existe en BDD
     function emailExist(email)
     {
         var request     = new XMLHttpRequest();

@@ -63,9 +63,11 @@ class SecurityController extends AbstractController
         $user = new User();
 
         // Ajout des valeurs à l'objet User
-        $user->setPrenom($form->get('firstname'))
-            ->setNom($form->get('lastname'))
-            ->setEmail($form->get('email'));
+        if (empty($this->user->getEmailExist($form->get('email'))))
+            $user->setEmail($form->get('email'));
+        else
+            // Message temporaire d'erreur
+            $this->addFlash('error', 'Un compte existe déjà avec cette adresse email');
 
         // Hashage du password si celui-ci rempli les conditions de validations
         if ((strlen($form->get('password')) >= 8) && (preg_match('/[0-9]/', $form->get('password')) == 1) && (preg_match('/[A-Z]/', $form->get('password')) == 1) && (preg_match('/[a-z]/', $form->get('password'))))
@@ -74,7 +76,7 @@ class SecurityController extends AbstractController
             $user->setPassword($hash);
 
             // Message temporaire de validation
-            $this->addFlash('success', 'Email ' . $form->get('email') . ' created');
+            $this->addFlash('success', 'Votre compte ' . $form->get('email') . ' a bien été créé');
 
             // Ajout du UserF dans la BDD
             $this->em->persist($user);
@@ -90,6 +92,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register/email", name="register.email")
      * @return Response
+     * Ajax pour vérifier que l'email n'est pas en base de données
      */
     public function checkEmail(): Response
     {
