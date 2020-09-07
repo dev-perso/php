@@ -21,64 +21,82 @@
         <div class="row">
             <div class="col-4 text-center">
                 <img src="{{ asset('img/wines/' ~ userWine.image) }}"
-                     height="400px"
-                     width="300px"
+                     height="auto"
+                     width="auto"
                      class="dropdown-toggle wineImg"
                      id="dropdownMenuButton"/>
             </div>
             <div class="col-8">
-                <div class="col-12 noteDescribe">
-                    {% if userWine.getNote() is not empty %}
-                        {% set empty_star = 5 - userWine.getNote() %}
-                        {{ userWine.getNote() }} Note basée sur le millésime {{ wine.getAnnee() }}
-                        <br>
-                        {% for i in 1..userWine.getNote() %}
-                            <img src="{{ asset('img/star.png') }}" width="40px" height="40px">
-                        {% endfor %}
-                        {% for i in 1..empty_star %}
-                            <img src="{{ asset('img/empty-star.png') }}" width="40px" height="40px">
-                        {% endfor %}
-                    {% else %}
-                        Vous n'avez pas encore assigné de note à ce vin
-                    {% endif %}
+
+                {# Appellation & Année #}
+                <div class="row">
+                    <div class="col-12 appellationDescribe">
+                        {{ userWine.getEntityVin().getAppellation() }} {{ userWine.getEntityVin().getAnnee() }}
+                    </div>
                 </div>
-                <div class="col-12 priceDescribe">
-                    {% if userWine.getPrix() is not empty %}
-                        {{ userWine.getPrix() }} €
-                    {% else %}
-                        Vous n'avez pas encore renseigné de prix à ce vin
-                    {% endif %}
+                {# Couleur, Note & Prix #}
+                <div class="row">
+                    <div class="col-2 colorDescribe">
+                        {% if userWine.getEntityVin().getEntityCouleur().getCouleur() == "Blanc" %}
+                            <div class="whiteBtl"></div>
+                        {% elseif userWine.getEntityVin().getEntityCouleur().getCouleur() == "Rosé" %}
+                            <div class="roseBtl"></div>
+                        {% elseif userWine.getEntityVin().getEntityCouleur().getCouleur() == "Rouge" %}
+                            <div class="redBtl"></div>
+                        {% endif %}
+                    </div>
+                    <div class="col-6 noteDescribe">
+                        {% if userWine.getNote() is not empty %}
+                            {% set empty_star = 5 - userWine.getNote() %}
+                            {% for i in 1..userWine.getNote() %}
+                                <img src="{{ asset('img/star.png') }}" class="starImg">
+                            {% endfor %}
+                            {% if empty_star != 0 %}
+                                {% for i in 1..empty_star %}
+                                    <img src="{{ asset('img/empty-star.png') }}" class="starImg">
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            {% for i in 1..5 %}
+                                <img src="{{ asset('img/empty-star.png') }}" class="starImg">
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-2 priceDescribe">
+                        {% if userWine.getPrix() is not empty %}
+                            {{ userWine.getPrix() }} €
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# Domaine #}
+                <div class="row">
+                    <div class="col-12 domainDescribe">
+                        {{ userWine.getEntityVin().getEntityDomaine().getDomaine() }}
+                    </div>
+                </div>
+
+                {# Région #}
+                <div class="row">
+                    <div class="col-12 regionDescribe">
+                        {{ userWine.getEntityVin().getEntityRegion().getRegion() }}, {{ userWine.getEntityVin().getEntityRegion().getEntityPays().getPays() }}
+                    </div>
+                </div>
+
+                {# Quantité & Modification #}
+                <div class="row">
+                    <div class="col-6 quantityDescribe">
+                        <i class="fa fa-boxes"></i> {{ userWine.getQuantite() }}
+                    </div>
+                    <div class="col-6 modifyBtl">
+                        <button><img src="{{ asset('img/modifier.png') }}" class="editWine"/>Modifier</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="col-12">
-                    Quantité : {{ userWine.getQuantite() }}
-                </div>
-                <div class="col-12">
-                    Description : {{ userWine.getDescription() }}
-                </div>
-                <div class="col-12">
-                    Région : {{ userWine.getEntityVin().getEntityRegion().getRegion() }}
-                    Région : {{ wine.getEntityRegion().getRegion() }}
-                </div>
-                <div class="col-12">
-                    Domaine : {{ userWine.getEntityVin().getEntityDomaine().getDomaine() }}
-                    Domaine : {{ wine.getEntityDomaine().getDomaine() }}
-                </div>
-                <div class="col-12">
-                    Couleur : {{ userWine.getEntityVin().getEntityCouleur().getCouleur() }}
-                    Couleur : {{ wine.getEntityCouleur().getCouleur() }}
-                </div>
-                <div class="col-12">
-                    Appellation : {{ userWine.getEntityVin().getAppellation() }}
-                    Appellation : {{ wine.getAppellation() }}
-                </div>
-                <div class="col-12">
-                    Année : {{ userWine.getEntityVin().getAnnee() }}
-                    Année : {{ wine.getAnnee() }}
-                </div>
+            <div class="col-12 descriptionDescribe">
+                {{ userWine.getDescription() }}
             </div>
         </div>
     </div>

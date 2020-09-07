@@ -1,3 +1,8 @@
+body
+{
+    font-family: 'Roboto';
+}
+
 .Alsace
 {
     background-image: url("../img/region/alsace.jpg");
@@ -70,8 +75,6 @@
     padding: 9rem 2rem !important;
 }
 
-
-
 .wineImg
 {
     margin-top : -100px;
@@ -79,13 +82,113 @@
     border-radius : 10px;
 }
 
+.appellationDescribe
+{
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.colorDescribe
+{
+    display: inline-block;
+}
+
+.colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
+{
+    width : 40px;
+    height : 40px;
+    margin : 10px 0px;
+    display : inline-block;
+    position :relative;
+    border-radius: 20px;
+}
+
+.colorDescribe .whiteBtl
+{
+    background-color : rgb(255,248,188);
+}
+
+.colorDescribe .roseBtl
+{
+    background-color : #db7599;
+}
+
+.colorDescribe .redBtl
+{
+    background-color : rgb(219,50,77);
+}
+
 .noteDescribe
 {
-    font-size : 30px;
+    display: inline-block;
+    text-align: center;
+}
+
+.noteDescribe .starImg
+{
+    height: 40px;
+    width : 40px;
+    margin-top: 10px;
 }
 
 .priceDescribe
 {
+    margin-top: 15px;
+    font-size: 24px;
+    text-align: right;
+}
+
+.domainDescribe
+{
+    font-size: 25px;
+}
+
+.regionDescribe
+{
+    font-size: 18px;
+    color: #aaaaaa;
     margin-top : 10px;
-    font-size : 25px;
+}
+
+.quantityDescribe
+{
+    margin-top : 10px;
+}
+
+.modifyBtl
+{
+    margin-top: 10px;
+    text-align: right;
+}
+
+.modifyBtl .editWine
+{
+    width : 20px;
+    height : 20px;
+}
+
+.descriptionDescribe
+{
+    margin-top : 20px;
+    background-color : #f5f5f5;
+    border : 1px solid #dddddd;
+    border-radius: 10px;
+}
+
+@media (min-width: 992px)
+{
+    .wineImg
+    {
+        width: 300px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 991px)
+{
+    .wineImg
+    {
+        width: 200px;
+        height: 266px;
+    }
 }
