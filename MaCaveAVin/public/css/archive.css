@@ -3,6 +3,46 @@ body
     font-family: 'Roboto';
 }
 
+@media (min-width: 576px)
+{
+    .container-table-adapted
+    {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 768px)
+{
+    .container-table-adapted
+    {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 992px)
+{
+    .container-table-adapted
+    {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px)
+{
+    .container-table-adapted
+    {
+        max-width: 1140px;
+    }
+}
+
 .btnWine, .btnFilter
 {
     background-color: white !important;

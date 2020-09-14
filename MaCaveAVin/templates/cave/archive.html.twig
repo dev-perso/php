@@ -6,9 +6,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="text-center">Archive</h1>
 
+    <div class="container-table-adapted mt-4">
         <table class="table table-striped mt-5">
             <thead>
                 <tr>
@@ -39,10 +38,10 @@
                         <!-- Should be the last column -->
                         <td>
                             <img src="{{ asset('img/modifier.png') }}"
-                                class="editWine pointer" 
+                                class="editWine pointer"
                                 id="{{ 'edit' ~ archive.getEntityVin().getIdVin() }}"
                                 title="Modifier"
-                                height="30px" 
+                                height="30px"
                                 width="30px" />
                             <img src="{{ asset('img/remettre.png') }}" 
                                 class="addWine ml-3 pointer" 

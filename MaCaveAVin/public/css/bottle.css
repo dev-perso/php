@@ -3,6 +3,11 @@ body
     font-family: 'Roboto';
 }
 
+button:hover
+{
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
 .Alsace
 {
     background-image: url("../img/region/alsace.jpg");
@@ -85,7 +90,6 @@ body
 .appellationDescribe
 {
     font-weight: bold;
-    font-size: 36px;
 }
 
 .colorDescribe
@@ -95,8 +99,6 @@ body
 
 .colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
 {
-    width : 40px;
-    height : 40px;
     margin : 10px 0px;
     display : inline-block;
     position :relative;
@@ -126,21 +128,13 @@ body
 
 .noteDescribe .starImg
 {
-    height: 40px;
-    width : 40px;
     margin-top: 10px;
 }
 
 .priceDescribe
 {
     margin-top: 15px;
-    font-size: 24px;
     text-align: right;
-}
-
-.domainDescribe
-{
-    font-size: 25px;
 }
 
 .regionDescribe
@@ -161,18 +155,42 @@ body
     text-align: right;
 }
 
-.modifyBtl .editWine
+.modifyBtl .editBtn
+{
+    background-color: #93032E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border : none;
+
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
+
+    color: #FFFFFF;
+    outline: none;
+}
+
+.modifyBtl .editBtn .editWine
 {
     width : 20px;
     height : 20px;
 }
 
+
 .descriptionDescribe
 {
-    margin-top : 20px;
+    margin-top : 40px;
     background-color : #f5f5f5;
     border : 1px solid #dddddd;
     border-radius: 10px;
+    padding : 15px 15px 15px 30px;
+}
+
+.descriptionDescribe .commentTitle
+{
+    position : absolute;
+    left : 15px;
+    top : -23px;
+    color : lightgrey;
 }
 
 @media (min-width: 992px)
@@ -182,6 +200,51 @@ body
         width: 300px;
         height: 400px;
     }
+
+    .appellationDescribe
+    {
+        font-size: 36px;
+    }
+
+    .colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
+    {
+        width: 40px;
+        height: 40px;
+    }
+
+    .noteDescribe .starImg
+    {
+        height: 40px;
+        width: 40px;
+    }
+
+    .priceDescribe
+    {
+        font-size: 24px;
+    }
+
+    .domainDescribe
+    {
+        font-size: 25px;
+    }
+
+    .regionDescribe
+    {
+        font-size: 18px;
+    }
+
+    .quantityDescribe
+    {
+        font-size : 18px;
+    }
+
+    .modifyBtl .editBtn
+    {
+        border-radius: 40px;
+        padding: 10px 40px;
+        font-size: 18px;
+        line-height: 21px;
+    }
 }
 
 @media (max-width: 991px)
@@ -190,5 +253,51 @@ body
     {
         width: 200px;
         height: 266px;
+    }
+
+    .appellationDescribe
+    {
+        font-size: 24px;
+    }
+
+    .colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
+    {
+        width: 25px;
+        height: 25px;
+    }
+
+    .noteDescribe .starImg
+    {
+        height: 25px;
+        width: 25px;
+    }
+
+    .priceDescribe
+    {
+        font-size: 16px;
+    }
+
+    .domainDescribe
+    {
+        font-size: 16px;
+    }
+
+    .regionDescribe
+    {
+        font-size: 12px;
+    }
+
+    .quantityDescribe
+    {
+        font-size : 12px;
+    }
+
+    .modifyBtl .editBtn
+    {
+        border-radius: 40px;
+        padding: 5px 20px;
+        margin-top : 0px;
+        font-size: 12px;
+        line-height: 14px;
     }
 }

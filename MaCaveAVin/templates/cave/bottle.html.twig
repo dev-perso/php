@@ -45,7 +45,7 @@
                             <div class="redBtl"></div>
                         {% endif %}
                     </div>
-                    <div class="col-6 noteDescribe">
+                    <div class="col-6 col-md-5 noteDescribe">
                         {% if userWine.getNote() is not empty %}
                             {% set empty_star = 5 - userWine.getNote() %}
                             {% for i in 1..userWine.getNote() %}
@@ -62,7 +62,7 @@
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <div class="col-2 priceDescribe">
+                    <div class="col-2 col-md-3 priceDescribe">
                         {% if userWine.getPrix() is not empty %}
                             {{ userWine.getPrix() }} €
                         {% endif %}
@@ -86,18 +86,21 @@
                 {# Quantité & Modification #}
                 <div class="row">
                     <div class="col-6 quantityDescribe">
-                        <i class="fa fa-boxes"></i> {{ userWine.getQuantite() }}
+                        En cave : {{ userWine.getQuantite() }}
                     </div>
                     <div class="col-6 modifyBtl">
-                        <button><img src="{{ asset('img/modifier.png') }}" class="editWine"/>Modifier</button>
+                        <button class="editBtn" id="{{ 'edit' ~ userWine.getIdVin() }}">MODIFIER</button>{#<img src="{{ asset('img/modifier.png') }}" class="editWine"/>#}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 descriptionDescribe">
-                {{ userWine.getDescription() }}
+        {% if userWine.getDescription()is not empty %}
+            <div class="row">
+                <div class="offset-1 col-10 descriptionDescribe">
+                    <span class="commentTitle">Commentaire</span>
+                    {{ userWine.getDescription() }}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}
