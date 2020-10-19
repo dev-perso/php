@@ -155,26 +155,26 @@ button:hover
     text-align: right;
 }
 
-.modifyBtl .editBtn
+.modifyBtl .editBtn, .useBtn
 {
-    background-color: #93032E;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border : none;
-
     font-style: normal;
     font-weight: bold;
     text-align: center;
-
     color: #FFFFFF;
-    outline: none;
+    outline: none !important;
 }
 
-.modifyBtl .editBtn .editWine
+.modifyBtl .editBtn
 {
-    width : 20px;
-    height : 20px;
+    background-color: #93032E;
 }
 
+.useBtn
+{
+    background-color: lightgrey;
+}
 
 .descriptionDescribe
 {
@@ -193,62 +193,17 @@ button:hover
     color : lightgrey;
 }
 
-@media (min-width: 992px)
+@media (min-width: 576px)
 {
-    .wineImg
+    .container-table-adapted
     {
-        width: 300px;
-        height: 400px;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
     }
 
-    .appellationDescribe
-    {
-        font-size: 36px;
-    }
-
-    .colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
-    {
-        width: 40px;
-        height: 40px;
-    }
-
-    .noteDescribe .starImg
-    {
-        height: 40px;
-        width: 40px;
-    }
-
-    .priceDescribe
-    {
-        font-size: 24px;
-    }
-
-    .domainDescribe
-    {
-        font-size: 25px;
-    }
-
-    .regionDescribe
-    {
-        font-size: 18px;
-    }
-
-    .quantityDescribe
-    {
-        font-size : 18px;
-    }
-
-    .modifyBtl .editBtn
-    {
-        border-radius: 40px;
-        padding: 10px 40px;
-        font-size: 18px;
-        line-height: 21px;
-    }
-}
-
-@media (max-width: 991px)
-{
     .wineImg
     {
         width: 200px;
@@ -292,12 +247,156 @@ button:hover
         font-size : 12px;
     }
 
-    .modifyBtl .editBtn
+    .modifyBtl .editBtn, .useBtn
     {
         border-radius: 40px;
         padding: 5px 20px;
         margin-top : 0px;
         font-size: 12px;
         line-height: 14px;
+    }
+}
+
+@media (min-width: 768px)
+{
+    .container-table-adapted
+    {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .wineImg
+    {
+        width: 200px;
+        height: 266px;
+    }
+
+    .appellationDescribe
+    {
+        font-size: 24px;
+    }
+
+    .colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
+    {
+        width: 25px;
+        height: 25px;
+    }
+
+    .noteDescribe .starImg
+    {
+        height: 25px;
+        width: 25px;
+    }
+
+    .priceDescribe
+    {
+        font-size: 16px;
+    }
+
+    .domainDescribe
+    {
+        font-size: 16px;
+    }
+
+    .regionDescribe
+    {
+        font-size: 12px;
+    }
+
+    .quantityDescribe
+    {
+        font-size : 12px;
+    }
+
+    .modifyBtl .editBtn, .useBtn
+    {
+        border-radius: 40px;
+        padding: 5px 20px;
+        margin-top : 0px;
+        font-size: 12px;
+        line-height: 14px;
+    }
+}
+
+@media (min-width: 992px)
+{
+    .container-table-adapted
+    {
+        max-width: 960px;
+    }
+
+    .wineImg
+    {
+        width: 300px;
+        height: 400px;
+    }
+
+    .appellationDescribe
+    {
+        font-size: 36px;
+    }
+
+    .colorDescribe .whiteBtl, .colorDescribe .roseBtl, .colorDescribe .redBtl
+    {
+        width: 40px;
+        height: 40px;
+    }
+
+    .noteDescribe .starImg
+    {
+        height: 40px;
+        width: 40px;
+    }
+
+    .priceDescribe
+    {
+        font-size: 24px;
+    }
+
+    .domainDescribe
+    {
+        font-size: 25px;
+    }
+
+    .regionDescribe
+    {
+        font-size: 18px;
+    }
+
+    .quantityDescribe
+    {
+        font-size : 18px;
+    }
+
+    .modifyBtl .editBtn, .useBtn
+    {
+        border-radius: 40px;
+        padding: 10px 40px;
+        font-size: 18px;
+        line-height: 21px;
+    }
+}
+
+@media (min-width: 1200px)
+{
+    .container-fluid
+    {
+        max-width : 1140px !important;
+    }
+
+    .container-table-adapted
+    {
+        max-width: 1140px;
+    }
+
+    .modifyBtl .editBtn, .useBtn
+    {
+        border-radius: 40px;
+        padding: 10px 40px;
+        font-size: 18px;
+        line-height: 21px;
     }
 }

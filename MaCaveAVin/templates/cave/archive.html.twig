@@ -15,7 +15,7 @@
                     <th scope="col">Couleur</th>
                     <th scope="col">Appelation</th>
                     <th scope="col">Année</th>
-                    <th scope="col">Quantité</th>
+                    <th scope="col">Qté</th>
                     <th scope="col">Prix</th>
                     <th scope="col">Note</th>
                     <th scope="col">Action</th>
@@ -30,21 +30,15 @@
                         <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.getEntityVin().getAnnee() }}</td>
                         <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.quantite }}</td>
                         {%  if archive.prix is empty %}
-                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">NC</td>
+                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer"></td>
                         {% else %}
-                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.prix }} €</td>
+                            <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="priceColumn pointer">{{ archive.prix }} €</td>
                         {% endif %}
                         <td data-id="{{ archive.getEntityVin().getIdVin() }}" class="pointer">{{ archive.note }}</td>
                         <!-- Should be the last column -->
-                        <td>
-                            <img src="{{ asset('img/modifier.png') }}"
-                                class="editWine pointer"
-                                id="{{ 'edit' ~ archive.getEntityVin().getIdVin() }}"
-                                title="Modifier"
-                                height="30px"
-                                width="30px" />
+                        <td class="useWineColumn">
                             <img src="{{ asset('img/remettre.png') }}" 
-                                class="addWine ml-3 pointer" 
+                                class="addWine pointer"
                                 id="{{ 'add' ~ archive.getEntityVin().getIdVin() }}"
                                 title="Remettre" 
                                 height="30px" 

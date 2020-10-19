@@ -235,8 +235,7 @@ document.addEventListener("DOMContentLoaded", function()
             newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.note + "</td>";
         else
             newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\"></td>";
-        newTableBody += "<td><img src=\"../img/modifier.png\" class=\"editWine\" id=\"edit" + wine.idVin + "\" title=\"Modifier\" height=\"30px\" width=\"30px\" />" +
-            "<img src=\"../img/utiliser.png\" class=\"useWine ml-3\" id=\"use" + wine.idVin + "\" title=\"Utiliser\" height=\"30px\" width=\"30px\" /></td>";
+        newTableBody += "<td class=\"useWineColumn\"><img src=\"../img/utiliser.png\" class=\"useWine\" id=\"use" + wine.idVin + "\" title=\"Utiliser\" height=\"30px\" width=\"30px\" /></td>";
         newTableBody += "</tr>";
 
         return newTableBody;

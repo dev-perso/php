@@ -53,3 +53,13 @@ body
 {
     cursor : pointer;
 }
+
+.priceColumn
+{
+    white-space: nowrap;
+}
+
+.useWineColumn
+{
+    text-align: center;
+}

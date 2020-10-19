@@ -16,8 +16,8 @@
     <div class="jumbotron {{ region | replace({'ô': 'o'}) }}">
 
     </div>
-
-    <div class="container mt-4">
+    <div class="container-fluid">
+    <div class="container-table-adapted mt-4">
         <div class="row">
             <div class="col-4 text-center">
                 <img src="{{ asset('img/wines/' ~ userWine.image) }}"
@@ -88,10 +88,19 @@
                     <div class="col-6 quantityDescribe">
                         En cave : {{ userWine.getQuantite() }}
                     </div>
-                    <div class="col-6 modifyBtl">
-                        <button class="editBtn" id="{{ 'edit' ~ userWine.getIdVin() }}">MODIFIER</button>{#<img src="{{ asset('img/modifier.png') }}" class="editWine"/>#}
+                    <div class="col-6 col-md-5 modifyBtl">
+                        <button class="editBtn" id="{{ 'edit' ~ userWine.getIdVin() }}">MODIFIER</button>
                     </div>
                 </div>
+
+                {# Utiliser #}
+                {% if userWine.getQuantite() > 0 %}
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="useBtn" id="{{ 'use' ~ userWine.getIdVin() }}">UTILISER</button>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
         {% if userWine.getDescription()is not empty %}
@@ -103,4 +112,9 @@
             </div>
         {% endif %}
     </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/bottle.js') }}"></script>
 {% endblock %}
