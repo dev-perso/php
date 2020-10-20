@@ -22,16 +22,21 @@ body .navAjustement .profil .rowProfil
     width : 100%;
 }
 
-body .navAjustement .whiteBtl, body .navAjustement .roseBtl, body .navAjustement .redBtl
+body .navAjustement .searchBtl, body .navAjustement .whiteBtl, body .navAjustement .roseBtl, body .navAjustement .redBtl
 {
     width : 25px;
     height : 25px;
-    margin : 0px 5px;
+    margin : -4px 5px 0px 5px;
     display : inline-block;
     position :relative;
     top : calc(50% - 10px);
     border-radius: 13px;
     padding-top : 4px;
+}
+
+body .navAjustement .searchBtl
+{
+    font-size: 16px;
 }
 
 body .navAjustement .whiteBtl

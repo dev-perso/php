@@ -29,9 +29,10 @@
                 {# Compteur #}
                 {% set url = app.request.requesturi %}
                 {% if "/bienvenue" in url or "/connexion" in url or "/inscription" in url %}
-                    <div class="col-2 btnCounter"></div>
+                    <div class="col-3 btnCounter"></div>
                 {% else %}
-                    <div class="col-2 btnCounter">
+                    <div class="col-3 btnCounter">
+                        <div class="searchBtl"><i class="fa fa-search"></i></div>
                         <div class="whiteBtl">{{ whiteWines }}</div>
                         <div class="roseBtl">{{ roseWines }}</div>
                         <div class="redBtl">{{ redWines }}</div>
@@ -39,7 +40,7 @@
                 {% endif %}
 
                 {# Titre #}
-                <div class="col-8">
+                <div class="col-7">
                     <a href="{{ path('main') }}" class="navbar-brand mb-0 h1">La Cave à Vin</a>
                 </div>
 

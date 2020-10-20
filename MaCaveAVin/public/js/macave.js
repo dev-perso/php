@@ -277,7 +277,9 @@ document.addEventListener("DOMContentLoaded", function()
                 tr[i].cells[j].addEventListener("click", getDescription, false);
     }
 
-    // Active les événements
+    /**
+     * Active les événements
+     */
     unlockFilter(filter);       // des filtres
     eventGetDescription(tr);    // des descriptions
     eventBtnEditWine(edit);     // des éditions du vin
