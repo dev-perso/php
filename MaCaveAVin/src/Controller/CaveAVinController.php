@@ -318,11 +318,15 @@ class CaveAVinController extends AbstractController
         // Pour chaque vin on récupère la quantité
         foreach ($winesFiltered as $wine)
         {
-            $quantite = $this->cave->getWineQuantity($this->user->getIdUser(), $wine->getIdVin());
+            $quantity   = $this->cave->getWineQuantity($this->user->getIdUser(), $wine->getIdVin());
+            $price      = $this->cave->getWinePrice($this->user->getIdUser(), $wine->getIdVin());
+            $note       = $this->cave->getWineNote($this->user->getIdUser(), $wine->getIdVin());
 
-            if ($quantite[0]['quantite'] > 0)
+            if ($quantity[0]['quantite'] > 0)
             {
-                $wine->setQuantity($quantite[0]['quantite']);
+                $wine->setQuantity($quantity[0]['quantite']);
+                $wine->setPrix($price[0]['prix']);
+                $wine->setNote($note[0]['note']);
 
                 // Réécris dans un tableau les vins filtrés
                 $winesToSend[] = $wine;

@@ -76,6 +76,16 @@ class Vin
     private $quantity;
 
     /**
+     * @var float
+     */
+    private $prix;
+
+    /**
+     * @var int
+     */
+    private $note;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $annee;
@@ -178,6 +188,30 @@ class Vin
     public function setQuantity(?int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $price): self
+    {
+        $this->prix = $price;
+
+        return $this;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(?int $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

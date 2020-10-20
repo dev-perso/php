@@ -19,23 +19,6 @@ class CaveRepository extends ServiceEntityRepository
         parent::__construct($registry, Cave::class);
     }
 
-    // /**
-    //  * @return Cave[] Returns an array of Cave objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     /**
      * @return Cave[] Returns an array of Cave objects
      * Récupère les vins avec une quantité strictement supérieur à 0
@@ -78,6 +61,38 @@ class CaveRepository extends ServiceEntityRepository
             ->setParameter('id_vin', $idWine)
             ->setParameter('id_user', $idUser)
             ->select('c.quantite')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * @return int
+     * Récupère le prix du vin du user
+     */
+    public function getWinePrice($idUser, $idWine)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id_vin = :id_vin')
+            ->andWhere('c.id_user = :id_user')
+            ->setParameter('id_vin', $idWine)
+            ->setParameter('id_user', $idUser)
+            ->select('c.prix')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * @return int
+     * Récupère la note du vin du user
+     */
+    public function getWineNote($idUser, $idWine)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id_vin = :id_vin')
+            ->andWhere('c.id_user = :id_user')
+            ->setParameter('id_vin', $idWine)
+            ->setParameter('id_user', $idUser)
+            ->select('c.note')
             ->getQuery()
             ->getArrayResult();
     }

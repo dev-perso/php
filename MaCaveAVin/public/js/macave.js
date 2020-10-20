@@ -8,31 +8,28 @@ document.addEventListener("DOMContentLoaded", function()
     var filter      = document.getElementsByClassName("btnFilter");
     var request     = new XMLHttpRequest();
 
+    // Redirect to edit page
     function editWine()
     {
         var id = this.getAttribute('id').substring(4);
         if (id != null)
-        {
             window.location.href = '/caveavin/gestion/modifier/' + id;
-        }
     }
 
+    // Redirect to use page
     function useWine()
     {
         var id = this.getAttribute('id').substring(3);
         if (id != null)
-        {
             window.location.href = '/caveavin/gestion/utiliser/' + id;
-        }
     }
 
+    // Redirect to bottle information page
     function getDescription()
     {
         var id = this.getAttribute("data-id")
         if (id != null)
-        {
             window.location.href = '/caveavin/bouteille/' + id;
-        }
     }
 
     // Enlève un filtre
@@ -62,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function()
         else
             url += "noFilter";
 
+        // Ajax request to get all wine filtered from user cave
         request.open('POST', url, true);
         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -72,52 +70,24 @@ document.addEventListener("DOMContentLoaded", function()
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
             {
                 const response      = JSON.parse(request.response);
-                var tableBody       = document.getElementById("macave");
-                let newTableBody    = "";
-
-                // Suppression des lignes du tableau
-                tableBody.innerHTML = "";
-
-                // Construction du nouveau tableau
-                response['wines'].forEach((wine) =>
-                {
-                    newTableBody += constructTable(wine);
-                });
-
-                // Ajout du nouveau tableau
-                tableBody.innerHTML = newTableBody;
-
-                var edit    = document.getElementsByClassName("editWine");
-                var use     = document.getElementsByClassName("useWine");
-                var tr      = document.getElementsByTagName("tr");
-
-                // Débloque les boutons des filtres
-                unlockFilter(filter);
-                // Permet d'obtenir la description des vins dans le tableau
-                eventGetDescription(tr);
-                // Crée les événements d'édition du vin
-                eventBtnEditWine(edit);
-                // Crée les événements d'utilisation du vin
-                eventBtnUseWine(use);
-                // Débloque les boutons pour retirer les filtres
-                unlockActifFilter();
-                
-                // Réécris dans l'input hidden des filtres en cours
-                if (currentFilter.value != "") currentFilter.value = newFilter;
-                else currentFilter.value = "";
 
                 // Créer le nouveau bouton du filtre disponible
                 var buttonFilter    = document.createElement('button');
                 var filterLine      = document.getElementById("filterLine");
 
+                refreshTable(response);
+                
+                // Réécris dans l'input hidden des filtres en cours
+                currentFilter.value != "" ? currentFilter.value = newFilter : currentFilter.value = "";
+
                 // Création button du filtre actif
-                if (toRemove == "cote_rhone") valueToDisplay = "Côte du rhône";
-                else valueToDisplay = toRemove;
+                toRemove == "cote_rhone" ? valueToDisplay = "Côte du rhône" : valueToDisplay = toRemove;
+
                 buttonFilter.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
                 buttonFilter.className = 'btn btn-light btnFilter ml-1';
                 buttonFilter.setAttribute("data-filter", toRemove);
                 buttonFilter.setAttribute("role", "button");
-                buttonFilter.addEventListener("click", filterMyCave, false);
+                buttonFilter.addEventListener("click", addFilter, false);
                 filterLine.appendChild(buttonFilter);
             }
         };
@@ -128,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function()
     }
 
     // Filtre la cave
-    function filterMyCave()
+    function addFilter()
     {
         var constraint  = this.getAttribute("data-filter");
         var actifFiltre = document.getElementById("filtres");
@@ -140,8 +110,7 @@ document.addEventListener("DOMContentLoaded", function()
         lockActifFilter();
 
         // Construit l'url pour la requête ajax
-        if (actifFiltre.value != "") url += constraint + "--" + actifFiltre.value;
-        else url += constraint;
+        actifFiltre.value != "" ? url += constraint + "--" + actifFiltre.value : url += constraint;
 
         // Enlève le filtre
         this.remove();
@@ -159,13 +128,11 @@ document.addEventListener("DOMContentLoaded", function()
                 const response      = JSON.parse(request.response);
                 var buttonFilter    = document.createElement('button');
                 var span            = document.createElement('span');
-                var tableBody       = document.getElementById("macave");
-                let newTableBody    = "";
                 var valueToDisplay  = "";
 
                 // Création button du filtre actif
-                if (constraint == "cote_rhone") valueToDisplay = "Côte du rhône";
-                else valueToDisplay = constraint;
+                constraint == "cote_rhone" ? valueToDisplay = "Côte du rhône" : valueToDisplay = constraint;
+
                 span.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
                 buttonFilter.classList.add('actif-filtre');
                 buttonFilter.setAttribute("data-filter", response['filters'][0]);
@@ -173,38 +140,11 @@ document.addEventListener("DOMContentLoaded", function()
                 actifFilter.appendChild(buttonFilter);
                 buttonFilter.addEventListener("click", removeFilter, false);
 
-                // Suppression des lignes du tableau
-                tableBody.innerHTML = "";
-
-                // Construction du nouveau tableau
-                response['wines'].forEach((wine) =>
-                {
-                    newTableBody += constructTable(wine);
-                });
-
-                // Ajout du nouveau tableau
-                tableBody.innerHTML = newTableBody;
-
-                var edit    = document.getElementsByClassName("editWine");
-                var use     = document.getElementsByClassName("useWine");
-                var tr      = document.getElementsByTagName("tr");
-
-                // Débloque les boutons des filtres
-                unlockFilter(filter);
-                // Permet d'obtenir la description des vins dans le tableau
-                eventGetDescription(tr);
-                // Crée les événements d'édition du vin
-                eventBtnEditWine(edit);
-                // Crée les événements d'utilisation du vin
-                eventBtnUseWine(use);
-                // Débloque les boutons pour retirer les filtres
-                unlockActifFilter();
+                refreshTable(response);
 
                 // Update des filtres actifs en cours
-                if (actifFiltre.value != "")
-                    actifFiltre.value = actifFiltre.value + "--" + response['filters'][0];
-                else
-                    actifFiltre.value = response['filters'];
+                actifFiltre.value != "" ?
+                    actifFiltre.value = actifFiltre.value + "--" + response['filters'][0] : actifFiltre.value = response['filters'];
             }
         };
     
@@ -213,9 +153,42 @@ document.addEventListener("DOMContentLoaded", function()
             console.log("Erreur requête ajax sur le Filtre Dropdown");
     }
 
+    // Init new Table
+    var refreshTable = (response) =>
+    {
+        let newTableBody    = "";
+        // Suppression des lignes du tableau
+        macave.innerHTML = "";
+
+        // Construction du nouveau tableau
+        response['wines'].forEach((wine) =>
+        {
+            newTableBody += constructTable(wine);
+        });
+
+        // Ajout du nouveau tableau
+        macave.innerHTML = newTableBody;
+
+        var edit    = document.getElementsByClassName("editWine");
+        var use     = document.getElementsByClassName("useWine");
+        var tr      = document.getElementsByTagName("tr");
+
+        // Débloque les boutons des filtres
+        unlockFilter(filter);
+        // Permet d'obtenir la description des vins dans le tableau
+        eventGetDescription(tr);
+        // Crée les événements d'édition du vin
+        eventBtnEditWine(edit);
+        // Crée les événements d'utilisation du vin
+        eventBtnUseWine(use);
+        // Débloque les boutons pour retirer les filtres
+        unlockActifFilter();
+    }
+
     // Construction d'une ligne du tableau en fonction du vin
     var constructTable = (wine) =>
     {
+        console.log("wine", wine);
         var largeString = "";
         if (wine.appellation.length > 60)
             largeString = "...";
@@ -228,9 +201,9 @@ document.addEventListener("DOMContentLoaded", function()
         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.annee + "</td>";
         newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.quantity + "</td>";
         if (wine.prix != null)
-            newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.prix + "</td>";
+            newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.prix + " €</td>";
         else
-            newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">NC</td>";
+            newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\"></td>";
         if (wine.note != null)
             newTableBody += "<td data-id=" + wine.idVin + " class=\"pointer\">" + wine.note + "</td>";
         else
@@ -268,14 +241,14 @@ document.addEventListener("DOMContentLoaded", function()
     var lockFilter = (filter) =>
     {
         for (var i = 0; i < filter.length; i++)
-            filter[i].removeEventListener("click", filterMyCave);
+            filter[i].removeEventListener("click", addFilter);
     }
 
     // Crée l'événement de filtre des vins
     var unlockFilter = (filter) =>
     {
         for (var i = 0; i < filter.length; i++)
-            filter[i].addEventListener("click", filterMyCave, false);
+            filter[i].addEventListener("click", addFilter, false);
     }
 
     // Bloque l'événement de filtre des vins
