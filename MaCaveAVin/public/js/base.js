@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", function()
 {
-    var login  = document.getElementById("login");
+    var login   = document.getElementById("login");
+    var search  = document.getElementById("search");
+    var overlay = document.getElementById("overlay");
+
+    var showSearchBar = () =>
+    {
+
+    }
 
     if (login)
     {
@@ -12,5 +19,9 @@ document.addEventListener("DOMContentLoaded", function()
             login.setAttribute("src", "img/login.svg");
         });
     }
+
+    search.addEventListener("click", showSearchBar);
+
+
 
 });

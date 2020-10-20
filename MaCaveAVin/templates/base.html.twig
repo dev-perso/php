@@ -32,7 +32,7 @@
                     <div class="col-3 btnCounter"></div>
                 {% else %}
                     <div class="col-3 btnCounter">
-                        <div class="searchBtl"><i class="fa fa-search"></i></div>
+                        <div class="searchBtl"><i class="fa fa-search" id="search"></i></div>
                         <div class="whiteBtl">{{ whiteWines }}</div>
                         <div class="roseBtl">{{ roseWines }}</div>
                         <div class="redBtl">{{ redWines }}</div>
@@ -120,6 +120,7 @@
             </div>
         </nav>
 
+        <div id="overlay" style="display : none"></div>
 
         {% block body %}{% endblock %}
         {% block javascripts %}
