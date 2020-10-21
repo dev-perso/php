@@ -116,5 +116,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('js/bottle.js') }}"></script>
 {% endblock %}

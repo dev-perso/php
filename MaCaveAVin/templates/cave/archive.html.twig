@@ -53,5 +53,6 @@
 {% endblock %}
 
 {% block javascripts %}
-     <script src="{{ asset('js/archive.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('js/archive.js') }}"></script>
 {% endblock %}

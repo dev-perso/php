@@ -32,6 +32,7 @@ body .navAjustement .searchBtl, body .navAjustement .whiteBtl, body .navAjusteme
     top : calc(50% - 10px);
     border-radius: 13px;
     padding-top : 4px;
+    cursor: pointer;
 }
 
 body .navAjustement .searchBtl
@@ -145,5 +146,39 @@ body .navAjustement .connexion .connexionBtn, body .navAjustement .deconnexion .
     right: 0;
     bottom: 0;
     background-color: rgba(255,255,255,0.7);
-    display: none;
+    z-index : 999;
+    overflow: hidden;
+    height : 100%;
+}
+
+#overlay .closeOverlay
+{
+    position : absolute;
+    color : #333;
+    top : 0px;
+    right : 30px;
+    font-size : 50px;
+    font-weight: bold;
+}
+
+#overlay .searchContainer
+{
+    margin-top : 100px;
+}
+
+#overlay .searchContainer .searchBar
+{
+    width : 100%;
+    padding: 15px;
+    border-radius: 24px;
+    outline: none;
+}
+
+#spinner
+{
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    z-index : 999;
 }

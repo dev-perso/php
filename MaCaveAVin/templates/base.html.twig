@@ -120,7 +120,25 @@
             </div>
         </nav>
 
-        <div id="overlay" style="display : none"></div>
+        {# Overlay #}
+        <div id="overlay" style="display : none">
+            {# Close Bouton #}
+            <div class="closeOverlay" id="closeOverlay">x</div>
+
+            {# Search bar #}
+            <div class="container searchContainer">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" name="search" class="searchBar" id="searchBar" placeholder="Search for a wine">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Spinner #}
+        <div id="spinner" style="display : none">
+            <img src="{{ asset('img/spinner.gif') }}">
+        </div>
 
         {% block body %}{% endblock %}
         {% block javascripts %}

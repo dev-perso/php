@@ -118,5 +118,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}

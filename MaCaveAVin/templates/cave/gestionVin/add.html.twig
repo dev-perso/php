@@ -71,5 +71,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('js/add.js') }}"></script>
 {% endblock %}
