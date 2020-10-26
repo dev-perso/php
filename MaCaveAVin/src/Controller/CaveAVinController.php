@@ -342,4 +342,60 @@ class CaveAVinController extends AbstractController
             'wines'     => $winesToSend
         ]);
     }
+
+    /**
+     * @Route("/caveavin/search/{search}", name="caveavin.search")
+     * @return Response
+     */
+    public function search ($search): Response
+    {
+        $color = $this->couleur->getLikeColor($search);
+        //$winesFromColor      = $this->vin->getUserWineLikeColor($this->user->getIdUser(), $search);
+        /*$winesFromRegion     = $this->region->findBy(['region' => $search]);
+        $winesFromName       = $this->vin->findBy(['wine' => $search]);
+        $winesFromDomain     = $this->domaine->findBy(['domain' => $search]);*/
+
+        // Si le filtre est une couleur
+        /*if ($color)
+            // Récupère tous les vins de l'utilisateur avec le filtre de la couleur en cours
+            $wineFiltered = $this->vin->getUserWineWithColorFilter($this->user->getIdUser(), $couleur);
+        // Sinon si le filtre est une région
+        else if ($region)
+            // Récupère tous les vins de l'utilisateur avec le filtre de la region en cours
+            $wineFiltered = $this->vin->getUserWineWithRegionFilter($this->user->getIdUser(), $region);
+
+            $winesFiltered = array_merge($winesFiltered, $wineFiltered);
+
+            $nbFilter++;
+        }
+
+        // Enlève tous les vins identiques
+        $winesFiltered = array_unique($winesFiltered, SORT_REGULAR);
+
+        // Pour chaque vin on récupère la quantité
+        foreach ($winesFiltered as $wine)
+        {
+            $quantity   = $this->cave->getWineQuantity($this->user->getIdUser(), $wine->getIdVin());
+            $price      = $this->cave->getWinePrice($this->user->getIdUser(), $wine->getIdVin());
+            $note       = $this->cave->getWineNote($this->user->getIdUser(), $wine->getIdVin());
+
+            if ($quantity[0]['quantite'] > 0)
+            {
+                $wine->setQuantity($quantity[0]['quantite']);
+                $wine->setPrix($price[0]['prix']);
+                $wine->setNote($note[0]['note']);
+
+                // Réécris dans un tableau les vins filtrés
+                $winesToSend[] = $wine;
+            }
+        }
+
+        // Tri les vins par Année
+        usort($winesToSend, array($this, "compareDate"));
+*/
+        return $this->json(
+        [
+            'wines'     => $search
+        ]);
+    }
 }

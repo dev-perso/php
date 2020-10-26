@@ -170,8 +170,26 @@ body .navAjustement .connexion .connexionBtn, body .navAjustement .deconnexion .
 {
     width : 100%;
     padding: 15px;
-    border-radius: 24px;
+    border-radius: 40px;
     outline: none;
+}
+
+#overlay .searchContainer .searchBtn
+{
+    position: absolute;
+    right: 45px;
+    top: 10px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 40px;
+    background-color: #721c24;
+}
+
+#overlay .searchContainer .searchBtn i
+{
+    color : white;
 }
 
 #spinner

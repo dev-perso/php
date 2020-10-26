@@ -19,32 +19,12 @@ class CouleurRepository extends ServiceEntityRepository
         parent::__construct($registry, Couleur::class);
     }
 
-    // /**
-    //  * @return Couleur[] Returns an array of Couleur objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getLikeColor($search): ?Couleur
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('c.couleur LIKE :search')
+            ->setParameter('search', $search)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Couleur
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

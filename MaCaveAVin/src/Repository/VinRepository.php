@@ -90,4 +90,22 @@ class VinRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $idUser
+     * @param $search
+     * @return mixed
+     * Récupère tous les vins dont les couleurs contiennent le $search
+     */
+    public function getUserWineLikeColor($idUser, $search)
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.users', 'User')
+            ->where('User.id_user = :id_user')
+            ->andWhere('v.couleur LIKE :couleur')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('couleur', $search)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

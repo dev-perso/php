@@ -6,7 +6,32 @@ document.addEventListener("DOMContentLoaded", function()
     var use         = document.getElementsByClassName("useWine");
     var edit        = document.getElementsByClassName("editWine");
     var filter      = document.getElementsByClassName("btnFilter");
+    var spinner     = document.getElementById("spinner");
     var request     = new XMLHttpRequest();
+    var currentUrl  = new URL(window.location.href);
+
+    // If user is searching for a wine from anywhere
+    if (currentUrl.searchParams.get("search"))
+    {
+        console.log("search", currentUrl.searchParams.get("search"));
+        var search = currentUrl.searchParams.get("search");
+        var url = "/caveavin/search/" + search;
+
+        // Prépare la requête ajax
+        request.open('POST', url, true);
+        request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.send();
+
+        request.onreadystatechange = function()
+        {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+            {
+                const response = JSON.parse(request.response);
+                console.log("response search", response);
+            }
+        };
+    }
 
     // Redirect to edit page
     function editWine()
@@ -32,6 +57,16 @@ document.addEventListener("DOMContentLoaded", function()
             window.location.href = '/caveavin/bouteille/' + id;
     }
 
+    var showSpinner = () =>
+    {
+        spinner.style.display = "block";
+    };
+
+    var hideSpinner = () =>
+    {
+        spinner.style.display = "none";
+    };
+
     // Enlève un filtre
     function removeFilter()
     {
@@ -42,6 +77,8 @@ document.addEventListener("DOMContentLoaded", function()
         var url             = "/caveavin/filtre/";
         var valueToDisplay  = "";
 
+        //Spinner
+        showSpinner();
         // Bloque le filtre des autres boutons
         lockFilter(filter);
         // Bloque le filtre des boutons pour retirer les filtres
@@ -89,6 +126,9 @@ document.addEventListener("DOMContentLoaded", function()
                 buttonFilter.setAttribute("role", "button");
                 buttonFilter.addEventListener("click", addFilter, false);
                 filterLine.appendChild(buttonFilter);
+
+                // Hide spinner
+                hideSpinner();
             }
         };
 
@@ -104,6 +144,8 @@ document.addEventListener("DOMContentLoaded", function()
         var actifFiltre = document.getElementById("filtres");
         var url         = "/caveavin/filtre/";
 
+        // Spinner
+        showSpinner();
         // Bloque le filtre des boutons de filtrage
         lockFilter(filter);
         // Bloque le filtre des boutons pour retirer les filtres
@@ -136,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function()
                 span.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
                 buttonFilter.classList.add('actif-filtre');
                 buttonFilter.setAttribute("data-filter", response['filters'][0]);
-                buttonFilter.appendChild(span);
+                buttonFilter.innerText = valueToDisplay.charAt(0).toUpperCase() + valueToDisplay.slice(1);
                 actifFilter.appendChild(buttonFilter);
                 buttonFilter.addEventListener("click", removeFilter, false);
 
@@ -145,12 +187,14 @@ document.addEventListener("DOMContentLoaded", function()
                 // Update des filtres actifs en cours
                 actifFiltre.value != "" ?
                     actifFiltre.value = actifFiltre.value + "--" + response['filters'][0] : actifFiltre.value = response['filters'];
+
+                hideSpinner();
             }
         };
     
         request.onerror = () =>
             // only triggers if the request couldn't be made at all
-            console.log("Erreur requête ajax sur le Filtre Dropdown");
+            console.log("Erreur sur le filtre " + constraint);
     }
 
     // Init new Table
@@ -177,8 +221,6 @@ document.addEventListener("DOMContentLoaded", function()
         unlockFilter(filter);
         // Permet d'obtenir la description des vins dans le tableau
         eventGetDescription(tr);
-        // Crée les événements d'édition du vin
-        eventBtnEditWine(edit);
         // Crée les événements d'utilisation du vin
         eventBtnUseWine(use);
         // Débloque les boutons pour retirer les filtres
@@ -188,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function()
     // Construction d'une ligne du tableau en fonction du vin
     var constructTable = (wine) =>
     {
-        console.log("wine", wine);
         var largeString = "";
         if (wine.appellation.length > 60)
             largeString = "...";
@@ -228,13 +269,6 @@ document.addEventListener("DOMContentLoaded", function()
     {
         for (var i = 0; i < use.length; i++)
             use[i].addEventListener("click", useWine, false);
-    }
-
-    // Crée l'événement d'édition d'un vin
-    var eventBtnEditWine = (edit) =>
-    {
-        for (var i = 0; i < edit.length; i++)
-            edit[i].addEventListener("click", editWine, false);
     }
 
     // Bloque l'événement de filtre des vins
@@ -282,6 +316,5 @@ document.addEventListener("DOMContentLoaded", function()
      */
     unlockFilter(filter);       // des filtres
     eventGetDescription(tr);    // des descriptions
-    eventBtnEditWine(edit);     // des éditions du vin
     eventBtnUseWine(use);       // de l'utilisation du vin
 });
