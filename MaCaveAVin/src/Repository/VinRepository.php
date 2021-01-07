@@ -91,6 +91,22 @@ class VinRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Vin[] Returns an array of Vin objects
+     * Récupère tous les vins de l'utilisateur avec le filtre de la region en cours
+     */
+    public function getUserWineWithDomainFilter($idUser, $domain)
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.users', 'User')
+            ->where('User.id_user = :id_user')
+            ->andWhere('v.domaine = :domain')
+            ->setParameter('id_user', $idUser)
+            ->setParameter('domain', $domain)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param $idUser
      * @param $search
      * @return mixed
@@ -108,4 +124,16 @@ class VinRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $search
+     * @return Vin[] Returns an array of Vin objects
+     */
+    public function getLikeName($search)
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.appellation LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

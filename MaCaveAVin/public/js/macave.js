@@ -10,12 +10,23 @@ document.addEventListener("DOMContentLoaded", function()
     var request     = new XMLHttpRequest();
     var currentUrl  = new URL(window.location.href);
 
+    var showSpinner = () =>
+    {
+        spinner.style.display = "block";
+    };
+
+    var hideSpinner = () =>
+    {
+        spinner.style.display = "none";
+    };
+
     // If user is searching for a wine from anywhere
     if (currentUrl.searchParams.get("search"))
     {
-        console.log("search", currentUrl.searchParams.get("search"));
         var search = currentUrl.searchParams.get("search");
         var url = "/caveavin/search/" + search;
+
+        showSpinner();
 
         // Prépare la requête ajax
         request.open('POST', url, true);
@@ -29,6 +40,8 @@ document.addEventListener("DOMContentLoaded", function()
             {
                 const response = JSON.parse(request.response);
                 console.log("response search", response);
+                refreshTable(response);
+                spinner.style.display = "none";
             }
         };
     }
@@ -56,16 +69,6 @@ document.addEventListener("DOMContentLoaded", function()
         if (id != null)
             window.location.href = '/caveavin/bouteille/' + id;
     }
-
-    var showSpinner = () =>
-    {
-        spinner.style.display = "block";
-    };
-
-    var hideSpinner = () =>
-    {
-        spinner.style.display = "none";
-    };
 
     // Enlève un filtre
     function removeFilter()
@@ -200,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function()
     // Init new Table
     var refreshTable = (response) =>
     {
+        console.log("table response", response);
         let newTableBody    = "";
         // Suppression des lignes du tableau
         macave.innerHTML = "";

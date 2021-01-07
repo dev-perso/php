@@ -411,11 +411,11 @@ class GererCaveController extends AbstractController
             $color = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
 
             if ($color == "Blanc")
-                $whiteWines++;
+                $whiteWines = $whiteWines + $wine->getQuantite();
             elseif ($color == "Rosé")
-                $roseWines++;
+                $roseWines = $roseWines + $wine->getQuantite();
             elseif ($color == "Rouge")
-                $redWines++;
+                $redWines = $redWines + $wine->getQuantite();
         }
 
         $this->whiteWinesNb = $whiteWines;

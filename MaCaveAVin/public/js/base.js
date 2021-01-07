@@ -22,6 +22,16 @@ document.addEventListener("DOMContentLoaded", function()
         body.style.overflow = null;
     };
 
+    var showSpinner = () =>
+    {
+        spinner.style.display = "block";
+    };
+
+    var hideSpinner = () =>
+    {
+        spinner.style.display = "none";
+    };
+
     /*var searchWine = (search) =>
     {
         showSpinner();
@@ -97,13 +107,14 @@ document.addEventListener("DOMContentLoaded", function()
         });
     }
 
-    search.addEventListener("click", showSearchBar, false);
+    if (search)
+        search.addEventListener("click", showSearchBar, false);
     close.addEventListener("click", hideSearchBar, false);
     searchBar.addEventListener('keypress', (e) => {
         if (e.key === 'Enter')
             window.location.href = '/caveavin?search=' + searchBar.value;
     }, false);
-    searchBtn.addEventListener("click", (e) => searchWine(searchBar.value), false);
+    searchBtn.addEventListener("click", (e) => window.location.href = "/caveavin/?search=" + searchBar.value, false);
 
 
 });

@@ -19,11 +19,15 @@ class CouleurRepository extends ServiceEntityRepository
         parent::__construct($registry, Couleur::class);
     }
 
-    public function getLikeColor($search): ?Couleur
+    /**
+     * @param $search
+     * @return Couleur[] Returns an array of Couleur objects
+     */
+    public function getLikeColor($search)
     {
         return $this->createQueryBuilder('c')
             ->where('c.couleur LIKE :search')
-            ->setParameter('search', $search)
+            ->setParameter('search', '%'.$search.'%')
             ->getQuery()
             ->getResult();
     }

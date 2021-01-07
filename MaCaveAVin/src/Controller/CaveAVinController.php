@@ -150,11 +150,11 @@ class CaveAVinController extends AbstractController
             $color = $wine->getEntityVin()->getEntityCouleur()->getCouleur();
 
             if ($color == "Blanc")
-                $whiteWines++;
+                $whiteWines = $whiteWines + $wine->getQuantite();
             elseif ($color == "Rosé")
-                $roseWines++;
+                $roseWines = $roseWines + $wine->getQuantite();
             elseif ($color == "Rouge")
-                $redWines++;
+                $redWines = $redWines + $wine->getQuantite();
         }
 
         $this->whiteWinesNb = $whiteWines;
@@ -349,26 +349,53 @@ class CaveAVinController extends AbstractController
      */
     public function search ($search): Response
     {
-        $color = $this->couleur->getLikeColor($search);
-        //$winesFromColor      = $this->vin->getUserWineLikeColor($this->user->getIdUser(), $search);
-        /*$winesFromRegion     = $this->region->findBy(['region' => $search]);
-        $winesFromName       = $this->vin->findBy(['wine' => $search]);
-        $winesFromDomain     = $this->domaine->findBy(['domain' => $search]);*/
+        $colors     = $this->couleur->getLikeColor($search);
+        $regions    = $this->region->getLikeRegion($search);
+        $names      = $this->vin->getLikeName($search);
+        $domains    = $this->domaine->getLikeDomain($search);
+        $tempWinesFilteredFromColors = [];
+        $tempWinesFilteredFromRegions = [];
+        $tempWinesFilteredFromNames = [];
+        $tempWinesFilteredFromDomains = [];
 
         // Si le filtre est une couleur
-        /*if ($color)
+        if ($colors)
+        {
             // Récupère tous les vins de l'utilisateur avec le filtre de la couleur en cours
-            $wineFiltered = $this->vin->getUserWineWithColorFilter($this->user->getIdUser(), $couleur);
-        // Sinon si le filtre est une région
-        else if ($region)
-            // Récupère tous les vins de l'utilisateur avec le filtre de la region en cours
-            $wineFiltered = $this->vin->getUserWineWithRegionFilter($this->user->getIdUser(), $region);
-
-            $winesFiltered = array_merge($winesFiltered, $wineFiltered);
-
-            $nbFilter++;
+            foreach ($colors as $color)
+            {
+                $tempWinesFilteredFromColors = $this->vin->getUserWineWithColorFilter($this->user->getIdUser(), $color);
+            }
         }
 
+        // Si le filtre est une région
+        if ($regions)
+        {
+            foreach ($regions as $region)
+            {
+                // Récupère tous les vins de l'utilisateur avec le filtre de la region en cours
+                $tempWinesFilteredFromRegions = $this->vin->getUserWineWithRegionFilter($this->user->getIdUser(), $region);
+            }
+        }
+
+        // Si le filtre est une appellation de vin
+        if ($names)
+        {
+            $tempWinesFilteredFromNames = $names;
+        }
+
+        // Si le filtre est un domaine
+        if ($domains)
+        {
+            foreach ($domains as $domain)
+            {
+                // Récupère tous les vins de l'utilisateur avec le filtre de la couleur en cours
+                $tempWinesFilteredFromDomains = $this->vin->getUserWineWithDomainFilter($this->user->getIdUser(), $domain);
+            }
+        }
+
+        // Merge tous les tableaux
+        $winesFiltered = array_merge($tempWinesFilteredFromColors, $tempWinesFilteredFromRegions, $tempWinesFilteredFromNames, $tempWinesFilteredFromDomains);
         // Enlève tous les vins identiques
         $winesFiltered = array_unique($winesFiltered, SORT_REGULAR);
 
@@ -379,6 +406,8 @@ class CaveAVinController extends AbstractController
             $price      = $this->cave->getWinePrice($this->user->getIdUser(), $wine->getIdVin());
             $note       = $this->cave->getWineNote($this->user->getIdUser(), $wine->getIdVin());
 
+            $testprice[] = $price;
+            $testnote[] = $note;
             if ($quantity[0]['quantite'] > 0)
             {
                 $wine->setQuantity($quantity[0]['quantite']);
@@ -392,10 +421,10 @@ class CaveAVinController extends AbstractController
 
         // Tri les vins par Année
         usort($winesToSend, array($this, "compareDate"));
-*/
+
         return $this->json(
         [
-            'wines'     => $search
+            'wines'     => $winesToSend
         ]);
     }
 }

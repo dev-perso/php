@@ -19,23 +19,6 @@ class DomaineRepository extends ServiceEntityRepository
         parent::__construct($registry, Domaine::class);
     }
 
-    // /**
-    //  * @return Domaine[] Returns an array of Domaine objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     /**
      * @return Array
      * Cherche si le domaine existe
@@ -49,5 +32,16 @@ class DomaineRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    /**
+     * @param $search
+     * @return Domaine[] Returns an array of Couleur objects
+     */
+    public function getLikeDomain($search)
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.domaine LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }
